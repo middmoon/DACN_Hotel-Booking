@@ -1,5 +1,5 @@
 # server (back-end)
-- * setup environment *
+ **setup environment**
 - nodejs 20.10 
 - `cd server` 
 - `npm install`
