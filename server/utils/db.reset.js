@@ -1,7 +1,9 @@
+"use strict";
+
 const db = require("../models");
 
 db.sequelize
-  .sync()
+  .sync({ force: true })
   .then(() => {})
   .catch((error) => {
     console.log(error);
