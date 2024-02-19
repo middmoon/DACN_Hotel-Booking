@@ -1,11 +1,18 @@
-import { useEffect } from "react";
-import axios from "axios";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Access from "./pages/Access";
 
 function App() {
-  useEffect(() => {}, []);
-
-  return <div className="App"></div>;
+  return (
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<h1>Home</h1>} />
+          <Route path="/*" element={<Access />} />
+        </Routes>
+      </Router>
+    </div>
+  );
 }
 
 export default App;
