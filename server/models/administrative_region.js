@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "AdministrativeRegion",
       tableName: "administrative_regions",
-      timestamps: true,
+      timestamps: false,
     }
   );
 

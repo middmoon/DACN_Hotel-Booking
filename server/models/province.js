@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Province",
       tableName: "provinces",
-      timestamps: true,
+      timestamps: false,
       indexes: [
         {
           unique: false,
