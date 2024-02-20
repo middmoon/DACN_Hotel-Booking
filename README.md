@@ -11,3 +11,4 @@
 - chỉnh thông số của .env đúng với thông số của mình
 - `cd server` 
 - `npm run init_db`
+-- hạn chế sử dụng `npm run reset_db`
