@@ -1,4 +1,5 @@
 "use strict";
+
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Province extends Model {
@@ -9,35 +10,54 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Province.belongsTo(models.Country, { foreignKey: "id_country" });
+      Province.belongsTo(models.AdministrativeRegion, { foreignKey: "administrative_region_id" });
+      Province.belongsTo(models.AdministrativeUnit, { foreignKey: "administrative_unit_id" });
     }
   }
+
   Province.init(
     {
-      _id: {
-        type: DataTypes.INTEGER,
+      code: {
+        type: DataTypes.STRING(20),
         primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
       },
-      province_name: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+      name: {
+        type: DataTypes.STRING,
       },
-      id_country: {
+      name_en: {
+        type: DataTypes.STRING,
+      },
+      full_name: {
+        type: DataTypes.STRING,
+      },
+      full_name_en: {
+        type: DataTypes.STRING,
+      },
+      code_name: {
+        type: DataTypes.STRING,
+      },
+      administrative_unit_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        // references: {
-        //   model: "Country",
-        //   key: "_id",
-        // },
+      },
+      administrative_region_id: {
+        type: DataTypes.INTEGER,
       },
     },
     {
       sequelize,
       modelName: "Province",
-      tableName: "province",
+      tableName: "provinces",
       timestamps: true,
+      indexes: [
+        {
+          unique: false,
+          fields: ["administrative_unit_id"],
+        },
+        {
+          unique: false,
+          fields: ["administrative_region_id"],
+        },
+      ],
     }
   );
 

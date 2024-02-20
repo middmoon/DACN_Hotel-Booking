@@ -2,7 +2,7 @@
 
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class District extends Model {
+  class AdministrativeUnit extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -10,22 +10,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      District.belongsTo(models.Province, { foreignKey: "code" });
-      District.belongsTo(models.AdministrativeUnit, { foreignKey: "administrative_units" });
     }
   }
-
-  District.init(
+  AdministrativeUnit.init(
     {
-      code: {
-        type: DataTypes.STRING(20),
+      id: {
+        type: DataTypes.INTEGER,
         primaryKey: true,
-      },
-      name: {
-        type: DataTypes.STRING,
-      },
-      name_en: {
-        type: DataTypes.STRING,
       },
       full_name: {
         type: DataTypes.STRING,
@@ -33,33 +24,26 @@ module.exports = (sequelize, DataTypes) => {
       full_name_en: {
         type: DataTypes.STRING,
       },
+      short_name: {
+        type: DataTypes.STRING,
+      },
+      short_name_en: {
+        type: DataTypes.STRING,
+      },
       code_name: {
         type: DataTypes.STRING,
       },
-      province_code: {
+      code_name_en: {
         type: DataTypes.STRING,
-      },
-      administrative_unit_id: {
-        type: DataTypes.INTEGER,
       },
     },
     {
       sequelize,
-      modelName: "District",
-      tableName: "districts",
+      modelName: "AdministrativeUnit",
+      tableName: "administrative_units",
       timestamps: true,
-      indexes: [
-        {
-          unique: false,
-          fields: ["administrative_unit_id"],
-        },
-        {
-          unique: false,
-          fields: ["province_code"],
-        },
-      ],
     }
   );
 
-  return District;
+  return AdministrativeUnit;
 };

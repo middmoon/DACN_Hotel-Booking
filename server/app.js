@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const path = require("node:path/win32");
 const app = express();
+const db = require("./models");
 
 // middleware
 app.use(cors());
@@ -24,6 +25,24 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // routes
 app.use("", require("./routes"));
+
+// check connect db
+
+db.sequelize
+  .authenticate()
+  .then(() => {
+    const { host, port, database } = db.sequelize.config;
+    console.log(`Connection established successfully.`);
+    console.log(`Host: ${host}`);
+    console.log(`Port: ${port}`);
+    console.log(`Database: ${database}`);
+  })
+  .then(() => {
+    console.log("Connection closed successfully.");
+  })
+  .catch((error) => {
+    console.error("Unable to connect to the database:", error);
+  });
 
 // error handler
 app.use((req, res, next) => {

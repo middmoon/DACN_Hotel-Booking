@@ -1,4 +1,5 @@
 "use strict";
+
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Ward extends Model {
@@ -9,35 +10,53 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Ward.belongsTo(models.District, { foreignKey: "id_district" });
+      Ward.belongsTo(models.District, { foreignKey: "district_code" });
+      Ward.belongsTo(models.AdministrativeUnit, { foreignKey: "administrative_unit_id" });
     }
   }
   Ward.init(
     {
-      _id: {
-        type: DataTypes.INTEGER,
+      code: {
+        type: DataTypes.STRING(20),
         primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
       },
-      ward_name: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+      name: {
+        type: DataTypes.STRING,
       },
-      id_district: {
+      name_en: {
+        type: DataTypes.STRING,
+      },
+      full_name: {
+        type: DataTypes.STRING,
+      },
+      full_name_en: {
+        type: DataTypes.STRING,
+      },
+      code_name: {
+        type: DataTypes.STRING,
+      },
+      district_code: {
+        type: DataTypes.STRING,
+      },
+      administrative_unit_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        // references: {
-        //   model: "District",
-        //   key: "_id",
-        // },
       },
     },
     {
       sequelize,
       modelName: "Ward",
-      tableName: "ward",
+      tableName: "wards",
       timestamps: true,
+      indexes: [
+        {
+          unique: false,
+          fields: ["administrative_unit_id"],
+        },
+        {
+          unique: false,
+          fields: ["district_code"],
+        },
+      ],
     }
   );
 

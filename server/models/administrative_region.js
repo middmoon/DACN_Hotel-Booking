@@ -1,7 +1,8 @@
 "use strict";
+
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Country extends Model {
+  class AdministrativeRegion extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,26 +12,32 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Country.init(
+  AdministrativeRegion.init(
     {
-      _id: {
+      id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-        field: "_id",
       },
-      country_name: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+      name: {
+        type: DataTypes.STRING,
+      },
+      name_en: {
+        type: DataTypes.STRING,
+      },
+      code_name: {
+        type: DataTypes.STRING,
+      },
+      code_name_en: {
+        type: DataTypes.STRING,
       },
     },
     {
       sequelize,
-      modelName: "Country",
-      tableName: "country",
+      modelName: "AdministrativeRegion",
+      tableName: "administrative_regions",
       timestamps: true,
     }
   );
-  return Country;
+
+  return AdministrativeRegion;
 };
