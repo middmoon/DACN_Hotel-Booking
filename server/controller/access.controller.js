@@ -15,9 +15,31 @@ class AccessController {
   };
 
   login = async (req, res, next) => {
+    const loginResponse = await AccessService.login(req.body);
+    const { accessToken, refreshToken, user } = loginResponse.metadata;
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+    });
+
     new OK({
       message: "Login OK",
-      metadata: await AccessService.login(req.body),
+      metadata: {
+        user,
+        accessToken,
+      },
+    }).send(res);
+  };
+
+  refesh = async (req, res, next) => {
+    const refreshToken = await AccessService.refesh(req.cookies.refreshToken);
+    new OK({
+      message: "handlerRefreshToken OK",
+      metadata: {
+        refreshToken,
+      },
     }).send(res);
   };
 }

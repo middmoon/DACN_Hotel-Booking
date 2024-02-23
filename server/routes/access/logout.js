@@ -1,10 +1,10 @@
-"use strict";
+// "use strict";
 
-const express = require("express");
-const logoutRouter = express.Router();
+// const express = require("express");
+// const logoutRouter = express.Router();
 
-logoutRouter.delete("/", (req, res) => {
-  res.send("logout page");
-});
+// logoutRouter.delete("/", (req, res) => {
+//   res.send("logout page");
+// });
 
-module.exports = logoutRouter;
+// module.exports = logoutRouter;
