@@ -12,7 +12,7 @@ const Register = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3001/register", {
+      const response = await fetch("http://localhost:3030/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
