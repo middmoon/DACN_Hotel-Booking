@@ -14,25 +14,31 @@ const verifyToken = asyncHandler(async (req, res, next) => {
   const token = req.headers[HEADER.AUTHORIZATION];
   if (!token) throw new AuthFailureError("Invalid request");
 
-  jwt.verify(token, process.env.ACCES_TOKEN_SECRET, (err, decoded) => {
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     if (err) throw new AuthFailureError("Invalid token");
     req.user = decoded;
     next();
   });
 });
 
-// const verifyTokenAndAdminAuth = asyncHandler(async (req, res, next) => {
+const verifyAdminAuth = (req, res, next) => {
+  if (req.user.role === "ADMIN") {
+    next();
+  } else {
+    throw new AuthFailureError("Insufficient privileges");
+  }
+};
 
-//   verifyToken(req, res, ()=>{
-//     if (req.user.id == req.params.id || req.user.role == "ADMIN") {
-
-//     }
-//   })
-//   const token = req.headers[HEADER.AUTHORIZATION];
-//   if (!token) throw new AuthFailureError("Invalid request");
-
-// });
+const verifyHotelAuth = (req, res, next) => {
+  if (req.user.role === "HOTEL_MANAGER") {
+    next();
+  } else {
+    throw new AuthFailureError("Insufficient privileges");
+  }
+};
 
 module.exports = {
   verifyToken,
+  verifyAdminAuth,
+  verifyHotelAuth,
 };

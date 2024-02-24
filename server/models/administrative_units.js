@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "AdministrativeUnit",
       tableName: "administrative_units",
-      timestamps: true,
+      timestamps: false,
     }
   );
 

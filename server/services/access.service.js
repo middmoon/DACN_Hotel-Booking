@@ -4,9 +4,9 @@ require("dotenv").config();
 const db = require("../models");
 const { BadRequestError, AuthFailureError } = require("../core/error.response");
 const { getInfoData } = require("../utils");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const emailValidator = require("email-validator");
+const KeyService = require("./key.service");
 
 const User = db.User;
 
@@ -38,42 +38,47 @@ class AccessService {
     };
   };
 
-  static login = async ({ option, password }) => {
+  static login = async ({ option, password, res }) => {
     let foundUser;
 
     emailValidator.validate(option)
       ? (foundUser = await User.findOne({ where: { email: option } }))
       : (foundUser = await User.findOne({ where: { user_name: option } }));
 
+    if (!foundUser) {
+      throw new BadRequestError("Error: Username or Password do not match");
+    }
+
     const validPassword = await bcrypt.compare(password, foundUser.password);
 
-    if (!foundUser || !validPassword) {
+    if (!validPassword) {
       throw new BadRequestError("Error: Username or Password do not match");
     }
 
     if (foundUser && validPassword) {
       // create token pair //
-      const accessToken = jwt.sign(
-        {
-          _id: foundUser._id,
-          // user_name: foundUser.user_name,
-          // email: foundUser.email,
-          role: foundUser.role,
-        },
-        process.env.ACCES_TOKEN_SECRET,
-        { expiresIn: "30m" }
-      );
+      const tokenPair = await KeyService.createTokenPair(foundUser);
 
       return {
         metadata: {
           user: getInfoData({ fields: ["_id", "role"], object: foundUser }),
-          accessToken: accessToken,
+          accessToken: tokenPair.accessToken,
+          refreshToken: tokenPair.refreshToken,
         },
       };
     }
     return {
       metadata: null,
+      res,
     };
+  };
+
+  static refesh = async (refreshToken) => {
+    if (!refreshToken) {
+      throw new BadRequestError("Error: You are not authenticated");
+    }
+
+    return refreshToken;
   };
 
   static logout = async ({ email, password }) => {};

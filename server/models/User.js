@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       // Define associations here if needed
-      User.belongsTo(models.Ward, { foreignKey: "id_ward" });
+      User.belongsTo(models.Ward, { foreignKey: "ward_code" });
       User.belongsTo(models.Street, { foreignKey: "id_street" });
     }
   }
@@ -53,8 +53,8 @@ module.exports = (sequelize, DataTypes) => {
       id_street: {
         type: DataTypes.INTEGER,
       },
-      id_ward: {
-        type: DataTypes.INTEGER,
+      ward_code: {
+        type: DataTypes.STRING(20),
       },
       house_number: {
         type: DataTypes.INTEGER,
