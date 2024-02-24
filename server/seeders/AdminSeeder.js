@@ -1,5 +1,12 @@
 "use strict";
 
+const bcrypt = require("bcrypt");
+
+async function hashPassword(password) {
+  const salt = await bcrypt.genSalt(10);
+  return (password = await bcrypt.hash(password, salt));
+}
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -17,9 +24,10 @@ module.exports = {
 
     return queryInterface.bulkInsert("user", [
       {
-        firstName: "John",
-        lastName: "Doe",
-        email: "example@example.com",
+        user_name: "admin",
+        email: "admin@example.com",
+        password: await hashPassword("dlu.admin"),
+        role: "ADMIN",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
