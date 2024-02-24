@@ -20,8 +20,12 @@
 
 # client (front-end)
  **setup environment**
-- `cd server` 
+- `cd client` 
 - `npm install`
 - `copy .env.example .env` chỉnh lại đúng với thông số của mình
 - `npm start`
 
+
+# PORT
+- PORT=3000
+- APP_PORT=3030
