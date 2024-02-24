@@ -6,12 +6,11 @@ module.exports = (sequelize, DataTypes) => {
   class Token extends Model {
     static associate(models) {
       // Define associations here if needed
-      Rating.belongsTo(models.Hotel, { foreignKey: "id_hotel" });
-      Rating.belongsTo(models.User, { foreignKey: "id_user" });
+      Token.belongsTo(models.User, { foreignKey: "id_user" });
     }
   }
 
-  Rating.init(
+  Token.init(
     {
       _id: {
         type: DataTypes.INTEGER,
@@ -19,27 +18,20 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      id_hotel: {
-        type: DataTypes.INTEGER,
-      },
       id_user: {
         type: DataTypes.INTEGER,
       },
-      comment: {
+      refreshTokenUsed: {
         type: DataTypes.STRING,
       },
-      rating_point: {
-        type: DataTypes.INTEGER,
-      },
     },
-
     {
       sequelize,
-      modelName: "Rating",
-      tableName: "rating",
+      modelName: "Key",
+      tableName: "key",
       timestamps: true,
     }
   );
 
-  return Rating;
+  return Token;
 };
