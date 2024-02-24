@@ -1,8 +1,13 @@
+import Navbar from "../../components/navbar/navBar"
+import Header from "../../components/header/Header"
 import "./home.css"
 
 const Home = () => {
     return (
-        <div>xin loi</div>
+        <div>
+            <Navbar />
+            <Header />
+        </div>
     )
 }
 

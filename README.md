@@ -12,3 +12,20 @@
 - `cd server` 
 - `npm run init_db`
 - hạn chế sử dụng `npm run reset_db`
+
+ **db seeder**
+- `cd server` 
+- AdminSeeder `npx sequelize db:seed --seed AdminSeeder`
+
+
+# client (front-end)
+ **setup environment**
+- `cd client` 
+- `npm install`
+- `copy .env.example .env` chỉnh lại đúng với thông số của mình
+- `npm start`
+
+
+# PORT
+- PORT=3000
+- APP_PORT=3030
