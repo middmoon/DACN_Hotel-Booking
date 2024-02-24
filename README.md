@@ -15,7 +15,7 @@
 
  **db seeder**
 - `cd server` 
-- AdminSeeder `npx sequelize db:seed --seed AdminSeeder`
+- AdminSeeder `npx sequelize db:seed --seed AdminSeeder --config=config/mysql.config.js`
 
 
 # client (front-end)
