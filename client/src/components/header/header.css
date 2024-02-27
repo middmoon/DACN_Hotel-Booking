@@ -70,9 +70,11 @@
 .date{
     position: absolute;
     top: 57px;
+    z-index: 2;
 }
 
 .options{
+    z-index: 2;
     color: gray;
     background-color: white;
     top: 57px;
