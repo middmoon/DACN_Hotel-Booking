@@ -1,33 +1,31 @@
-.pList{
+.fp{
     width: 100%;
     max-width: 1024px;
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     gap: 20px;
-    
 }
 
-.pListItem{
-    flex:1;
+.fpItem{
+    display: flex;
+    flex: 1;
+    gap: 10px;
+    flex-direction: column;
     border-radius: 10px;
     overflow: hidden;
-    cursor: pointer;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-.pListImg{
+.fpImg{
     width: 100%;
-    height: 120px;
-    object-fit: cover;
 }
 
-.pListTitles>h1{
-    font-size: 18px;
+.fpName{
+    font-weight: bold;
     padding: 5px;
 }
 
-.pListTitles>h2{
-    font-size: 14px;
+.fpCity{
     font-weight: 300;
     padding: 5px;
 }
