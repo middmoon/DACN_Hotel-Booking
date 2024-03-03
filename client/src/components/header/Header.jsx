@@ -8,8 +8,17 @@ import { useState } from "react"
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import {format} from "date-fns"
+import { useNavigate } from 'react-router-dom';
+
 
 const Header = ({type}) => {
+const navigate = useNavigate();
+const handleSearch = () => {
+    navigate("/hotels")
+}
+
+
+
     const [openDate, setOpenDate] = useState(false)
    const [date, setDate] = useState([
     {
@@ -93,7 +102,7 @@ const Header = ({type}) => {
         </div>
      
         <div className="headerSearchItem">
-            <button className="headerBtn">Search</button>
+            <button onClick={handleSearch} className="headerBtn">Search</button>
         </div>
         </div>
         </>}

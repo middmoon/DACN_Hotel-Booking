@@ -4,6 +4,7 @@ import Home from "./pages/Home/Home";
 import List from "./pages/list/List";
 import Hotels from "./pages/hotel/Hotel";
 
+
 function App() {
   return (
     <div className="App">
