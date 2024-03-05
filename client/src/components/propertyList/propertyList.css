@@ -1,13 +1,23 @@
 .pList{
-    width: 100%;
+    width: 100vw;
     max-width: 1024px;
+    flex-wrap: nowrap;
     display: flex;
+    overflow-x: scroll;
     justify-content:space-between;
     gap: 20px;
     
+    
+    
 }
-
+.slide{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 .pListItem{
+    min-width: 150px;
+    display: inline-block;
     flex:1;
     border-radius: 10px;
     overflow: hidden;

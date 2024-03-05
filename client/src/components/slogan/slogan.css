@@ -9,7 +9,7 @@
 
 .slItem{
     width: 400px;
-    
+    min-width: 300;
     display: flex;
     gap: 10px;
     border-radius: 10px;
