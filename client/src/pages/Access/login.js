@@ -1,11 +1,16 @@
 import React from "react";
-
+import { useState } from "react";
 const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle form submission logic here
+    const newUser = {
+      username: username,
+      password: password,
+    }
   };
 
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
   return (
     <div className="vh-100" style={{ backgroundColor: "#eee" }}>
       <div className="container h-100">
@@ -22,7 +27,13 @@ const Login = () => {
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-id-badge fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
-                          <input name="tendangnhap" type="text" id="form3Example3c" className="form-control" placeholder="Tên Đăng Nhập" />
+                          <input 
+                          name="tendangnhap" 
+                          type="text" 
+                          id="form3Example3c" 
+                          className="form-control" 
+                          placeholder="Tên Đăng Nhập" 
+                          onChange={(e) => setUsername(e.target.value)}/>
                         </div>
                       </div>
 
@@ -30,7 +41,13 @@ const Login = () => {
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
-                          <input name="matkhau" type="password" id="form3Example4c" className="form-control" placeholder="Mật Khẩu" />
+                          <input 
+                          name="matkhau" 
+                          type="password" 
+                          id="form3Example4c" 
+                          className="form-control" 
+                          placeholder="Mật Khẩu" 
+                          onChange={(e) => setPassword(e.target.value)}/>
                         </div>
                       </div>
 

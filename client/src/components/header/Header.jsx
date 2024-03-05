@@ -12,9 +12,12 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Header = ({type}) => {
+
+    
 const navigate = useNavigate();
-const handleSearch = () => {
-    navigate("/hotels")
+
+const handleLogin = () => {
+    navigate("/lg")
 }
 
 
@@ -50,7 +53,7 @@ const handleSearch = () => {
 
         { type !== "list" && <><h1 className="headerTitle">Find your next stay</h1>
         <p className="headerDesc">Search low prices on hotels, homes and much more...</p>
-        <button className="headerBtn">Sign in / Register</button>
+        <button onClick={handleLogin} className="headerBtn">Sign in / Register</button>
         <div className="headerSearch">
         <div className="headerSearchItem">
             <FontAwesomeIcon icon={faBed} className="headerIcon"/> 
@@ -102,7 +105,7 @@ const handleSearch = () => {
         </div>
      
         <div className="headerSearchItem">
-            <button onClick={handleSearch} className="headerBtn">Search</button>
+            <button  className="headerBtn">Search</button>
         </div>
         </div>
         </>}
