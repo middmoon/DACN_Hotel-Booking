@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       user_display_name: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING, // sequelize, sequelize-cli ORM
       },
       email: {
         type: DataTypes.STRING,
