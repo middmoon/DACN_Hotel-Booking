@@ -11,7 +11,7 @@ const KeyService = require("./key.service");
 const User = db.User;
 
 class AccessService {
-  static signUp = async ({ email, password }) => {
+  static signUp = async ({ email, password }, role = "USER") => {
     const foundUser = await User.findOne({ where: { email: email } });
 
     if (foundUser) {
@@ -24,6 +24,7 @@ class AccessService {
     const newUser = await User.create({
       email: email,
       password: hashPassword,
+      role: role,
     });
 
     if (newUser) {
@@ -59,29 +60,54 @@ class AccessService {
       // create token pair //
       const tokenPair = await KeyService.createTokenPair(foundUser);
 
-      return {
-        metadata: {
-          user: getInfoData({ fields: ["_id", "role"], object: foundUser }),
-          accessToken: tokenPair.accessToken,
-          refreshToken: tokenPair.refreshToken,
-        },
-      };
+      const store = await KeyService.storeRefreshToken({
+        id_user: foundUser._id,
+        refreshTokenUsed: tokenPair.refreshToken,
+      });
+
+      if (store) {
+        return {
+          metadata: {
+            user: getInfoData({ fields: ["_id", "role"], object: foundUser }),
+            accessToken: tokenPair.accessToken,
+            refreshToken: tokenPair.refreshToken,
+          },
+        };
+      }
     }
     return {
       metadata: null,
-      res,
     };
   };
 
-  static refesh = async (refreshToken) => {
+  static refresh = async ({ refreshToken, userInfo }) => {
     if (!refreshToken) {
       throw new BadRequestError("Error: You are not authenticated");
     }
 
-    return refreshToken;
+    // console.log({
+    //   if: "access service",
+    //   userInfo,
+    //   refreshToken,
+    // });
+
+    const tokenPair = await KeyService.refesh(refreshToken, userInfo);
+
+    // console.log({
+    //   if: "access service",
+    //   tokenPair,
+    // });
+
+    if (!tokenPair) {
+      throw new BadRequestError("Error: Create token pair fails");
+    }
+
+    return tokenPair;
   };
 
-  static logout = async ({ email, password }) => {};
+  static logout = async (userInfo) => {
+    return await KeyService.deleteKeyByIdUser(userInfo._id);
+  };
 }
 
 module.exports = AccessService;

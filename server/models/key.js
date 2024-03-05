@@ -30,6 +30,12 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Key",
       tableName: "key",
       timestamps: true,
+      indexes: [
+        {
+          unique: false,
+          fields: ["refreshTokenUsed"],
+        },
+      ],
     }
   );
 

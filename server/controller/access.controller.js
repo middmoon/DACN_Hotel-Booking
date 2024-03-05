@@ -1,5 +1,4 @@
 "use strict";
-
 const { CREATED, OK } = require("../core/success.response");
 const AccessService = require("../services/access.service");
 
@@ -21,6 +20,7 @@ class AccessController {
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: false,
+      path: "/",
       sameSite: "strict",
     });
 
@@ -33,13 +33,31 @@ class AccessController {
     }).send(res);
   };
 
-  refesh = async (req, res, next) => {
-    const refreshToken = await AccessService.refesh(req.cookies.refreshToken);
+  refresh = async (req, res, next) => {
+    const refresh = await AccessService.refresh({ refreshToken: req.cookies.refreshToken, userInfo: req.user });
+
+    res.cookie("refreshToken", refreshToken.refreshToken, {
+      httpOnly: true,
+      secure: false,
+      path: "/",
+      sameSite: "strict",
+    });
+
     new OK({
       message: "handlerRefreshToken OK",
       metadata: {
-        refreshToken,
+        user: req.user,
+        accessToken: refresh.accessToken,
       },
+    }).send(res);
+  };
+
+  logout = async (req, res, next) => {
+    res.clearCookie("refreshToken");
+
+    new OK({
+      message: "Logout OK",
+      metadata: await AccessService.logout(req.user),
     }).send(res);
   };
 }
