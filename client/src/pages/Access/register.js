@@ -2,17 +2,15 @@ import React from "react";
 const { useState } = require("react");
 const Register = () => {
   const [formData, setFormData] = useState({
-    hoten: "",
-    email: "",
     tendangnhap: "",
-    matkhau: "",
+    password: "",
   });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3030/register", {
+      const response = await fetch("http://localhost:3030/v1/api/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,7 +28,12 @@ const Register = () => {
       console.error("Error:", error);
     }
   };
+  
+  const handleSubmit_v2 = async (event) => {
+    event.preventDefault();
 
+    
+  };
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
@@ -51,7 +54,7 @@ const Register = () => {
                     <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Đăng Ký</p>
 
                     <form method="POST" onSubmit={handleSubmit} className="mx-1 mx-md-4">
-                      {/* Ho Ten */}
+                      {/* Ho Ten
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
@@ -66,6 +69,20 @@ const Register = () => {
                         </div>
                       </div>
 
+                      <div className="d-flex flex-row align-items-center mb-4">
+                        <i className="fas fa-user fa-lg me-3 fa-fw"></i>
+                        <div className="form-outline flex-fill mb-0">
+                          <input
+                            onChange={handleChange}
+                            name="hoten"
+                            type="text"
+                            id="form3Example1c"
+                            className="form-control"
+                            placeholder="Họ và Tên "
+                          />
+                        </div>
+                      </div> */}
+
                       {/* Email */}
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
@@ -74,7 +91,7 @@ const Register = () => {
                         </div>
                       </div>
 
-                      {/* Ten Dang Nhap */}
+                      {/* Ten Dang Nhap
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-id-badge fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
@@ -87,7 +104,7 @@ const Register = () => {
                             placeholder="Tên Đăng Nhập"
                           />
                         </div>
-                      </div>
+                      </div> */}
 
                       {/* Mat Khau */}
                       <div className="d-flex flex-row align-items-center mb-4">
@@ -95,7 +112,7 @@ const Register = () => {
                         <div className="form-outline flex-fill mb-0">
                           <input
                             onChange={handleChange}
-                            name="matkhau"
+                            name="password"
                             type="password"
                             id="form3Example4c"
                             className="form-control"

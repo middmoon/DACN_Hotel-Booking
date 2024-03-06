@@ -4,18 +4,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../redux/apiRequest";
 import { useDispatch } from "react-redux";
 const Login = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const newUser = {
-      username: username,
-      password: password,
-    };
-    loginUser(newUser,dispatch,navigate);
-  };
+  const [option, setOpTion] = useState("")
+  const [password, setPassword] = useState("")
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const user = {
+      option: option,
+      password: password,
+    };
+    loginUser(user,dispatch,navigate);
+  };
+
   return (
     <div className="vh-100" style={{ backgroundColor: "#eee" }}>
       <div className="container h-100">
@@ -33,12 +35,12 @@ const Login = () => {
                         <i className="fas fa-id-badge fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
                           <input 
-                          name="tendangnhap" 
+                          name="option" 
                           type="text" 
                           id="form3Example3c" 
                           className="form-control" 
-                          placeholder="Tên Đăng Nhập" 
-                          onChange={(e) => setUsername(e.target.value)}/>
+                          placeholder="Tên Đăng Nhập Hoac Email" 
+                          onChange={(e) => setOpTion(e.target.value)}/>
                         </div>
                       </div>
 
@@ -47,7 +49,7 @@ const Login = () => {
                         <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
                           <input 
-                          name="matkhau" 
+                          name="password" 
                           type="password" 
                           id="form3Example4c" 
                           className="form-control" 

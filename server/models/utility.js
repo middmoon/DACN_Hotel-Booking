@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
       utility_name: {
         type: DataTypes.STRING,
       },
+      utility_icon: {
+        type: DataTypes.STRING,
+      },
     },
     {
       sequelize,
