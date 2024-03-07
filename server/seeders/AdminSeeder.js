@@ -26,7 +26,7 @@ module.exports = {
       {
         user_name: "admin",
         email: "admin@example.com",
-        password: await hashPassword("dlu.admin"),
+        password: await hashPassword("  "),
         role: "ADMIN",
         createdAt: new Date(),
         updatedAt: new Date(),

@@ -6,12 +6,28 @@ const headers = {
     'Content-Type': 'application/json'
 };
 
+ function AuthRoute(role, navigate) {
+    switch (role) {
+        case "USER":
+            navigate("/")        
+            break;
+        case "HOTEL_MANAGER":
+            navigate("/hotel-manage")
+            break;
+        case "ADMIN":
+            navigate("/admin")
+            break;
+        default:
+            break;
+    }
+ }
+
 export const loginUser = async(user, dispatch, navigate) => {
     dispatch(loginStart())
     try {
         const r = await axios.post(url,user, headers)
         dispatch(loginSuccess(r.data))
-        navigate("/")
+        AuthRoute(r.data.metadata.user.role, navigate);
     } catch (error) {
         dispatch(loginFailed())
     }

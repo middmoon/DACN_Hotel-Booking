@@ -4,9 +4,9 @@ import Home from "./pages/Home/Home";
 import List from "./pages/list/List";
 import Login from "./pages/Access/login";
 import Register from "./pages/Access/register";
-
+import Admin from "./pages/Admin/admin";
 import Hotels from "./pages/hotel/Hotel";
-
+import HotelManage from "./pages/HotelManage/hotelManage"
 
 function App() {
   return (
@@ -18,6 +18,8 @@ function App() {
           <Route path="/hotels/:id" element={<Hotels />} />
           <Route path="/lg" element={<Login />}/>
           <Route path="/register" element={<Register />}/>
+          <Route path="/admin" element={<Admin />}/>
+          <Route path="/hotel-manage" element={<HotelManage />}/>
         </Routes>
       </Router>
     </div>
