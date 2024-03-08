@@ -21,14 +21,17 @@ const authSlice = createSlice({
     loginFailed: (state) =>{
         state.login.isFetching = false;
         state.login.error = true;
-    }
+    },
+
+
     }
 });
 
 export const {
     loginStart,
     loginFailed,
-    loginSuccess
+    loginSuccess,
+   
 } = authSlice.actions;
 
 

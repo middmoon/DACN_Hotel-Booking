@@ -15,7 +15,7 @@ const headers = {
             navigate("/hotel-manage")
             break;
         case "ADMIN":
-            navigate("/admin")
+            navigate("/")
             break;
         default:
             break;

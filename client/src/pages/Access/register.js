@@ -1,6 +1,11 @@
 import React from "react";
 const { useState } = require("react");
+ 
+
+
 const Register = () => {
+
+
   const [formData, setFormData] = useState({
     tendangnhap: "",
     password: "",
@@ -29,11 +34,7 @@ const Register = () => {
     }
   };
   
-  const handleSubmit_v2 = async (event) => {
-    event.preventDefault();
 
-    
-  };
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
