@@ -1,5 +1,5 @@
 import axios from "axios";
-import { loginFailed, loginStart, loginSuccess } from "./authSlice";
+import { logOutFailed, logOutStart, logOutSuccess, loginFailed, loginStart, loginSuccess } from "./authSlice";
 
 const url = 'http://localhost:3030/v1/api/user/login';
 const headers = {
@@ -15,7 +15,7 @@ const headers = {
             navigate("/hotel-manage")
             break;
         case "ADMIN":
-            navigate("/")
+            navigate("/admin")
             break;
         default:
             break;
@@ -30,5 +30,17 @@ export const loginUser = async(user, dispatch, navigate) => {
         AuthRoute(r.data.metadata.user.role, navigate);
     } catch (error) {
         dispatch(loginFailed())
+    }
+}
+
+export const logOut = async(dispatch,navigate,axiosJWT) => {
+    dispatch(logOutStart());
+    try{
+        await axiosJWT.post("/v1/auth/logout",{
+            
+        });
+    dispatch(loginSuccess());
+    }catch(err){
+        dispatch(logOutFailed());
     }
 }
