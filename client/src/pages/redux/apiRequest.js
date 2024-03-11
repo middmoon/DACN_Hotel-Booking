@@ -1,5 +1,5 @@
 import axios from "axios";
-import { logOutFailed, logOutStart, logOutSuccess, loginFailed, loginStart, loginSuccess } from "./authSlice";
+import { loginFailed, loginStart, loginSuccess } from "./authSlice";
 
 const url = 'http://localhost:3030/v1/api/user/login';
 const headers = {
@@ -33,14 +33,3 @@ export const loginUser = async(user, dispatch, navigate) => {
     }
 }
 
-export const logOut = async(dispatch,navigate,axiosJWT) => {
-    dispatch(logOutStart());
-    try{
-        await axiosJWT.post("/v1/auth/logout",{
-            
-        });
-    dispatch(loginSuccess());
-    }catch(err){
-        dispatch(logOutFailed());
-    }
-}

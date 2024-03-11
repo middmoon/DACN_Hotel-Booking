@@ -2,10 +2,10 @@ import { useState } from "react";
 import "./navBar.css"
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import { logOut } from "../../pages/redux/apiRequest";
+
 
 const Navbar = () => {
-
+    
     const user = useSelector((useState) => useState.auth.login.currentUser);
     const navigate = useNavigate();
 
@@ -22,8 +22,8 @@ const Navbar = () => {
     }
 
     const handleLogout = () => {
-       
-        logOut();
+        
+        navigate("/")
     }
 
     return (
