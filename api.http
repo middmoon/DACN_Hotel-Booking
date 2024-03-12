@@ -1,0 +1,38 @@
+### user signup
+POST http://localhost:3030/v1/api/user/register
+Content-Type: application/json
+
+{
+    "email": "test1@gmail.com",
+    "password": "123"
+}
+
+### user login
+POST http://localhost:3030/v1/api/user/login
+Content-Type: application/json
+
+{
+    "option": "admin@example.com",
+    "password": "dlu.admin"
+}
+
+### user handle refresh token
+POST http://localhost:3030/v1/api/user/refesh
+Content-Type: application/json
+Cookie: refreshToken= tự lấy trong cookie bên font-end
+authorization: access_token (tự thêm vô cho mỗi người)
+
+{
+    "_id": 5,
+    "role": "ADMIN"
+}
+
+### user logout
+POST http://localhost:3030/v1/api/user/logout
+Content-Type: application/json
+authorization: access_token (tự thêm vô cho mỗi người)
+
+{
+    "_id": 5,
+    "role": "ADMIN"
+}
