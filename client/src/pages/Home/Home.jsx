@@ -8,7 +8,17 @@ import MailList from "../../components/mailList/Mail.List"
 import Footer from "../../components/footer/Footer"
 import Slogan from "../../components/slogan/slogan"
 
+
 const Home = () => {
+
+
+  
+
+    
+
+
+
+
 
     return (
         <div>
