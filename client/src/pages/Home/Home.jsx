@@ -11,15 +11,6 @@ import Slogan from "../../components/slogan/slogan"
 
 const Home = () => {
 
-
-  
-
-    
-
-
-
-
-
     return (
         <div>
             <Navbar />
