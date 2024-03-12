@@ -12,7 +12,7 @@ const PropertyList = () => {
     return (
     
             <div id="slider" className="slide">
-            <button id="btn">left</button>
+           
                 <div className="pList">
            
         <div  className="pListItem">
@@ -95,7 +95,7 @@ const PropertyList = () => {
             </div>
         </div>
         </div>
-        <button id="btn">right</button>
+      
             </div>
     )
 }

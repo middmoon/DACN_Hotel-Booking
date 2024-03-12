@@ -1,5 +1,5 @@
 import axios from "axios";
-import { loginFailed, loginStart, loginSuccess } from "./authSlice";
+import { logOutFailed, logOutStart, logOutSuccess, loginFailed, loginStart, loginSuccess } from "./authSlice";
 
 const url = 'http://localhost:3030/v1/api/user/login';
 const headers = {
@@ -33,3 +33,33 @@ export const loginUser = async(user, dispatch, navigate) => {
     }
 }
 
+
+
+export const logOut = async(dispatch,id, navigate,accessToken,axiosJWT) => {
+    dispatch(logOutStart())
+    try{
+        await axiosJWT.delete("http://localhost:3030/v1/api/user/logout",id,{
+            headers:{token: `${accessToken}`}
+        });
+        dispatch(logOutSuccess());
+        navigate("/");
+    }catch(error){
+        dispatch(logOutFailed());
+    }
+}
+
+
+// export const logOut = async (accessToken, dispatch, navigate) => {
+//     const logoutUrl = 'http://localhost:3030/v1/api/user/logout';
+//     try {
+//       await axios.post(logoutUrl, null, {
+//         headers: {
+//           token: `${accessToken}`
+//         }
+//       });
+//       dispatch(logOutSuccess());
+//     } catch (error) {
+//      dispatch(logOutFailed());
+//     }
+//   };
+  

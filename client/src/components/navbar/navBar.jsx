@@ -1,17 +1,18 @@
 import { useState } from "react";
 import "./navBar.css"
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from "react-redux";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../../pages/redux/apiRequest"
+import { logOutSuccess } from "../../pages/redux/authSlice";
+import { createAxios } from "../../pages/redux/createInstance";
 const Navbar = () => {
     
     const user = useSelector((useState) => useState.auth.login.currentUser);
     const navigate = useNavigate();
-
-
-
-
+    const dispatch = useDispatch();
+    const accessToken = user?.accessToken;
+    const id = user?._id;
+    let axiosJWT = createAxios(user,dispatch,logOutSuccess);
     
     const handleRegister = () => {
         navigate("/register")
@@ -22,8 +23,7 @@ const Navbar = () => {
     }
 
     const handleLogout = () => {
-        
-        navigate("/")
+        logOut( dispatch,id,navigate,accessToken,axiosJWT);
     }
 
     return (
