@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../pages/redux/apiRequest";
 
 const Navbar = () => {
-  const user = useSelector((useState) => useState.auth.login.currentUser);
+  const state = useSelector((useState) => useState.auth.login.currentUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const accessToken = user?.metadata.accessToken;
+  const accessToken = state?.metadata.accessToken;
 
   const handleRegister = () => {
     navigate("/register");
@@ -19,18 +19,22 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    logOut(dispatch, user, accessToken, navigate);
+    const user = {
+      _id: state?.metadata.user._id,
+      role: state?.metadata.user.role,
+    };
+  logOut(dispatch,accessToken,navigate);
   };
 
   return (
     <div className="navbar">
       <div className="navContainer">
         <span className="logo">MidmoonBooking</span>
-        {user ? (
+        {state ? (
           <>
             <div className="navItems">
               <button className="navButton">
-                hi, {user.metadata.user.role}
+                hi, {state.metadata.user.role}
               </button>
               <button onClick={handleLogout} className="navButton">
                 log out
