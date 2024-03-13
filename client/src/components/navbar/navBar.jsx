@@ -31,7 +31,7 @@ const Navbar = () => {
                {user? (
                 <>
                  <div className="navItems">
-                    <button className="navButton">hi, {user.user_name}</button>
+                    <button className="navButton">hi, {user.metadata.user.role}</button>
                     <button onClick={handleLogout} className="navButton">log out</button>
                 </div>
                 </>

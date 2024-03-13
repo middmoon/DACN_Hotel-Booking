@@ -7,9 +7,51 @@ import FeaturedProperties from "../../components/featuredProperties/FeaturedProp
 import MailList from "../../components/mailList/Mail.List"
 import Footer from "../../components/footer/Footer"
 import Slogan from "../../components/slogan/slogan"
-
-
+import axios from "axios"
+import { jwtDecode } from "jwt-decode"
+import { useDispatch, useSelector } from "react-redux"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { loginSuccess } from "../redux/authSlice"
 const Home = () => {
+    const user = useSelector((useState) => useState.auth.login.currentUser);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    let axiosJWT = axios.create();
+
+    const refreshToken = async() => {
+        try{
+            const res = await axios.post("http://localhost:3030/v1/api/user/refesh",{
+                withCredentials: true,
+            });
+            return res.data;
+           }catch(err){
+            console.log(err);
+           }
+    }
+
+
+    axiosJWT.interceptors.request.use(
+        async(config) => {
+            let date = new Date();
+            const decodedToken = jwtDecode(user?.metadata.accessToken);
+            if(decodedToken.exp < date.getTime()/1000){
+                const data = await refreshToken();
+                const refreshUser = {
+                    ...user,
+                    accessToken: data.accessToken,
+                    
+                };
+                dispatch(loginSuccess(refreshUser));
+                config.headers["Authorization"] = data.accessToken;
+            }
+            return config;
+        },
+        (err) => {
+            return Promise.reject(err);
+        }
+        );
+
 
     return (
         <div>
