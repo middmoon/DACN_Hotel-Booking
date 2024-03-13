@@ -1,60 +1,60 @@
 import { useState } from "react";
-import "./navBar.css"
-import { useNavigate } from 'react-router-dom';
+import "./navBar.css";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logOut } from "../../pages/redux/apiRequest"
-
+import { logOut } from "../../pages/redux/apiRequest";
 
 const Navbar = () => {
-    
-    const state = useSelector((useState) => useState.auth.login.currentUser);
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const accessToken = state?.metadata.accessToken;
-   
-    
-    const handleRegister = () => {
-        navigate("/register")
-    }
+  const user = useSelector((useState) => useState.auth.login.currentUser);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const accessToken = user?.metadata.accessToken;
 
-    const handleLogin = () => {
-        navigate("/lg")
-    }
+  const handleRegister = () => {
+    navigate("/register");
+  };
 
-    const handleLogout = () => {
-        const user = {
-            _id: state?.metadata.user._id,
-            role: state?.metadata.user.role,
-          };
-        logOut(dispatch,accessToken,navigate);
-    }
+  const handleLogin = () => {
+    navigate("/lg");
+  };
 
-    return (
-        <div className="navbar">
-            <div className="navContainer">
-                <span className="logo">MidmoonBooking</span>
-               {state? (
-                <>
-                 <div className="navItems">
-                    <button className="navButton">hi, {state.metadata.user.role}</button>
-                    <button onClick={handleLogout} className="navButton">log out</button>
-                </div>
-                </>
-               ) : (
-               <>
-                <div className="navItems">
-                    <button onClick={handleRegister} className="navButton">Register</button>
-                    <button onClick={handleLogin} className="navButton">login</button>
-                </div>
-               </>
-               )}
+  const handleLogout = () => {
+    logOut(dispatch, user, accessToken, navigate);
+  };
+
+  return (
+    <div className="navbar">
+      <div className="navContainer">
+        <span className="logo">MidmoonBooking</span>
+        {user ? (
+          <>
+            <div className="navItems">
+              <button className="navButton">
+                hi, {user.metadata.user.role}
+              </button>
+              <button onClick={handleLogout} className="navButton">
+                log out
+              </button>
             </div>
-        </div>
-    )
+          </>
+        ) : (
+          <>
+            <div className="navItems">
+              <button onClick={handleRegister} className="navButton">
+                Register
+              </button>
+              <button onClick={handleLogin} className="navButton">
+                login
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
 };
 
-export default Navbar
-
+export default Navbar;
 
 // import { useState } from "react";
 // import "./navBar.css";
