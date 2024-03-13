@@ -65,17 +65,5 @@ export const logOut = async(dispatch,user, accessToken, navigate) => {
 }
 
 
-// export const logOut = async (accessToken, dispatch, navigate) => {
-//     const logoutUrl = 'http://localhost:3030/v1/api/user/logout';
-//     try {
-//       await axios.post(logoutUrl, null, {
-//         headers: {
-//           token: `${accessToken}`
-//         }
-//       });
-//       dispatch(logOutSuccess());
-//     } catch (error) {
-//      dispatch(logOutFailed());
-//     }
-//   };
+
   
