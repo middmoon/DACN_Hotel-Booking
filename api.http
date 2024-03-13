@@ -3,7 +3,7 @@ POST http://localhost:3030/v1/api/user/register
 Content-Type: application/json
 
 {
-    "email": "test1@gmail.com",
+    "email": "testuser@gmail.com",
     "password": "123"
 }
 
@@ -12,27 +12,27 @@ POST http://localhost:3030/v1/api/user/login
 Content-Type: application/json
 
 {
-    "option": "admin@example.com",
-    "password": "dlu.admin"
+    "option": "testuser@gmail.com",
+    "password": "123"
 }
 
 ### user handle refresh token
 POST http://localhost:3030/v1/api/user/refesh
 Content-Type: application/json
-Cookie: refreshToken= tự lấy trong cookie bên font-end
-authorization: access_token (tự thêm vô cho mỗi người)
+Cookie: refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzEwMjU2ODU0LCJleHAiOjE3MTI4NDg4NTR9.nDBsdIT9pjChb3JfIZtaX3dUWiqBJi0-7RpSSHfPnbs; Path=/; HttpOnly; SameSite=Strict
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzEwMjU2ODU0LCJleHAiOjE3MTAyNTg2NTR9.V0KbE2RIqc2G8F8vA5VDryGyx7W8Rz_-_j2pnUr7NfE
 
 {
-    "_id": 5,
-    "role": "ADMIN"
+    "_id": 2,
+    "role": "USER"
 }
 
 ### user logout
-POST http://localhost:3030/v1/api/user/logout
+DELETE  http://localhost:3030/v1/api/user/logout
 Content-Type: application/json
-authorization: access_token (tự thêm vô cho mỗi người)
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzEwMzI4NzY4LCJleHAiOjE3MTAzMzA1Njh9.0ZoHTpM8_TjHwibddNuyFt5hlIV-qVN_XrS3d3JtLoE
 
 {
-    "_id": 5,
-    "role": "ADMIN"
+   "_id": 2,
+    "role": "USER"
 }

@@ -35,11 +35,27 @@ export const loginUser = async(user, dispatch, navigate) => {
 
 
 
-export const logOut = async(dispatch,id, navigate,accessToken,axiosJWT) => {
+// export const logOut = async(dispatch, navigate,accessToken,axiosJWT) => {
+//     dispatch(logOutStart())
+//     try{
+//         await axiosJWT.delete("http://localhost:3030/v1/api/user/logout",{
+//             headers:{token: `${accessToken}`}
+//         });
+//         dispatch(logOutSuccess());
+//         navigate("/");
+//     }catch(error){
+//         dispatch(logOutFailed());
+//     }
+// }
+
+export const logOut = async(dispatch,user, accessToken, navigate) => {
     dispatch(logOutStart())
     try{
-        await axiosJWT.delete("http://localhost:3030/v1/api/user/logout",id,{
-            headers:{token: `${accessToken}`}
+        await axios.delete('http://localhost:3030/v1/api/user/logout', user, {
+            headers: {
+                'Authorization': `${accessToken}`,
+                'Content-Type': 'application/json'
+            }
         });
         dispatch(logOutSuccess());
         navigate("/");
