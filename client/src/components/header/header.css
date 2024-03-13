@@ -6,6 +6,8 @@
     position: relative;
 }
 
+
+
 .headerContainer{
     width: 100%;
     max-width: 1024px;
@@ -109,4 +111,19 @@
 
 .optionCounterButton:disabled{
     cursor: not-allowed;
+}
+
+.header2{
+    background-image: url("../../../public/IMG/Home/slah.jpg.jpg");
+    background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+    color: white;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.pd{
+    height: 80px;
 }
