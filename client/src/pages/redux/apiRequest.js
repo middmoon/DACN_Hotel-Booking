@@ -1,10 +1,20 @@
 import axios from "axios";
 import { logOutFailed, logOutStart, logOutSuccess, loginFailed, loginStart, loginSuccess } from "./authSlice";
-
-const url = 'http://localhost:3030/v1/api/user/login';
-const headers = {
+const urlLogout = 'http://localhost:3030/v1/api/user/logout';
+const urlLogin = 'http://localhost:3030/v1/api/user/login';
+const loginHeaders = {
     'Content-Type': 'application/json'
 };
+
+function logoutHeaders(accessToken){
+    return {
+
+        'Authorization': `${accessToken}`,
+        'Content-Type': 'application/json'
+    }
+};
+
+
 
  function AuthRoute(role, navigate) {
     switch (role) {
@@ -25,7 +35,7 @@ const headers = {
 export const loginUser = async(user, dispatch, navigate) => {
     dispatch(loginStart())
     try {
-        const r = await axios.post(url,user, headers)
+        const r = await axios.post(urlLogin,user, loginHeaders)
         dispatch(loginSuccess(r.data))
         AuthRoute(r.data.metadata.user.role, navigate);
     } catch (error) {
@@ -48,14 +58,12 @@ export const loginUser = async(user, dispatch, navigate) => {
 //     }
 // }
 
-export const logOut = async(dispatch,user, accessToken, navigate) => {
+export const logOut = async(dispatch, accessToken, navigate) => {
     dispatch(logOutStart())
     try{
-        await axios.delete('http://localhost:3030/v1/api/user/logout', user, {
-            headers: {
-                'Authorization': `${accessToken}`,
-                'Content-Type': 'application/json'
-            }
+        
+        await axios.delete(urlLogout, {
+            headers: logoutHeaders(accessToken)
         });
         dispatch(logOutSuccess());
         navigate("/");
