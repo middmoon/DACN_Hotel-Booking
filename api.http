@@ -35,3 +35,18 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjIsInJvbGUiOiJVU0VS
    "_id": 2,
     "role": "USER"
 }
+
+### get user info
+GET  http://localhost:3030/v1/api/user/:_id
+Content-Type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzEwMzQyODc3LCJleHAiOjE3MTAzNDQ2Nzd9.eB-kpQAoMEEbs6ya-c5E4HnMc1_s5FUR_V-tqcXN6Oo
+
+
+### get all provinces
+GET  http://localhost:3030/v1/api/provinces
+
+### get all provinces
+GET  http://localhost:3030/v1/api/provinces/district/:province_code
+
+### get all provinces
+GET  http://localhost:3030/v1/api/provinces/ward/:district_code

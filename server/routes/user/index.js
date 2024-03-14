@@ -3,16 +3,13 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
 const UserController = require("../../controller/user.controller");
+const { verifyToken } = require("../../middleware/auth.middleware");
 
 const router = express.Router();
 
-router.post("/user/register", asyncHandler(UserController.d));
-router.post("/user/login", asyncHandler(AccessController.login));
-
-router.use(verifyToken);
 // use authen midleware
+router.use(verifyToken);
 
-router.post("/user/refesh", asyncHandler(AccessController.refresh));
-router.delete("/user/logout", asyncHandler(AccessController.logout));
+router.get("/user/:_id", asyncHandler(UserController.getUserInfo));
 
 module.exports = router;

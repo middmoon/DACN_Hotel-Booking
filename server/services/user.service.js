@@ -7,7 +7,11 @@ const User = db.User;
 
 class UserService {
   static async getUserInfoById(id_user) {
-    const foundUser = User.findOne({ where: { id_user: id_user }, raw: true });
+    const foundUser = await User.findOne({
+      where: { _id: id_user },
+      attributes: { exclude: ["password", "_id", "role"] },
+      raw: true,
+    });
 
     if (!foundUser) {
       throw new NotFoundError("Error: Can not find the user");
