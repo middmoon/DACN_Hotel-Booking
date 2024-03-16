@@ -13,7 +13,11 @@ const loginHeaders = {
   "Content-Type": "application/json",
 };
 
-function logoutHeaders(accessToken) {
+const urlGetUser = (_id) => {
+  return `http://localhost:3030/v1/api/user/${_id}`;
+};
+
+function HeadersTK(accessToken) {
   return {
     Authorization: `${accessToken}`,
     "Content-Type": "application/json",
@@ -40,7 +44,26 @@ export const loginUser = async (user, dispatch, navigate) => {
   dispatch(loginStart());
   try {
     const r = await axios.post(urlLogin, user, loginHeaders);
-    dispatch(loginSuccess(r.data));
+
+    const r2 = await axios.get(urlGetUser(r.data.metadata.user._id), {
+      headers: HeadersTK(r.data.metadata.accessToken),
+    });
+
+    const data = {
+      message: r.data.message,
+      statusCode: r.data.statusCode,
+      metadata: {
+        user: r.data.metadata.user,
+        userInfo: r2.data.metadata.user,
+        accessToken: r.data.metadata.accessToken,
+      },
+    };
+
+    // console.log(data);
+    // console.log(r.data);
+    // console.log(r2.data);
+
+    dispatch(loginSuccess(data));
     AuthRoute(r.data.metadata.user.role, navigate);
   } catch (error) {
     dispatch(loginFailed());
@@ -64,7 +87,7 @@ export const logOut = async (dispatch, accessToken, navigate) => {
   dispatch(logOutStart());
   try {
     await axios.delete(urlLogout, {
-      headers: logoutHeaders(accessToken),
+      headers: HeadersTK(accessToken),
     });
     dispatch(logOutSuccess());
     navigate("/");

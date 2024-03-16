@@ -23,8 +23,15 @@ const Navbar = () => {
       _id: state?.metadata.user._id,
       role: state?.metadata.user.role,
     };
-  logOut(dispatch,accessToken,navigate);
+    logOut(dispatch, accessToken, navigate);
   };
+
+  function getDisplayName(state) {
+    if (!state?.metadata.userInfo.user_name) {
+      return state?.metadata.userInfo.email.split("@")[0];
+    }
+    return state?.metadata.userInfo.user_name;
+  }
 
   return (
     <div className="navbar">
@@ -33,9 +40,7 @@ const Navbar = () => {
         {state ? (
           <>
             <div className="navItems">
-              <button className="navButton">
-                hi, {state.metadata.user.role}
-              </button>
+              <button className="navButton">hi, {getDisplayName(state)}</button>
               <button onClick={handleLogout} className="navButton">
                 log out
               </button>

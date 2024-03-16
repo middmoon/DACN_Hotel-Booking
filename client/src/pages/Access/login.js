@@ -4,18 +4,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../redux/apiRequest";
 import { useDispatch } from "react-redux";
 const Login = () => {
-  const [option, setOpTion] = useState("")
-  const [password, setPassword] = useState("")
+  const [option, setOpTion] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const user = {
       option: option,
       password: password,
     };
-    loginUser(user,dispatch,navigate);
+    await loginUser(user, dispatch, navigate);
   };
 
   return (
@@ -27,20 +27,23 @@ const Login = () => {
               <div className="card-body p-md-5">
                 <div className="row justify-content-center">
                   <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                    <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Đăng Nhập</p>
+                    <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                      Đăng Nhập
+                    </p>
 
                     <form onSubmit={handleSubmit} className="mx-1 mx-md-4">
                       {/* Ten Dang Nhap */}
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-id-badge fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
-                          <input 
-                          name="option" 
-                          type="text" 
-                          id="form3Example3c" 
-                          className="form-control" 
-                          placeholder="Tên Đăng Nhập Hoac Email" 
-                          onChange={(e) => setOpTion(e.target.value)}/>
+                          <input
+                            name="option"
+                            type="text"
+                            id="form3Example3c"
+                            className="form-control"
+                            placeholder="Tên Đăng Nhập Hoac Email"
+                            onChange={(e) => setOpTion(e.target.value)}
+                          />
                         </div>
                       </div>
 
@@ -48,18 +51,22 @@ const Login = () => {
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
-                          <input 
-                          name="password" 
-                          type="password" 
-                          id="form3Example4c" 
-                          className="form-control" 
-                          placeholder="Mật Khẩu" 
-                          onChange={(e) => setPassword(e.target.value)}/>
+                          <input
+                            name="password"
+                            type="password"
+                            id="form3Example4c"
+                            className="form-control"
+                            placeholder="Mật Khẩu"
+                            onChange={(e) => setPassword(e.target.value)}
+                          />
                         </div>
                       </div>
 
                       <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                        <button type="submit" className="btn btn-primary btn-lg">
+                        <button
+                          type="submit"
+                          className="btn btn-primary btn-lg"
+                        >
                           Đăng Nhập
                         </button>
                       </div>
