@@ -1,5 +1,6 @@
 import Navbar from "../../components/navbar/navBar";
 import Header from "../../components/header/Header";
+
 import "./home.css";
 import Featured from "../../components/featured/Featured";
 import PropertyList from "../../components/propertyList/propertyList";
@@ -13,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "../redux/authSlice";
+import Offer from "../../components/offer/offer";
 const Home = () => {
   const user = useSelector((useState) => useState.auth.login.currentUser);
   const dispatch = useDispatch();
@@ -55,6 +57,13 @@ const Home = () => {
       <Navbar />
       <Header />
       <div className="homeContainer">
+      <div>
+          <h1 className="homeTitle">Offers</h1>
+          <p className="homeDecrip">
+          Promotions, deals and special offers for you
+          </p>
+        </div>
+      <Offer />
         <div>
           <h1 className="homeTitle">Trending destinations</h1>
           <p className="homeDecrip">
