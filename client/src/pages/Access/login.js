@@ -98,7 +98,7 @@ const Login = () => {
     // </div>
 
     <div>
-    <div className="background"></div>
+    <div className="background1"></div>
     <div className="bg">
         <div className="content">
           <h2 className="logo"><FontAwesomeIcon icon={faCircleHalfStroke} /> MidMoonBooking</h2>
