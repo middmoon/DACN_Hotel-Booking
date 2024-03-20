@@ -5,9 +5,7 @@ const { useState } = require("react");
 
 const Register = () => {
   const navigate = useNavigate();
-  const handleRegister = () => {
-    navigate("/lg");
-  };
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -31,6 +29,7 @@ const Register = () => {
 
       if (response.ok) {
         console.log("Data sent successfully");
+        navigate("/lg");
       } else {
         console.error("Failed to send data to the server");
       }
