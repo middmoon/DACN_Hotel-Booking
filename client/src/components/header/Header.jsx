@@ -10,7 +10,10 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import { format } from "date-fns"
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux"
-
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const Header = ({ type }) => {
   
@@ -116,6 +119,7 @@ const Header = ({ type }) => {
                     </div>
         
             </div>
+        
         </div>
          
             </>

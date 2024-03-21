@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "../redux/authSlice";
 import Offer from "../../components/offer/offer";
+import Navbars from "../../components/navbar/navBar";
 const Home = () => {
   const user = useSelector((useState) => useState.auth.login.currentUser);
   const dispatch = useDispatch();
@@ -54,7 +55,7 @@ const Home = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbars />
       <Header />
       <div className="homeContainer">
       <div>

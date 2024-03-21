@@ -3,8 +3,13 @@ import "./navBar.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../pages/redux/apiRequest";
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
-const Navbar = () => {
+
+const Navbars = () => {
   const state = useSelector((useState) => useState.auth.login.currentUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -12,6 +17,10 @@ const Navbar = () => {
 
   const handleRegister = () => {
     navigate("/register");
+  };
+
+  const handleRegisterHT = () => {
+    navigate("/registerHotels");
   };
 
   const handleLogin = () => {
@@ -40,21 +49,40 @@ const Navbar = () => {
         {state ? (
           <>
             <div className="navItems">
-              <button className="navButton">hi, {getDisplayName(state)}</button>
+              {/* <button className="navButton">hi, {getDisplayName(state)}</button>
               <button onClick={handleLogout} className="navButton">
                 log out
-              </button>
+              </button> */}
+              <NavDropdown className="navButton" title={`Hi, ${getDisplayName(state)}`} id="basic-nav-dropdown">
+              <div className="navbtItems">
+              <NavDropdown.Item >Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                Another action
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={handleLogout} >
+              log out
+              </NavDropdown.Item>
+              </div>
+            </NavDropdown>
             </div>
+
+            
           </>
         ) : (
           <>
             <div className="navItems">
-              <button onClick={handleRegister} className="navButton">
+            <button onClick={handleRegisterHT} className="navButton1">
+            List your property
+              </button>
+              <button onClick={handleRegister} className="navButton2">
                 Register
               </button>
-              <button onClick={handleLogin} className="navButton">
+              <button onClick={handleLogin} className="navButton2">
                 login
               </button>
+              
             </div>
           </>
         )}
@@ -63,62 +91,6 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbars;
 
-// import { useState } from "react";
-// import "./navBar.css";
-// import { useNavigate } from 'react-router-dom';
-// import { useSelector } from "react-redux";
-// import Cookies from 'universal-cookie';
-// import jwt from 'jwt-decode';
 
-// const Navbar = () => {
-//     const cookies = new Cookies();
-//     const navigate = useNavigate();
-//     const userToken = useSelector((state) => state.auth.login.token);
-
-//     // Decode the token if it exists
-//     let decodedToken = null;
-//     if (userToken) {
-//         decodedToken = jwt(userToken);
-//     }
-
-//     const handleRegister = () => {
-//         navigate("/register");
-//     };
-
-//     const handleLogin = () => {
-//         navigate("/lg");
-//     };
-
-//     const handleLogout = () => {
-//         // Clear the token from cookie
-//         cookies.remove('token');
-//         navigate("/");
-//     };
-
-//     return (
-//         <div className="navbar">
-//             <div className="navContainer">
-//                 <span className="logo">MidmoonBooking</span>
-//                 {userToken ? (
-//                     <>
-//                         <div className="navItems">
-//                             <button className="navButton">hi, {decodedToken.user_name}</button>
-//                             <button onClick={handleLogout} className="navButton">log out</button>
-//                         </div>
-//                     </>
-//                 ) : (
-//                         <>
-//                             <div className="navItems">
-//                                 <button onClick={handleRegister} className="navButton">Register</button>
-//                                 <button onClick={handleLogin} className="navButton">login</button>
-//                             </div>
-//                         </>
-//                     )}
-//             </div>
-//         </div>
-//     )
-// };
-
-// export default Navbar;
