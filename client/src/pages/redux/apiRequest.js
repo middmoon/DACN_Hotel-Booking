@@ -67,6 +67,7 @@ export const loginUser = async (user, dispatch, navigate) => {
     AuthRoute(r.data.metadata.user.role, navigate);
   } catch (error) {
     dispatch(loginFailed());
+    alert("Tên tài khoản hoặc mật khẩu không đúng")
   }
 };
 

@@ -3,7 +3,7 @@ POST http://localhost:3030/v1/api/user/register
 Content-Type: application/json
 
 {
-    "email": "testuser@gmail.com",
+    "email": "testuuser@gmail.com",
     "password": "123"
 }
 
@@ -29,7 +29,7 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjIsInJvbGUiOiJVU0VS
 ### user logout
 DELETE  http://localhost:3030/v1/api/user/logout
 Content-Type: application/json
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzEwMzQyODc3LCJleHAiOjE3MTAzNDQ2Nzd9.eB-kpQAoMEEbs6ya-c5E4HnMc1_s5FUR_V-tqcXN6Oo
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzExMTIyMDM0LCJleHAiOjE3MTExMjM4MzR9.9jgtdFjIdugh5U_dcoFu_hfNEmvp3m9-yOcghtlwJrQ
 
 {
    "_id": 2,
@@ -39,14 +39,14 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjIsInJvbGUiOiJVU0VS
 ### get user info
 GET  http://localhost:3030/v1/api/user/:_id
 Content-Type: application/json
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzEwNTA0NDQ4LCJleHAiOjE3MTA1MDYyNDh9.KMdB7BKcgRFip0VkdrDGIzGRfWXghFdln01WvEoYgwQ
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzExMTIyMDM0LCJleHAiOjE3MTExMjM4MzR9.9jgtdFjIdugh5U_dcoFu_hfNEmvp3m9-yOcghtlwJrQ
 
 
 ### get all provinces
-GET  http://localhost:3030/v1/api/provinces
+GET  http://localhost:3030/v1/api/province
 
 ### get all provinces
-GET  http://localhost:3030/v1/api/provinces/district/:province_code
+GET  http://localhost:3030/v1/api/province/district/:province_code
 
 ### get all provinces
-GET  http://localhost:3030/v1/api/provinces/ward/:district_code
+GET  http://localhost:3030/v1/api/province/ward/:district_code

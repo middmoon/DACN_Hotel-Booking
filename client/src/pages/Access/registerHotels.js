@@ -1,20 +1,22 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./registerHotels.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleHalfStroke } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleHalfStroke } from "@fortawesome/free-solid-svg-icons";
 const { useState } = require("react");
 
 const Registerhotels = () => {
   const navigate = useNavigate();
+
+ 
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const handleLG = () => {
-    navigate("/lg")
-}
+    navigate("/lg");
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -36,7 +38,7 @@ const Registerhotels = () => {
         navigate("/lg");
       } else {
         console.error("Failed to send data to the server");
-        alert("tài khoản đã tồn tại")
+        alert("tài khoản đã tồn tại");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -53,55 +55,89 @@ const Registerhotels = () => {
 
   return (
     <div>
-    <div className="background2"></div>
-    <div className="bg2">
+      <div className="background2"></div>
+      <div className="bg2">
         <div className="content2">
-          <h2 className="logo"><FontAwesomeIcon icon={faCircleHalfStroke} /> MidMoonBooking</h2>
+          <h2 className="logo">
+            <FontAwesomeIcon icon={faCircleHalfStroke} /> MidMoonBooking
+          </h2>
           <div className="text-sci">
-            <h2>Welcome!! <br/><span>To our new Website</span></h2>
-            <p>For more than 20 years MidMoonBooking.com has been making it easier for travellers everywhere to experience the world. We provide an unrivalled experience for your customers and a digital experience optimised to drive revenue.</p>
+            <h2>
+              Welcome!! <br />
+              <span>To our new Website</span>
+            </h2>
+            <p>
+              For more than 20 years MidMoonBooking.com has been making it
+              easier for travellers everywhere to experience the world. We
+              provide an unrivalled experience for your customers and a digital
+              experience optimised to drive revenue.
+            </p>
           </div>
         </div>
         <div className="logreg-box2">
           <div className="form-box login">
-          <form onSubmit={handleSubmit}>
-          <h2>Register</h2>
-          <div className="imput-box">
-           
-          <input
-                            onChange={handleChange}
-                            name="email"
-                            type="email"
-                            id="form3Example3c"
-                            className="form-control"
-                            placeholder="Email"
-                          />
+            <form onSubmit={handleSubmit}>
+              <h2>Register</h2>
+              <div className="imput-box">
+                <input
+                  onChange={handleChange}
+                  name="email"
+                  type="email"
+                  id="form3Example3c"
+                  className="form-control"
+                  placeholder="Email"
+                />
 
+                <input
+                  onChange={handleChange}
+                  name="password"
+                  type="password"
+                  id="form3Example4c"
+                  className="form-control"
+                  placeholder="Mật Khẩu"
+                />
+  <select className="form-control">
+                    <option>Chọn tỉnh</option>
+               </select>
 
-          <input
-                            onChange={handleChange}
-                            name="password"
-                            type="password"
-                            id="form3Example4c"
-                            className="form-control"
-                            placeholder="Mật Khẩu"
-                          />
-            <button
-                          type="submit"
-                          className="btn btn-primary btn-lg"
-                        >
-                          Tạo Tài Khoản
-                        </button>
-                </div>        
-          <div className="login-register">
-            <p>Already have an account? <span onClick={handleLG} >Login</span></p>
-          </div>
-          </form>
+               <select className="form-control">
+                    <option>Chọn thành phố</option>
+               </select>
+                <input
+                  onChange={handleChange}
+                  name="password"
+                  type="password"
+                  id="form3Example4c"
+                  className="form-control"
+                  placeholder="Số Nhà"
+                />
+
+                <input
+                  onChange={handleChange}
+                  name="password"
+                  type="password"
+                  id="form3Example4c"
+                  className="form-control"
+                  placeholder="Tên Đường"
+                />
+
+             
+
+               
+                <button type="submit" className="btn btn-primary btn-lg">
+                  Tạo Tài Khoản
+                </button>
+              </div>
+              <div className="login-register">
+                <p>
+                  Already have an account? <span onClick={handleLG}>Login</span>
+                </p>
+              </div>
+            </form>
           </div>
         </div>
+      </div>
     </div>
-    </div>
-
   );
 };
 
