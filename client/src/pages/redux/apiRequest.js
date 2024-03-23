@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosDefaults from "axios";
 import {
   logOutFailed,
   logOutStart,
@@ -67,7 +68,7 @@ export const loginUser = async (user, dispatch, navigate) => {
     AuthRoute(r.data.metadata.user.role, navigate);
   } catch (error) {
     dispatch(loginFailed());
-    alert("Tên tài khoản hoặc mật khẩu không đúng")
+    alert("Tên tài khoản hoặc mật khẩu không đúng");
   }
 };
 
@@ -96,3 +97,16 @@ export const logOut = async (dispatch, accessToken, navigate) => {
     dispatch(logOutFailed());
   }
 };
+
+export const apiGetPublicProvince = () =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await axiosDefaults({
+        method: "get",
+        url: "http://localhost:3030/v1/api/province",
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });

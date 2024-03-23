@@ -3,26 +3,28 @@ import { useNavigate } from "react-router-dom";
 import "./registerHotels.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleHalfStroke } from "@fortawesome/free-solid-svg-icons";
+import { apiGetPublicProvince } from "../redux/apiRequest";
 const { useState } = require("react");
 
 const Registerhotels = () => {
   const navigate = useNavigate();
-  const [stre, setStre] = useState([{'name':'','code':''}])
+  const [stre, setStre] = useState();
+  const [province, setProvince] = useState();
+  const [district, setDistrict] = useState();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
   useEffect(() => {
-   const fetchData = async  () =>{
-   const response = await fetch('http://localhost:3030/v1/api/province');
-   const newData = await response.json();
-   setStre(newData.metadata.province);
-   console.log(newData.metadata.province)
-   };
-   fetchData();
-  },[])
+    const fetchPublicProvince = async () => {
+      const response = await apiGetPublicProvince();
+      setStre(response.data.metadata.province);
+    };
+    fetchPublicProvince();
+  }, []);
 
+  console.log(province);
   const handleLG = () => {
     navigate("/lg");
   };
@@ -105,13 +107,19 @@ const Registerhotels = () => {
                   className="form-control"
                   placeholder="Mật Khẩu"
                 />
-                <select className="form-control">
-                  <option value={formData}>Chọn tỉnh</option>
-                  {
-                    stre.map(sr => (
-                      <option value={formData} key={sr.code}>{sr.name}</option>
-                    ))
-                  }
+
+                <select
+                  value={province}
+                  onChange={(e) => setProvince(e.target.value)}
+                  className="form-control"
+                >
+                  <option value="">Chọn Thành Phố / Tỉnh</option>
+                  {stre &&
+                    stre.map((st) => (
+                      <option value={st.code} key={st.code}>
+                        {st.name}
+                      </option>
+                    ))}
                 </select>
 
                 <select className="form-control">
