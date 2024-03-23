@@ -5,12 +5,13 @@ const cors = require("cors");
 const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
+const hbs = require("express-handlebars");
+
 const path = require("node:path/win32");
 const app = express();
 const db = require("./models");
 
 // middleware
-app.use(cors());
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(
@@ -18,10 +19,25 @@ app.use(
     extended: true,
   })
 );
+// middleware - setup cors
+const corsOptions = {
+  origin: "http://localhost:3000",
+  methods: "GET,POST,DELETE,PUT,PATCH",
+  allowedHeaders: "Content-Type,Authorization",
+  credentials: true,
+};
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 // static field
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/modules", express.static(path.join(__dirname, "node_modules")));
+
+// set view engine
+app.engine("handlebars", hbs.engine());
+app.set("view engine", "handlebars");
+app.set("views", path.join(__dirname, "views"));
 
 // routes
 app.use("", require("./routes"));

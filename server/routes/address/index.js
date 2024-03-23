@@ -8,11 +8,11 @@ const router = express.Router();
 
 router.get("/province", asyncHandler(AddressController.getProvinces));
 router.get(
-  "/provinces/district/:province_code",
+  "/province/district/:province_code",
   asyncHandler(AddressController.getDistrictsByProvinceCode)
 );
 router.get(
-  "/provinces/ward/:district_code",
+  "/province/ward/:district_code",
   asyncHandler(AddressController.getWardsByDistrictCode)
 );
 

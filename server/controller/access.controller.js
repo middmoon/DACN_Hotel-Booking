@@ -21,7 +21,7 @@ class AccessController {
       httpOnly: true,
       secure: false,
       path: "/",
-      sameSite: "strict",
+      sameSite: "Lax",
     });
 
     new OK({
@@ -34,7 +34,10 @@ class AccessController {
   };
 
   refresh = async (req, res, next) => {
-    const refresh = await AccessService.refresh({ refreshToken: req.cookies.refreshToken, userInfo: req.user });
+    const refresh = await AccessService.refresh({
+      refreshToken: req.cookies.refreshToken,
+      userInfo: req.user,
+    });
 
     res.cookie("refreshToken", refresh.refreshToken, {
       httpOnly: true,

@@ -12,7 +12,7 @@ const HEADER = {
 
 const verifyToken = asyncHandler(async (req, res, next) => {
   const token = req.headers[HEADER.AUTHORIZATION];
-  if (!token) throw new AuthFailureError("Invalid request");
+  if (!token) throw new AuthFailureError("Not found token");
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     if (err) throw new AuthFailureError("Invalid token");
