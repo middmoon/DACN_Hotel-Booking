@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./registerHotels.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,13 +7,22 @@ const { useState } = require("react");
 
 const Registerhotels = () => {
   const navigate = useNavigate();
-
- 
-
+  const [stre, setStre] = useState([{'name':'','code':''}])
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+   const fetchData = async  () =>{
+   const response = await fetch('http://localhost:3030/v1/api/province');
+   const newData = await response.json();
+   setStre(newData.metadata.province);
+   console.log(newData.metadata.province)
+   };
+   fetchData();
+  },[])
+
   const handleLG = () => {
     navigate("/lg");
   };
@@ -96,13 +105,18 @@ const Registerhotels = () => {
                   className="form-control"
                   placeholder="Mật Khẩu"
                 />
-  <select className="form-control">
-                    <option>Chọn tỉnh</option>
-               </select>
+                <select className="form-control">
+                  <option value={formData}>Chọn tỉnh</option>
+                  {
+                    stre.map(sr => (
+                      <option value={formData} key={sr.code}>{sr.name}</option>
+                    ))
+                  }
+                </select>
 
-               <select className="form-control">
-                    <option>Chọn thành phố</option>
-               </select>
+                <select className="form-control">
+                  <option>Chọn thành phố</option>
+                </select>
                 <input
                   onChange={handleChange}
                   name="password"
@@ -121,9 +135,6 @@ const Registerhotels = () => {
                   placeholder="Tên Đường"
                 />
 
-             
-
-               
                 <button type="submit" className="btn btn-primary btn-lg">
                   Tạo Tài Khoản
                 </button>
