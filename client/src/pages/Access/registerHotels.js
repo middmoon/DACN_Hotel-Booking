@@ -3,19 +3,32 @@ import { useNavigate } from "react-router-dom";
 import "./registerHotels.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleHalfStroke } from "@fortawesome/free-solid-svg-icons";
-import { apiGetPublicProvince } from "../redux/apiRequest";
+import { apiGetPublicDistrict, apiGetPublicProvince, apiGetPublicWard } from "../redux/apiRequest";
 const { useState } = require("react");
 
 const Registerhotels = () => {
   const navigate = useNavigate();
-  const [stre, setStre] = useState();
+  
+  
+  // href
+  const handleLG = () => {
+    navigate("/lg");
+  };
+
+  // State
+
+  const [stre, setStre] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
   const [province, setProvince] = useState();
   const [district, setDistrict] = useState();
+  const [ward, setWard] = useState();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
+  
+  // ProvineAPI
   useEffect(() => {
     const fetchPublicProvince = async () => {
       const response = await apiGetPublicProvince();
@@ -24,10 +37,31 @@ const Registerhotels = () => {
     fetchPublicProvince();
   }, []);
 
-  console.log(province);
-  const handleLG = () => {
-    navigate("/lg");
-  };
+  
+
+  // DistrictAPI
+  useEffect(() => {
+  const fetchPublicDistrict = async() => {
+    const response = await apiGetPublicDistrict(province);
+    setDistricts(response.data.metadata.district)
+  }
+  province && fetchPublicDistrict(province)
+  },[province])
+
+  // DistrictWardAPI
+    useEffect(() => {
+      const fetchPublicDistrictWard = async() => {
+        const response = await apiGetPublicWard(district);
+        setWards(response.data.metadata.ward)
+      }
+      province && fetchPublicDistrictWard(district)
+      },[district])
+
+  // testLog
+  console.log(province,district,ward);
+
+
+  // submit
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -56,6 +90,7 @@ const Registerhotels = () => {
     }
   };
 
+  // change
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
@@ -122,9 +157,37 @@ const Registerhotels = () => {
                     ))}
                 </select>
 
-                <select className="form-control">
-                  <option>Chọn thành phố</option>
+                <select
+                  value={district}
+                  onChange={(e) => setDistrict(e.target.value)}
+                  className="form-control"
+                >
+                  <option value="">Chọn Thành Quận / Huyện</option>
+                  {districts &&
+                    districts.map((dst) => (
+                      <option value={dst.code} key={dst.code}>
+                        {dst.name}
+                      </option>
+                    ))}
                 </select>
+                
+
+                <select
+                  value={ward}
+                  onChange={(e) => setWard(e.target.value)}
+                  className="form-control"
+                >
+                  <option value="">Chọn Đường / Phường</option>
+                  {wards &&
+                    wards.map((wt) => (
+                      <option value={wt.code} key={wt.code}>
+                        {wt.name}
+                      </option>
+                    ))}
+                </select>
+
+
+
                 <input
                   onChange={handleChange}
                   name="password"
@@ -134,14 +197,7 @@ const Registerhotels = () => {
                   placeholder="Số Nhà"
                 />
 
-                <input
-                  onChange={handleChange}
-                  name="password"
-                  type="password"
-                  id="form3Example4c"
-                  className="form-control"
-                  placeholder="Tên Đường"
-                />
+               
 
                 <button type="submit" className="btn btn-primary btn-lg">
                   Tạo Tài Khoản

@@ -110,3 +110,31 @@ export const apiGetPublicProvince = () =>
       reject(error);
     }
   });
+
+
+  export const apiGetPublicDistrict = (province_code) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await axiosDefaults({
+        method: "get",
+        url: `http://localhost:3030/v1/api/province/district/${province_code}`,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+
+  export const apiGetPublicWard = (district_code) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await axiosDefaults({
+        method: "get",
+        url: `http://localhost:3030/v1/api/province/ward/${district_code}`,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
