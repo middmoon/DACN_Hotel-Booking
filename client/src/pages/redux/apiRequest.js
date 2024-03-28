@@ -111,8 +111,7 @@ export const apiGetPublicProvince = () =>
     }
   });
 
-
-  export const apiGetPublicDistrict = (province_code) =>
+export const apiGetPublicDistrict = (province_code) =>
   new Promise(async (resolve, reject) => {
     try {
       const response = await axiosDefaults({
@@ -125,15 +124,32 @@ export const apiGetPublicProvince = () =>
     }
   });
 
+// export const apiGetPublicWard = (district_code) =>
+// new Promise(async (resolve, reject) => {
+//   try {
+//     const response = await axiosDefaults({
+//       method: "get",
+//       url: `http://localhost:3030/v1/api/province/ward/${district_code}`,
+//     });
+//     resolve(response);
+//   } catch (error) {
+//     reject(error);
+//   }
+// });
 
-  export const apiGetPublicWard = (district_code) =>
+export const apiGetPublicWard = (district_code) =>
   new Promise(async (resolve, reject) => {
     try {
-      const response = await axiosDefaults({
-        method: "get",
-        url: `http://localhost:3030/v1/api/province/ward/${district_code}`,
-      });
-      resolve(response);
+      if (!district_code) {
+        // If district_code is null or undefined, resolve immediately with empty data
+        resolve({ data: { metadata: { ward: [] } } });
+      } else {
+        const response = await axiosDefaults({
+          method: "get",
+          url: `http://localhost:3030/v1/api/province/ward/${district_code}`,
+        });
+        resolve(response);
+      }
     } catch (error) {
       reject(error);
     }

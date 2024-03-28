@@ -46,7 +46,7 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjIsInJvbGUiOiJVU0VS
 GET  http://localhost:3030/v1/api/province
 
 ### get all provinces
-GET  http://localhost:3030/v1/api/province/district/:province_code
+GET  http://localhost:3030/v1/api/province/districts/:province_code
 
 ### get all provinces
 GET  http://localhost:3030/v1/api/province/ward/:district_code

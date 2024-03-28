@@ -3,13 +3,16 @@ import { useNavigate } from "react-router-dom";
 import "./registerHotels.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleHalfStroke } from "@fortawesome/free-solid-svg-icons";
-import { apiGetPublicDistrict, apiGetPublicProvince, apiGetPublicWard } from "../redux/apiRequest";
+import {
+  apiGetPublicDistrict,
+  apiGetPublicProvince,
+  apiGetPublicWard,
+} from "../redux/apiRequest";
 const { useState } = require("react");
 
 const Registerhotels = () => {
   const navigate = useNavigate();
-  
-  
+
   // href
   const handleLG = () => {
     navigate("/lg");
@@ -27,39 +30,59 @@ const Registerhotels = () => {
     email: "",
     password: "",
   });
-  
-  // ProvineAPI
-  useEffect(() => {
-    const fetchPublicProvince = async () => {
-      const response = await apiGetPublicProvince();
-      setStre(response.data.metadata.province);
-    };
-    fetchPublicProvince();
-  }, []);
 
-  
+  // ProvineAPI
+  // useEffect(() => {
+  //   const fetchPublicProvince = async () => {
+  //     const response = await apiGetPublicProvince();
+  //     setStre(response.data.metadata.province);
+  //   };
+  //   fetchPublicProvince();
+  // }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const provinceResponse = await apiGetPublicProvince();
+      setStre(provinceResponse.data.metadata.province);
+
+      if (province) {
+        const districtResponse = await apiGetPublicDistrict(province);
+        setDistricts(districtResponse.data.metadata.district);
+      }
+    };
+
+    fetchData();
+  }, [province]);
 
   // DistrictAPI
   useEffect(() => {
-  const fetchPublicDistrict = async() => {
-    const response = await apiGetPublicDistrict(province);
-    setDistricts(response.data.metadata.district)
-  }
-  province && fetchPublicDistrict(province)
-  },[province])
+    const fetchPublicDistrict = async () => {
+      try {
+        if (province) {
+          const response = await apiGetPublicDistrict(province);
+          setDistricts(response.data.metadata.district);
+        } else {
+          setDistricts([]); // Clear districts if province is not selected
+        }
+      } catch (error) {
+        console.error("Error fetching districts:", error);
+      }
+    };
+
+    fetchPublicDistrict();
+  }, [province]);
 
   // DistrictWardAPI
-    useEffect(() => {
-      const fetchPublicDistrictWard = async() => {
-        const response = await apiGetPublicWard(district);
-        setWards(response.data.metadata.ward)
-      }
-      province && fetchPublicDistrictWard(district)
-      },[district])
+  useEffect(() => {
+    const fetchPublicDistrictWard = async () => {
+      const response = await apiGetPublicWard(district);
+      setWards(response.data.metadata.ward);
+    };
+    province && fetchPublicDistrictWard(district);
+  }, [district]);
 
   // testLog
-  console.log(province,district,ward);
-
+  console.log(province, district, ward);
 
   // submit
   const handleSubmit = async (event) => {
@@ -152,7 +175,7 @@ const Registerhotels = () => {
                   {stre &&
                     stre.map((st) => (
                       <option value={st.code} key={st.code}>
-                        {st.name}
+                        {st.full_name}
                       </option>
                     ))}
                 </select>
@@ -166,27 +189,24 @@ const Registerhotels = () => {
                   {districts &&
                     districts.map((dst) => (
                       <option value={dst.code} key={dst.code}>
-                        {dst.name}
+                        {dst.full_name}
                       </option>
                     ))}
                 </select>
-                
 
                 <select
                   value={ward}
                   onChange={(e) => setWard(e.target.value)}
                   className="form-control"
                 >
-                  <option value="">Chọn Đường / Phường</option>
+                  <option value="">Chọn Xã / Phường</option>
                   {wards &&
                     wards.map((wt) => (
                       <option value={wt.code} key={wt.code}>
-                        {wt.name}
+                        {wt.full_name}
                       </option>
                     ))}
                 </select>
-
-
 
                 <input
                   onChange={handleChange}
@@ -196,8 +216,6 @@ const Registerhotels = () => {
                   className="form-control"
                   placeholder="Số Nhà"
                 />
-
-               
 
                 <button type="submit" className="btn btn-primary btn-lg">
                   Tạo Tài Khoản
