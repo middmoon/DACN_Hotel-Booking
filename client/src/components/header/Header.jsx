@@ -22,7 +22,9 @@ const Header = ({ type }) => {
     const handleLogin = () => {
         navigate("/lg")
     }
-
+    const handleSearch = () => {
+        navigate("/hotels", {state:{destination,date,options}})
+    }
     const [openDate, setOpenDate] = useState(false)
     const [date, setDate] = useState([
         {
@@ -32,6 +34,7 @@ const Header = ({ type }) => {
         }
     ]);
 
+    const[destination, setDestination] = useState("");
     const [openOptions, setOpenOptions] = useState(false)
     const [options, setOptions] = useState({
         adult: 1,
@@ -53,10 +56,10 @@ const Header = ({ type }) => {
             <>
          
           <div className="header2" >
-            <div className="headerContainer">
+            <div className={type === "list" ? "headerContainer listMode" : "headerContainer"}>
               
-          
-                   <h1 className="headerTitle">Welcome</h1>
+          { type !== "list" && 
+            <>     <h1 className="headerTitle">Welcome</h1>
                     <p className="headerDesc">Search low prices on hotels, homes and much more...</p>
                     <div className="pd"></div>
            
@@ -68,7 +71,8 @@ const Header = ({ type }) => {
                             <FontAwesomeIcon icon={faBed} className="headerIcon" />
                             <input type="text"
                                 placeholder="Where are you going?"
-                                className="headerSearchInput" />
+                                className="headerSearchInput" 
+                                onChange={e=>setDestination(e.target.value)}/>
                         </div>
 
                         <div className="headerSearchItem">
@@ -80,6 +84,7 @@ const Header = ({ type }) => {
                                 moveRangeOnFirstSelection={false}
                                 ranges={date}
                                 className="date"
+                                minDate={new Date()}
                             />}
                         </div>
 
@@ -114,9 +119,10 @@ const Header = ({ type }) => {
                         </div>
 
                         <div className="headerSearchItem">
-                            <button className="headerBtn">Search</button>
+                            <button className="headerBtn" onClick={handleSearch}>Search</button>
                         </div>
-                    </div>
+                    </div></>}
+              
         
             </div>
         
@@ -126,10 +132,12 @@ const Header = ({ type }) => {
         ) : (
             <>
               <div className="header" >
-            <div className="headerContainer">
+            <div className={type === "list" ? "headerContainer listMode" : "headerContainer"}>
               
-          
-                   <h1 className="headerTitle">Find your next stay</h1>
+          {
+            type !== "list" &&
+            <>
+            <h1 className="headerTitle">Find your next stay</h1>
                     <p className="headerDesc">Search low prices on hotels, homes and much more...</p>
                     <button onClick={handleLogin} className="headerBtn">Sign in / Register</button>
            
@@ -153,6 +161,7 @@ const Header = ({ type }) => {
                                 moveRangeOnFirstSelection={false}
                                 ranges={date}
                                 className="date"
+                                minDate={new Date()}
                             />}
                         </div>
 
@@ -187,9 +196,11 @@ const Header = ({ type }) => {
                         </div>
 
                         <div className="headerSearchItem">
-                            <button className="headerBtn">Search</button>
+                            <button className="headerBtn"  onClick={handleSearch} >Search</button>
                         </div>
                     </div>
+          </>}
+               
         
             </div>
         </div>

@@ -31,14 +31,6 @@ const Registerhotels = () => {
     password: "",
   });
 
-  // ProvineAPI
-  // useEffect(() => {
-  //   const fetchPublicProvince = async () => {
-  //     const response = await apiGetPublicProvince();
-  //     setStre(response.data.metadata.province);
-  //   };
-  //   fetchPublicProvince();
-  // }, []);
 
   useEffect(() => {
     const fetchData = async () => {
