@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+</head>
+
+<body>
+  <table class="table">
+    <thead>
+      <tr>
+        {{#each metadata.cols}}
+        <th>{{this}}</th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Content</td>
+        <td>Title</td>
+        <td>BlogId</td>
+        <td>
+          <a href="#">Edit</a> |
+          <a href="#">Details</a> |
+          <a href="#">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>
