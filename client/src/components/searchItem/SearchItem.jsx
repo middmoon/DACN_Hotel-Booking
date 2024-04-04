@@ -1,6 +1,11 @@
 import "./searchItem.css"
-
+import { useNavigate } from "react-router-dom";
 const SearchItem = () =>{
+    const navigate = useNavigate();
+    const handleSearch = () => {
+        navigate("/hotels/:id")
+    }
+
     return(
         <div className="searchItem">
             <img 
@@ -9,7 +14,7 @@ const SearchItem = () =>{
             className="siImg" 
             />
             <div className="siDesc">
-            <h1 className="siTitle">LENS HOTEL</h1>
+            <h1 className="siTitle" onClick={handleSearch}>LENS HOTEL</h1>
             <span className="siDistrict">DaLat</span>
             <span className="siDistance">0,6km from center</span>
             <span className="siSubtitle">Tọa lạc ở Đà Lạt, cách Sân golf Dalat Palace Golf Club 1.7 km, Len's Hotel cung cấp chỗ nghỉ có phòng chờ chung, chỗ đậu xe riêng miễn phí, sân hiên và nhà hàng.</span>
@@ -21,7 +26,7 @@ const SearchItem = () =>{
                 </div>
                 <div className="siDetailTexts">
                     
-                    <button className="siCheckButton">See availabitity</button>
+                    <button className="siCheckButton" onClick={handleSearch}>See availabitity</button>
                 </div>
             </div>
         </div>

@@ -3,10 +3,16 @@ import Header from "../../components/header/Header";
 import Navbar from "../../components/navbar/navBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faRightLong } from "@fortawesome/free-solid-svg-icons";
+import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import MailList from "../../components/mailList/Mail.List";
 import Footerr from "../../components/footer/Footer";
+import { useState } from "react";
 
 const Hotels = () => {
+  const [slideNumber, setSlideNumber] = useState(0);
+  const [open, setOpen] = useState(false);
   const photos = [
     {
       src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/499873746.jpg?k=1371aa53da917d471a0dc30c3a50354afed0d074a8198670a40d0b9d033f9254&o=&hp=1",
@@ -26,13 +32,41 @@ const Hotels = () => {
     {
       src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/357642217.jpg?k=194ad42880d94b85857a2f54a524cc9adde1bb0fca768154d3dead1db83335cf&o=&hp=1",
     },
+    
   ];
 
+  const handleOpen = (i) => {
+    setSlideNumber(i);
+    setOpen(true);
+  }
+
+  const handleMove = (direction) => {
+    let newSlideNumber;
+    if(direction === "l"){
+      newSlideNumber = slideNumber === 0 ? 5 : slideNumber - 1;
+    } else {
+      newSlideNumber = slideNumber === 5 ? 0 : slideNumber + 1;
+    }
+
+    setSlideNumber(newSlideNumber);
+  }
   return (
     <div className="a">
       <Navbar />
       <Header type="list" />
       <div className="hotelContainer">
+        {
+          open &&
+            <div className="slider" onClick={() => setOpen(false)}>
+          <FontAwesomeIcon icon={faXmark} className="close" onClick={() => setOpen(false)}/>
+          <FontAwesomeIcon icon={faLeftLong} className="arrow" onClick={(e) => { e.stopPropagation(); handleMove("l"); }} />
+          <div className="sliderWrapper">
+            <img src={photos[slideNumber].src} alt="" className="sliderImg" />
+          </div>
+          <FontAwesomeIcon icon={faRightLong} className="arrow" onClick={(e) => { e.stopPropagation(); handleMove("r"); }}/>
+          </div>
+        
+        }
         <div className="hotelWrapper">
           <button className="bookNow">Đặt ngay</button>
           <h1 className="hotelTitle">LENS HOTEL</h1>
@@ -42,9 +76,9 @@ const Hotels = () => {
           </div>
 
           <div className="hotelImages">
-            {photos.map((photo) => (
+            {photos.map((photo,i) => (
               <div className="hotelImgWrapper">
-                <img src={photo.src} alt="" className="hotelImg" />
+                <img onClick={()=>handleOpen(i)} src={photo.src} alt="" className="hotelImg" />
               </div>
             ))}
           </div>
@@ -74,6 +108,8 @@ const Hotels = () => {
               <button>Đặt ngay!</button>
             </div>
           </div>
+
+
         </div>
         <MailList />
         <Footerr />

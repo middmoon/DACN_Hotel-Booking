@@ -24,6 +24,13 @@
     font-size: 20px;
     color: #0071c2;
     font-weight: 700;
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+}
+
+.siTitle:hover{
+    color: lightgray;
+    transition: ease-in-out 0.3s;
 }
 
 .siDistrict{
@@ -51,6 +58,7 @@
 }
 .siRating>span{
     font-weight: 500;
+    color: green;
 }
 
 .siRating>button{
@@ -60,6 +68,17 @@
     font-weight: bold;
     border: none;
     border-radius: 2px;
+    transition: ease-in-out 0.3s;
+    cursor: pointer;
+}
+.siCheckButton{
+    transition: ease-in-out 0.3s;
+}
+
+.siCheckButton:hover{
+    color: #003580;
+    background-color: lightgray;
+    transition: ease-in-out 0.3s;
 }
 
 .siDetailTexts{
