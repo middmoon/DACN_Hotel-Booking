@@ -31,7 +31,6 @@ const Registerhotels = () => {
     password: "",
   });
 
-
   useEffect(() => {
     const fetchData = async () => {
       const provinceResponse = await apiGetPublicProvince();
