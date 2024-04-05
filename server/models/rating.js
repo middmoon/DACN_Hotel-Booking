@@ -38,6 +38,8 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Rating",
       tableName: "rating",
       timestamps: true,
+      charset: "utf8",
+      collate: "utf8_general_ci",
     }
   );
 

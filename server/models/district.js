@@ -50,6 +50,8 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "District",
       tableName: "districts",
       timestamps: false,
+      charset: "utf8",
+      collate: "utf8_general_ci",
       indexes: [
         {
           unique: false,

@@ -20,10 +20,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       id_room: {
         type: DataTypes.INTEGER,
-        // references: {
-        //   model: "Room",
-        //   key: "_id",
-        // },
       },
       price: {
         type: DataTypes.BIGINT.UNSIGNED,
@@ -37,6 +33,8 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "RoomType",
       tableName: "room_type",
       timestamps: true,
+      charset: "utf8",
+      collate: "utf8_general_ci",
     }
   );
 

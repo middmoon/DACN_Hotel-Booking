@@ -4,6 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    .table-container {
+      overflow-x: auto;
+    }
+  </style>
 </head>
 
 <body>
@@ -17,8 +23,9 @@
       <a href="#">Create New</a>
     </p>
 
-    {{> table}}
-
+    <div class="table-container">
+      {{> table}}
+    </div>
 
   </div>
 </body>

@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Ward.belongsTo(models.District, { foreignKey: "district_code" });
-      Ward.belongsTo(models.AdministrativeUnit, { foreignKey: "administrative_unit_id" });
+      Ward.belongsTo(models.AdministrativeUnit, {
+        foreignKey: "administrative_unit_id",
+      });
     }
   }
   Ward.init(
@@ -47,6 +49,8 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Ward",
       tableName: "wards",
       timestamps: false,
+      charset: "utf8",
+      collate: "utf8_general_ci",
       indexes: [
         {
           unique: false,

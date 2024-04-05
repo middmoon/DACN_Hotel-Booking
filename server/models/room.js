@@ -20,10 +20,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       id_hotel: {
         type: DataTypes.INTEGER,
-        // references: {
-        //   model: "Hotel",
-        //   key: "_id",
-        // },
       },
       room_number: {
         type: DataTypes.STRING,
@@ -37,6 +33,8 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Room",
       tableName: "room",
       timestamps: true,
+      charset: "utf8",
+      collate: "utf8_general_ci",
     }
   );
 
