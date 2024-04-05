@@ -30,6 +30,8 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Key",
       tableName: "key",
       timestamps: true,
+      charset: "utf8",
+      collate: "utf8_general_ci",
       indexes: [
         {
           unique: false,

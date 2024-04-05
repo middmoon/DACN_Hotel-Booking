@@ -6,24 +6,6 @@ const { getUserInfoById } = require("../services/user.service");
 
 const db = require("../models");
 
-const excludeCols = [
-  {
-    User: [
-      "_id",
-      "user_name",
-      "password",
-      "user_display_name",
-      "user_birthday",
-      "id_street",
-      "ward_code",
-      "house_number",
-      "image_link",
-      "role",
-      "updatedAt",
-    ],
-  },
-];
-
 class AdminController {
   getModel = (req, res, next) => {
     const path = req.path;
@@ -42,7 +24,8 @@ class AdminController {
       model: req.model,
       cols: req.cols,
     };
-    res.render("manage", { metadata });
+
+    res.render("manage-overview", { metadata });
   };
 }
 

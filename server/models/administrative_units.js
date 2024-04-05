@@ -42,6 +42,8 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "AdministrativeUnit",
       tableName: "administrative_units",
       timestamps: false,
+      charset: "utf8",
+      collate: "utf8_general_ci",
     }
   );
 

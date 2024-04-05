@@ -5,39 +5,33 @@ const {
   verifyToken,
   verifyAdminAuth,
 } = require("../../middleware/auth.middleware");
+const AdminControler = require("../../controller/admin.controler");
 
 const router = express.Router();
 
 //#region GET - views
-router.use(verifyToken, verifyAdminAuth);
+// router.use(verifyToken, verifyAdminAuth);
+
+const routes = [
+  "/hotel",
+  "/user",
+  "/utility",
+  // "/post",
+  "/review",
+  // "/discount",
+];
 
 router.get("/", (req, res) => {
   res.render("admin");
 });
 
-router.get("/hotel", (req, res) => {
-  res.render("hotel");
+router.use(AdminControler.getModel);
+router.use(AdminControler.getModelCols);
+
+routes.forEach((r) => {
+  router.get(r, AdminControler.getManageView);
 });
 
-router.get("/user", (req, res) => {
-  res.render("user");
-});
-
-router.get("/utility", (req, res) => {
-  res.render("utility");
-});
-
-router.get("/post", (req, res) => {
-  res.render("post");
-});
-
-router.get("/review", (req, res) => {
-  res.render("review");
-});
-
-router.get("/discount", (req, res) => {
-  res.render("discount");
-});
 //#endregion
 
 module.exports = router;

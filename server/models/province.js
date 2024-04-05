@@ -10,8 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Province.belongsTo(models.AdministrativeRegion, { foreignKey: "administrative_region_id" });
-      Province.belongsTo(models.AdministrativeUnit, { foreignKey: "administrative_unit_id" });
+      Province.belongsTo(models.AdministrativeRegion, {
+        foreignKey: "administrative_region_id",
+      });
+      Province.belongsTo(models.AdministrativeUnit, {
+        foreignKey: "administrative_unit_id",
+      });
     }
   }
 
@@ -48,6 +52,8 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Province",
       tableName: "provinces",
       timestamps: false,
+      charset: "utf8",
+      collate: "utf8_general_ci",
       indexes: [
         {
           unique: false,

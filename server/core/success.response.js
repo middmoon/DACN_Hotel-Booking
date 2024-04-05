@@ -11,7 +11,12 @@ const ReasonStatusCode = {
 };
 
 class SuccessResponse {
-  constructor({ message, statusCode = StatusCode.OK, reasonStatusCode = ReasonStatusCode.OK, metadata = {} }) {
+  constructor({
+    message,
+    statusCode = StatusCode.OK,
+    reasonStatusCode = ReasonStatusCode.OK,
+    metadata = {},
+  }) {
     this.message = !message ? reasonStatusCode : message;
     this.statusCode = statusCode;
     this.metadata = metadata;
@@ -29,7 +34,13 @@ class OK extends SuccessResponse {
 }
 
 class CREATED extends SuccessResponse {
-  constructor({ options, message, statusCode = StatusCode.CREATED, reasonStatusCode = ReasonStatusCode.CREATED, metadata = {} }) {
+  constructor({
+    options,
+    message,
+    statusCode = StatusCode.CREATED,
+    reasonStatusCode = ReasonStatusCode.CREATED,
+    metadata = {},
+  }) {
     super({ message, statusCode, reasonStatusCode, metadata });
     // this.options = options;
   }

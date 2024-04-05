@@ -9,6 +9,8 @@ router.use("/v1/api", require("./access"));
 
 router.use("/v1/api", require("./user"));
 
+router.use("/test/v1/api", require("./test"));
+
 router.use("/admin", require("./admin"));
 
 router.get("/", (req, res) => {

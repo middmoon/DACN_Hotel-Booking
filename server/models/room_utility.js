@@ -15,17 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       id_room: {
         type: DataTypes.INTEGER,
-        // references: {
-        //   model: "Room",
-        //   key: "_id",
-        // },
       },
       id_utility: {
         type: DataTypes.INTEGER,
-        // references: {
-        //   model: "Utility",
-        //   key: "_id",
-        // },
       },
     },
     {
@@ -33,6 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "RoomUtility",
       tableName: "room_utility",
       timestamps: true,
+      charset: "utf8",
+      collate: "utf8_general_ci",
     }
   );
 
