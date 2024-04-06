@@ -12,9 +12,11 @@ const Register = () => {
     email: "",
     password: "",
   });
+
   const handleLG = () => {
     navigate("/lg");
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 

@@ -29,6 +29,9 @@ const Registerhotels = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    hotelName: "",
+    houseNumber: "",
+    street: "",
   });
 
   useEffect(() => {
@@ -81,7 +84,7 @@ const Registerhotels = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3030/v1/api/user/register",
+        "http://localhost:3030/v1/api/hotel/register",
         {
           method: "POST",
           headers: {
@@ -93,8 +96,7 @@ const Registerhotels = () => {
       );
 
       if (response.ok) {
-        console.log("Data sent successfully");
-        navigate("/lg");
+        console.log("Data sent successfully", formData);
       } else {
         console.error("Failed to send data to the server");
         alert("tài khoản đã tồn tại");
@@ -104,13 +106,26 @@ const Registerhotels = () => {
     }
   };
 
-  // change
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+
+    if (name === "code_ward") {
+      const selectedWard =
+        event.target.options[event.target.selectedIndex].getAttribute(
+          "data-code"
+        );
+
+      if (selectedWard) {
+        setFormData((prevData) => ({
+          ...prevData,
+          code_ward: selectedWard,
+        }));
+      }
+    }
   };
 
   return (
@@ -187,7 +202,8 @@ const Registerhotels = () => {
 
                 <select
                   value={ward}
-                  onChange={(e) => setWard(e.target.value)}
+                  onChange={handleChange}
+                  name="code_ward"
                   className="form-control"
                 >
                   <option value="">Chọn Xã / Phường</option>
@@ -201,11 +217,29 @@ const Registerhotels = () => {
 
                 <input
                   onChange={handleChange}
-                  name="password"
-                  type="password"
+                  name="hotelName"
+                  type="text"
+                  id="form3Example4c"
+                  className="form-control"
+                  placeholder="Tên khách sạn"
+                />
+
+                <input
+                  onChange={handleChange}
+                  name="houseNumber"
+                  type="text"
                   id="form3Example4c"
                   className="form-control"
                   placeholder="Số Nhà"
+                />
+
+                <input
+                  onChange={handleChange}
+                  name="street"
+                  type="text"
+                  id="form3Example4c"
+                  className="form-control"
+                  placeholder="Tên đường"
                 />
 
                 <button type="submit" className="btn btn-primary btn-lg">
