@@ -29,9 +29,10 @@ class AccessService {
 
     if (newUser) {
       return {
-        metadata: {
-          user: getInfoData({ fields: ["_id", "email", "role"], object: newUser }),
-        },
+        user: getInfoData({
+          fields: ["_id", "email", "role"],
+          object: newUser,
+        }),
       };
     }
     return {

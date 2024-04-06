@@ -5,6 +5,8 @@ const router = express.Router();
 
 router.use("/v1/api", require("./address"));
 
+router.use("/v1/api", require("./hotel"));
+
 router.use("/v1/api", require("./access"));
 
 router.use("/v1/api", require("./user"));
