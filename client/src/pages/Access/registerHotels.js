@@ -8,6 +8,9 @@ import {
   apiGetPublicProvince,
   apiGetPublicWard,
 } from "../redux/apiRequest";
+
+import axios from "axios";
+
 const { useState } = require("react");
 
 const Registerhotels = () => {
@@ -29,9 +32,10 @@ const Registerhotels = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    hotelName: "",
-    houseNumber: "",
-    street: "",
+    hotel_name: "",
+    house_number: "",
+    street_name: "",
+    ward_code: "",
   });
 
   useEffect(() => {
@@ -83,19 +87,17 @@ const Registerhotels = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch(
-        "http://localhost:3030/v1/api/hotel/register",
+      const response = await axios.post(
+        "http://localhost:3030/v2/api/hotel/register",
+        formData,
         {
-          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-
-          body: JSON.stringify(formData),
         }
       );
 
-      if (response.ok) {
+      if (response.status === 200) {
         console.log("Data sent successfully", formData);
       } else {
         console.error("Failed to send data to the server");
@@ -104,6 +106,29 @@ const Registerhotels = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+
+    // try {
+    //   const response = await fetch(
+    //     "http://localhost:3030/v2/api/hotel/register",
+    //     {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+
+    //       body: JSON.stringify(formData),
+    //     }
+    //   );
+
+    //   if (response.ok) {
+    //     console.log("Data sent successfully", formData);
+    //   } else {
+    //     console.error("Failed to send data to the server");
+    //     alert("tài khoản đã tồn tại");
+    //   }
+    // } catch (error) {
+    //   console.error("Error:", error);
+    // }
   };
 
   const handleChange = (event) => {
@@ -203,7 +228,7 @@ const Registerhotels = () => {
                 <select
                   value={ward}
                   onChange={handleChange}
-                  name="code_ward"
+                  name="ward_code"
                   className="form-control"
                 >
                   <option value="">Chọn Xã / Phường</option>
@@ -217,7 +242,7 @@ const Registerhotels = () => {
 
                 <input
                   onChange={handleChange}
-                  name="hotelName"
+                  name="hotel_name"
                   type="text"
                   id="form3Example4c"
                   className="form-control"
@@ -226,7 +251,7 @@ const Registerhotels = () => {
 
                 <input
                   onChange={handleChange}
-                  name="houseNumber"
+                  name="house_number"
                   type="text"
                   id="form3Example4c"
                   className="form-control"
@@ -235,7 +260,7 @@ const Registerhotels = () => {
 
                 <input
                   onChange={handleChange}
-                  name="street"
+                  name="street_name"
                   type="text"
                   id="form3Example4c"
                   className="form-control"

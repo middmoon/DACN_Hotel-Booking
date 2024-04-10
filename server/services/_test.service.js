@@ -25,7 +25,7 @@ class TestService {
           ],
         },
       ],
-      attributes: { exclude: ["code_ward"] },
+      // attributes: { exclude: ["code_ward"] },
     });
 
     if (!foundHotel) {

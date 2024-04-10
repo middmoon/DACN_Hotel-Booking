@@ -35,9 +35,6 @@ class AccessService {
         }),
       };
     }
-    return {
-      metadata: null,
-    };
   };
 
   static login = async ({ option, password, res }) => {

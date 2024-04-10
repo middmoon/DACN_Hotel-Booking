@@ -6,7 +6,7 @@ class TestController {
   test_GetDetailHotel = async (req, res, next) => {
     new OK({
       message: "Get detail OK",
-      metadata: await TestService.test_GetDetailHotel(req.params.hotelId),
+      metadata: await TestService.test_GetDetailHotel(req.params._id),
     }).send(res);
   };
 }

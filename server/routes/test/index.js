@@ -9,6 +9,6 @@ router.get("/", (req, res) => {
   res.send("test API");
 });
 
-router.get("/hotel/:hotelId", _TestController.test_GetDetailHotel);
+router.get("/hotel/:_id", _TestController.test_GetDetailHotel);
 
 module.exports = router;

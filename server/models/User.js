@@ -43,6 +43,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM("ADMIN", "HOTEL_MANAGER", "USER"),
         defaultValue: "USER",
       },
+      full_name: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return `${this.first_name} ${this.last_name}`;
+        },
+      },
     },
     {
       sequelize,

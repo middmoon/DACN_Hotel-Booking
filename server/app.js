@@ -5,7 +5,8 @@ const cors = require("cors");
 const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-const hbs = require("express-handlebars");
+const exphbs = require("express-handlebars");
+const handlebarsHelpers = require("handlebars-helpers");
 
 const path = require("node:path/win32");
 const app = express();
@@ -35,7 +36,11 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/modules", express.static(path.join(__dirname, "node_modules")));
 
 // set view engine
-app.engine("handlebars", hbs.engine());
+const helpers = handlebarsHelpers();
+const hbs = exphbs.create({
+  helpers: helpers,
+});
+app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 app.set("views", path.join(__dirname, "views"));
 
