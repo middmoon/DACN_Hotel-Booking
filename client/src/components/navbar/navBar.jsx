@@ -3,11 +3,10 @@ import "./navBar.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../pages/redux/apiRequest";
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
 
 const Navbars = () => {
   const state = useSelector((useState) => useState.auth.login.currentUser);
@@ -53,28 +52,32 @@ const Navbars = () => {
               <button onClick={handleLogout} className="navButton">
                 log out
               </button> */}
-              <NavDropdown className="navButton" title={`Hi, ${getDisplayName(state)}`} id="basic-nav-dropdown">
-              <div className="navbtItems">
-              <NavDropdown.Item >Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={handleLogout} >
-              log out
-              </NavDropdown.Item>
-              </div>
-            </NavDropdown>
+              <NavDropdown
+                className="navButton"
+                title={`Hi, ${getDisplayName(state)}`}
+                id="basic-nav-dropdown"
+              >
+                <div className="navbtItems">
+                  <NavDropdown.Item>Action</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2">
+                    Another action
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.3">
+                    Something
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={handleLogout}>
+                    log out
+                  </NavDropdown.Item>
+                </div>
+              </NavDropdown>
             </div>
-
-            
           </>
         ) : (
           <>
             <div className="navItems">
-            <button onClick={handleRegisterHT} className="navButton1">
-            List your property
+              <button onClick={handleRegisterHT} className="navButton1">
+                List your property
               </button>
               <button onClick={handleRegister} className="navButton2">
                 Register
@@ -82,7 +85,6 @@ const Navbars = () => {
               <button onClick={handleLogin} className="navButton2">
                 login
               </button>
-              
             </div>
           </>
         )}
@@ -92,5 +94,3 @@ const Navbars = () => {
 };
 
 export default Navbars;
-
-

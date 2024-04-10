@@ -1,6 +1,6 @@
 import Navbar from "../../components/navbar/navBar";
 import Header from "../../components/header/Header";
-
+import React from "react";
 import "./home.css";
 import Featured from "../../components/featured/Featured";
 import PropertyList from "../../components/propertyList/propertyList";
@@ -16,8 +16,21 @@ import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "../redux/authSlice";
 import Offer from "../../components/offer/offer";
 import Navbars from "../../components/navbar/navBar";
+import About from "../../components/about/About";
+import { Link, Route, Routes } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import AboutUs from "../../components/aboutUs/AboutUs";
+
 const Home = () => {
   const user = useSelector((useState) => useState.auth.login.currentUser);
+  //kiểm tra role user
+  let userRole;
+  if (user && user.metadata) {
+    userRole = user.metadata.user.role;
+  } else {
+    userRole = "unknown";
+  }
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let axiosJWT = axios.create();
@@ -53,43 +66,52 @@ const Home = () => {
     }
   );
 
-  return (
-    <div>
-      <Navbars />
-      <Header />
-      <div className="homeContainer">
-      <div>
-          <h1 className="homeTitle">Offers</h1>
-          <p className="homeDecrip">
-          Promotions, deals and special offers for you
-          </p>
-        </div>
-      <Offer />
+  switch (userRole) {
+    case "USER":
+    case "unknown":
+      return (
         <div>
-          <h1 className="homeTitle">Trending destinations</h1>
-          <p className="homeDecrip">
-            Most popular choices for travellers from Vietnam
-          </p>
+          <Navbars />
+          <Header />
+          <div className="homeContainer">
+            <About />
+            <div>
+              <h1 className="homeTitle">Offers</h1>
+              <p className="homeDecrip">
+                Promotions, deals and special offers for you
+              </p>
+            </div>
+            <Offer />
+            <div>
+              <h1 className="homeTitle">Trending destinations</h1>
+              <p className="homeDecrip">
+                Most popular choices for travellers from Vietnam
+              </p>
+            </div>
+            <Featured />
+            <div>
+              <h1 className="homeTitle"> Booking made easy</h1>
+            </div>
+            <Slogan />
+            <div>
+              <h1 className="homeTitle">Explore Vietnam</h1>
+              <p className="homeDecrip">
+                These popular destinations have a lot to offer
+              </p>
+            </div>
+            <PropertyList />
+            <h1 className="homeTitle">Homes guests love</h1>
+            <FeaturedProperties />
+            <MailList />
+            <Footer />
+          </div>
         </div>
-        <Featured />
-        <div>
-          <h1 className="homeTitle"> Booking made easy</h1>
-        </div>
-        <Slogan />
-        <div>
-          <h1 className="homeTitle">Explore Vietnam</h1>
-          <p className="homeDecrip">
-            These popular destinations have a lot to offer
-          </p>
-        </div>
-        <PropertyList />
-        <h1 className="homeTitle">Homes guests love</h1>
-        <FeaturedProperties />
-        <MailList />
-        <Footer />
-      </div>
-    </div>
-  );
+      );
+    case "ADMIN":
+      return <Navigate to={"/admin"} replace={true} />;
+    case "HOTEL_MANAGER":
+      return <Navigate to={"/hotel-manage"} replace={true} />;
+  }
 };
 
 export default Home;
