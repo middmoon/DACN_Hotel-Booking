@@ -26,6 +26,12 @@
 
 .Dashboard-content-right {
   width: 30%;
+  margin-top: 50px;
+  margin-left: 30px;
+  margin-right: 10px;
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
 }
 .Db-title h1 {
   font-size: 20px;
@@ -33,6 +39,20 @@
 .dashBoard-list {
   display: flex;
   flex-direction: row;
+  padding: 20px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 10px;
+}
+.Db-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.Db-visitor {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 20px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -82,4 +102,30 @@
   align-items: center;
   justify-content: center;
   font-weight: 500;
+}
+
+.Visitor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Visitor-n {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  padding-left: 40px;
+}
+.Visitor-Name {
+  font-size: 20px;
+  font-weight: 500;
+}
+.Upcoming-date {
+  padding-top: 5px;
+  font-size: 15px;
+}
+.Vst-Detail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

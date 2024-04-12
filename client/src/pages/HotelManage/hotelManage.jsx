@@ -4,6 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import React, { useState } from "react";
 import Header from "./Header";
 import Slidebar from "./SideBar";
+
 const HotelManage = () => {
   const isLoggedIn = useSelector((useState) => useState.auth.login.currentUser);
 

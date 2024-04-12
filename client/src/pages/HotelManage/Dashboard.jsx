@@ -1,6 +1,7 @@
 import React from "react";
 import "./css/dashboard.css";
 import DashboardList from "./DashboardList";
+import { Link } from "react-router-dom";
 const Dashboard = () => {
   return (
     <div className="Dashboard-Container">
@@ -38,7 +39,25 @@ const Dashboard = () => {
         </div>
         <div className="bd-main"></div>
       </div>
-      <div className="Dashboard-content-right"></div>
+      <div className="Dashboard-content-right">
+        <div className="Db-title">
+          <h1>Upcoming Visitors</h1>
+        </div>
+        <div className="Db-container">
+          <div className="Db-visitor">
+            <div className="Visitor">
+              img
+              <div className="Visitor-n">
+                <span className="Visitor-Name">Tran Phuong Thai</span>
+                <span className="Upcoming-date">5/5/2024</span>
+              </div>
+            </div>
+            <div className="Vst-Detail">
+              <Link className="Vst-Detail-L">Details</Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
