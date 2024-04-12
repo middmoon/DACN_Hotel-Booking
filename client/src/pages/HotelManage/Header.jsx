@@ -1,5 +1,5 @@
-import { useState } from "react";
-import "./navBar.css";
+import React from "react";
+import "./css/header.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../pages/redux/apiRequest";
@@ -7,25 +7,22 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-
-const Navbars = () => {
+import menuSidebar from "./menuSidebar";
+const Header = () => {
   const state = useSelector((useState) => useState.auth.login.currentUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const accessToken = state?.metadata.accessToken;
 
-  const handleRegister = () => {
-    navigate("/register");
-  };
+  //lấy tên
+  function getDisplayName(state) {
+    if (!state?.metadata.userInfo.user_name) {
+      return state?.metadata.userInfo.email.split("@")[0];
+    }
+    return state?.metadata.userInfo.user_name;
+  }
 
-  const handleRegisterHT = () => {
-    navigate("/registerHotels");
-  };
-
-  const handleLogin = () => {
-    navigate("/lg");
-  };
-
+  //log out
   const handleLogout = () => {
     const user = {
       _id: state?.metadata.user._id,
@@ -34,22 +31,16 @@ const Navbars = () => {
     logOut(dispatch, accessToken, navigate);
   };
 
-  function getDisplayName(state) {
-    if (!state?.metadata.userInfo.user_name) {
-      return state?.metadata.userInfo.email.split("@")[0];
-    }
-    return state?.metadata.userInfo.user_name;
-  }
-
   return (
-    <div className="navbar">
-      <div className="navContainer">
-        <span className="logo">MidmoonBooking</span>
-        {state ? (
-          <>
+    <div className="w-full flex">
+      <div></div>
+      <div>
+        <div className="HeaderNav">
+          <div className="navContainerHeader">
+            <span className="logoHeader">Hotel Manager</span>
             <div className="navItems">
               <NavDropdown
-                className="navButton"
+                className="btnHeader"
                 title={`Hi, ${getDisplayName(state)}`}
                 id="basic-nav-dropdown"
               >
@@ -68,25 +59,11 @@ const Navbars = () => {
                 </div>
               </NavDropdown>
             </div>
-          </>
-        ) : (
-          <>
-            <div className="navItems">
-              <button onClick={handleRegisterHT} className="navButton1">
-                List your property
-              </button>
-              <button onClick={handleRegister} className="navButton2">
-                Register
-              </button>
-              <button onClick={handleLogin} className="navButton2">
-                login
-              </button>
-            </div>
-          </>
-        )}
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Navbars;
+export default Header;

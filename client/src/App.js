@@ -9,6 +9,7 @@ import Hotels from "./pages/hotel/Hotel";
 import HotelManage from "./pages/HotelManage/hotelManage";
 import Registerhotels from "./pages/Access/registerHotels";
 import AboutUs from "./components/aboutUs/AboutUs";
+import Createpost from "./pages/HotelManage/CreatePost";
 
 function App() {
   return (
@@ -23,7 +24,10 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/registerHotels" element={<Registerhotels />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/hotel-manage/*" element={<HotelManage />} />
+          {/* hotel manager */}
+          <Route path="/hotel-manage/*" element={<HotelManage />}>
+            <Route path="create-post" element={<Createpost />} />
+          </Route>
         </Routes>
       </Router>
     </div>

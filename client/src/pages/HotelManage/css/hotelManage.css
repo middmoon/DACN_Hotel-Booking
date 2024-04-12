@@ -1,0 +1,16 @@
+.hotelManagerContainer {
+  display: flex;
+  width: 100%;
+}
+
+.HotelM-l {
+  width: 15%;
+  color: white;
+  background-color: #003580;
+  height: 100vh;
+}
+
+.HotelM-r {
+  width: 85%;
+  background-color: rgb(236, 236, 236);
+}
