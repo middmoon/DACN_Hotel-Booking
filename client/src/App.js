@@ -10,6 +10,7 @@ import HotelManage from "./pages/HotelManage/hotelManage";
 import Registerhotels from "./pages/Access/registerHotels";
 import AboutUs from "./components/aboutUs/AboutUs";
 import Createpost from "./pages/HotelManage/CreatePost";
+import Dashboard from "./pages/HotelManage/Dashboard";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           {/* hotel manager */}
           <Route path="/hotel-manage/*" element={<HotelManage />}>
             <Route path="create-post" element={<Createpost />} />
+            <Route path="Dashboard" element={<Dashboard />} />
           </Route>
         </Routes>
       </Router>

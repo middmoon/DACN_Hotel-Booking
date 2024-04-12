@@ -33,7 +33,6 @@ const Header = () => {
 
   return (
     <div className="w-full flex">
-      <div></div>
       <div>
         <div className="HeaderNav">
           <div className="navContainerHeader">
