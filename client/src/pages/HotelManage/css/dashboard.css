@@ -16,7 +16,7 @@
   display: flex;
   width: 100%;
   gap: 30px;
-  padding-bottom: 20px;
+  padding-bottom: 70px;
 }
 .bd-main {
   display: flex;
@@ -36,6 +36,7 @@
 .Db-title h1 {
   font-size: 20px;
 }
+
 .dashBoard-list {
   display: flex;
   flex-direction: row;
@@ -48,6 +49,9 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  max-height: 750px;
+  overflow-x: scroll;
+  border-radius: 10px;
 }
 .Db-visitor {
   display: flex;
@@ -55,7 +59,7 @@
   justify-content: space-between;
   padding: 20px;
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
   border-radius: 10px;
 }
 .dashBoard-list-item {
@@ -114,7 +118,7 @@
   display: flex;
   flex-direction: column;
   justify-content: left;
-  padding-left: 40px;
+  padding-left: 20px;
 }
 .Visitor-Name {
   font-size: 20px;
@@ -128,4 +132,39 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.bd-mainContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 33.3%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.userImg {
+  width: 50px;
+  border-radius: 50%;
+}
+
+.bd-main {
+  display: flex;
+  width: 100%;
+  gap: 30px;
+}
+.main-Title {
+  font-size: 20px;
+  font-weight: 500;
+}
+.main-Img {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.main-desc {
+  text-align: justify;
+  font-size: 13px;
 }

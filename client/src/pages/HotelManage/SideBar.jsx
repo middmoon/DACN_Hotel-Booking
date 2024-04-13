@@ -1,6 +1,6 @@
 import React from "react";
 import "./css/slideBar.css";
-import menuSidebar from "./menuSidebar";
+import menuSidebar from "./API clone/menuSidebar";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPowerOff } from "@fortawesome/free-solid-svg-icons";

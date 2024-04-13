@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Profiler } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import List from "./pages/list/List";
@@ -11,6 +11,8 @@ import Registerhotels from "./pages/Access/registerHotels";
 import AboutUs from "./components/aboutUs/AboutUs";
 import Createpost from "./pages/HotelManage/CreatePost";
 import Dashboard from "./pages/HotelManage/Dashboard";
+import { Room } from "./pages/HotelManage/Room";
+import Profile from "./pages/HotelManage/profile";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           <Route path="/hotel-manage/*" element={<HotelManage />}>
             <Route path="create-post" element={<Createpost />} />
             <Route path="Dashboard" element={<Dashboard />} />
+            <Route path="Room" element={<Room />} />
+            <Route path="Profile" element={<Profile />} />
           </Route>
         </Routes>
       </Router>

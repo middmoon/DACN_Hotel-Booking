@@ -31,7 +31,7 @@ function AuthRoute(role, navigate) {
       navigate("/");
       break;
     case "HOTEL_MANAGER":
-      navigate("/hotel-manage");
+      navigate("/hotel-manage/Dashboard");
       break;
     case "ADMIN":
       navigate("/admin");
@@ -123,8 +123,6 @@ export const apiGetPublicDistrict = (province_code) =>
       reject(error);
     }
   });
-
-
 
 export const apiGetPublicWard = (district_code) =>
   new Promise(async (resolve, reject) => {
