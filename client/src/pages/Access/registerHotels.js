@@ -42,7 +42,7 @@ const Registerhotels = () => {
     const fetchData = async () => {
       const provinceResponse = await apiGetPublicProvince();
       setStre(provinceResponse.data.metadata.province);
-
+      console.log(provinceResponse);
       if (province) {
         const districtResponse = await apiGetPublicDistrict(province);
         setDistricts(districtResponse.data.metadata.district);
@@ -106,29 +106,6 @@ const Registerhotels = () => {
     } catch (error) {
       console.error("Error:", error);
     }
-
-    // try {
-    //   const response = await fetch(
-    //     "http://localhost:3030/v2/api/hotel/register",
-    //     {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-
-    //       body: JSON.stringify(formData),
-    //     }
-    //   );
-
-    //   if (response.ok) {
-    //     console.log("Data sent successfully", formData);
-    //   } else {
-    //     console.error("Failed to send data to the server");
-    //     alert("tài khoản đã tồn tại");
-    //   }
-    // } catch (error) {
-    //   console.error("Error:", error);
-    // }
   };
 
   const handleChange = (event) => {
