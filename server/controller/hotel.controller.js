@@ -4,10 +4,10 @@ const { OK } = require("../core/success.response");
 const HotelService = require("../services/hotel.service");
 
 class HotelController {
-  registerHotel = async (req, res, next) => {
+  getHotelInfo = async (req, res, next) => {
     new OK({
-      message: "create new Hotel with a Manager OK",
-      metadata: await HotelService.registerHotel(req.body),
+      message: "get hotel info OK",
+      metadata: await HotelService.getHotelInfo(req.params._id),
     }).send(res);
   };
 }

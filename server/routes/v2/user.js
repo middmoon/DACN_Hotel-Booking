@@ -17,7 +17,9 @@ router
   .post("/register", asyncHandler(AccessController.signUp))
   .post("/login", asyncHandler(AccessController.login))
   .use(verifyToken)
+  .put("/update/:_id", asyncHandler(UserController.updateUserInfo))
   .get("/:_id", asyncHandler(UserController.getUserInfo))
+  .post("/make-order", asyncHandler(UserController.makeOrder))
   .post("/refesh", asyncHandler(AccessController.refresh))
   .delete("/logout", asyncHandler(AccessController.logout));
 

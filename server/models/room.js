@@ -27,6 +27,13 @@ module.exports = (sequelize, DataTypes) => {
       is_ordered: {
         type: DataTypes.BOOLEAN,
       },
+      //
+      price: {
+        type: DataTypes.BIGINT.UNSIGNED,
+      },
+      type_name: {
+        type: DataTypes.ENUM("STD", "VIP"),
+      },
     },
     {
       sequelize,

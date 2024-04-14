@@ -19,15 +19,51 @@ class UserService {
 
     if (foundUser) {
       return {
-        metadata: {
-          user: foundUser,
-        },
+        user: foundUser,
       };
     }
+  }
 
-    return {
-      metadata: null,
-    };
+  static async updateUserInfo(id_user, payload) {
+    const updatedUser = await User.update(
+      { payload },
+      {
+        where: {
+          _id: id_user,
+        },
+      }
+    );
+
+    if (!foundUser) {
+      throw new NotFoundError("Error: Can not update this user");
+    }
+
+    if (foundUser) {
+      return {
+        user: updatedUser,
+      };
+    }
+  }
+
+  static async makeOrder(id_user, payload) {
+    const makedOrder = await db.Order.create({
+      id_user: id_user,
+      id_hotel: payload.id_hotel,
+      start_day: payload.start_day,
+      end_day: payload.end_day,
+      status: "PRE_ORDER",
+      total_price: payload.total_price,
+    });
+
+    if (!makedOrder) {
+      throw new NotFoundError("Error: Can make order");
+    }
+
+    if (makedOrder) {
+      return {
+        order: makedOrder,
+      };
+    }
   }
 }
 

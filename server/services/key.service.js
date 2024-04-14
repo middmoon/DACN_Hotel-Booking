@@ -25,7 +25,7 @@ class KeyService {
         role: foundUser.role,
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "30m" }
+      { expiresIn: "100m" }
     );
 
     const refreshToken = jwt.sign(
@@ -45,7 +45,10 @@ class KeyService {
 
   static async refesh(refreshToken, userInfo) {
     try {
-      const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+      const decoded = jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET
+      );
       const { _id, role } = decoded;
       const user = { _id, role };
 
@@ -61,7 +64,9 @@ class KeyService {
       // });
 
       if (user._id !== userInfo._id || user.role !== userInfo.role) {
-        throw new AuthFailureError("There are some things wrong with your informations");
+        throw new AuthFailureError(
+          "There are some things wrong with your informations"
+        );
       }
 
       const refreshTokenUsed = await Key.findAll({
@@ -74,7 +79,9 @@ class KeyService {
 
       // console.log({ refreshTokenUsed });
 
-      const refreshTokenUsedList = refreshTokenUsed.map((row) => row.refreshTokenUsed);
+      const refreshTokenUsedList = refreshTokenUsed.map(
+        (row) => row.refreshTokenUsed
+      );
 
       // console.log({ refreshTokenUsedList });
 
@@ -92,7 +99,10 @@ class KeyService {
       if (!tokenPair) {
         throw new AuthFailureError("Your are not verify 2");
       } else {
-        await this.storeRefreshToken({ id_user: user._id, refreshTokenUsed: tokenPair.refreshToken });
+        await this.storeRefreshToken({
+          id_user: user._id,
+          refreshTokenUsed: tokenPair.refreshToken,
+        });
         return tokenPair;
       }
     } catch (error) {

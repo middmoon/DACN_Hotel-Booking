@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       id_hotel: {
         type: DataTypes.INTEGER,
       },
-      hote_image: {
+      image_url: {
         type: DataTypes.STRING,
       },
     },

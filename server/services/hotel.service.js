@@ -1,66 +1,53 @@
 "use strict";
+require("dotenv").config();
 
 const db = require("../models");
-const { BadRequestError } = require("../core/error.response");
+const { BadRequestError, NotFoundError } = require("../core/error.response");
 const AccessService = require("./access.service");
 const { getInfoData } = require("../utils");
 
-require("dotenv").config();
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.API_SECRET,
+});
 
 class HotelService {
-  static async registerHotel(payload, role = "HOTEL_MANAGER") {
-    // sign up manager
-    const newManager = await AccessService.signUp(
-      { email: payload.email, password: payload.password },
-      role
-    );
-
-    console.log(newManager);
-
-    // register hotel
-
-    if (!newManager) {
-      throw new BadRequestError("Error: Can not register hotel");
-    }
-
-    const newHotel = await db.Hotel.create({
-      id_manager: newManager.user._id,
-      hotel_name: payload.hotel_name,
-      house_number: payload.house_number,
-      street_name: payload.street_name,
-      code_ward: payload.ward_code,
-      status: "ACTIVE",
+  static async getHotelInfo(hotelId) {
+    const foundHotel = await db.Hotel.findByPk(hotelId, {
+      include: [
+        {
+          model: db.Ward,
+          attributes: ["code", "full_name"],
+          include: [
+            {
+              model: db.District,
+              attributes: ["code", "full_name"],
+              include: [
+                {
+                  model: db.Province,
+                  attributes: ["code", "full_name"],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      // attributes: { exclude: ["code_ward"] },
     });
 
-    if (newHotel) {
-      return {
-        manager: newManager,
-        hotel: getInfoData({
-          fields: ["_id", "status"],
-          object: newHotel,
-        }),
-      };
+    if (!foundHotel) {
+      throw new NotFoundError("Error: Can not find the Hotel");
     }
 
-    // console.log(payload);
-
-    // return {
-    //   manager: {
-    //     email: payload.email,
-    //     password: payload.password,
-    //   },
-    //   hotel: {
-    //     hotel_name: payload.hotel_name,
-    //     house_number: payload.house_number,
-    //     street_name: payload.street_name,
-    //     ward_code: payload.ward_code,
-    //   },
-    // };
+    if (foundHotel) {
+      return {
+        hotel: foundHotel,
+      };
+    }
   }
-
-  static async updateHotelInfo() {}
-
-  static async deleteHotelInfo() {}
 }
 
 module.exports = HotelService;

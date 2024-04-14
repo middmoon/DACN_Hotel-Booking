@@ -17,6 +17,7 @@ const verifyToken = asyncHandler(async (req, res, next) => {
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     if (err) throw new AuthFailureError("Invalid token");
     req.user = decoded;
+    req._id = req.user._id;
     next();
   });
 });

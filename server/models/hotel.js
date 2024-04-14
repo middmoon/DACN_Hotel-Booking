@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       // Define associations here if needed
       Hotel.belongsTo(models.Ward, { foreignKey: "code_ward" });
       Hotel.belongsTo(models.User, { foreignKey: "id_manager" });
+      Hotel.hasMany(models.HotelImage, { foreignKey: "id_hotel" });
     }
   }
 

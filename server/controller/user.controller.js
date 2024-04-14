@@ -1,20 +1,46 @@
 "use strict";
 
-const { BadRequestError, NotFoundError } = require("../core/error.response");
+const { BadRequestError } = require("../core/error.response");
 const { OK } = require("../core/success.response");
-const { getUserInfoById } = require("../services/user.service");
+const UserService = require("../services/user.service");
 
 class UserController {
   getUserInfo = async (req, res, next) => {
     if (req.user._id != req.params._id) {
-      throw new NotFoundError(
+      throw new BadRequestError(
         "There are some things wrong with your informations"
       );
     }
 
     new OK({
       message: "get user info OK",
-      metadata: (await getUserInfoById(req.params._id)).metadata,
+      metadata: await UserService.getUserInfoById(req.params._id),
+    }).send(res);
+  };
+
+  updateUserInfo = async (req, res, next) => {
+    if (req.user._id != req.params._id) {
+      throw new BadRequestError(
+        "There are some things wrong with your informations"
+      );
+    }
+
+    new OK({
+      message: "update user info OK",
+      metadata: await UserService.updateUserInfo(req.params._id),
+    }).send(res);
+  };
+
+  makeOrder = async (req, res, next) => {
+    if (req.user._id != req.params._id) {
+      throw new BadRequestError(
+        "There are some things wrong with your informations"
+      );
+    }
+
+    new OK({
+      message: "Make order  OK",
+      metadata: await UserService.makeOrder(req._id, req.params.hotel_id),
     }).send(res);
   };
 }
