@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       Hotel.belongsTo(models.Ward, { foreignKey: "code_ward" });
       Hotel.belongsTo(models.User, { foreignKey: "id_manager" });
       Hotel.hasMany(models.HotelImage, { foreignKey: "id_hotel" });
+
+      Hotel.hasMany(models.HotelUtility, { foreignKey: "id_hotel" });
     }
   }
 

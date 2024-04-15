@@ -6,16 +6,7 @@ const { BadRequestError, NotFoundError } = require("../core/error.response");
 const AccessService = require("./access.service");
 const { getInfoData } = require("../utils");
 
-// const cloudinary = require("cloudinary").v2;
-
-// cloudinary.config({
-//   cloud_name: process.env.CLOUD_NAME,
-//   api_key: process.env.CLOUD_API_KEY,
-//   api_secret: process.env.API_SECRET,
-// });
-
 const cloudinary = require("../config/cloudinary.config");
-const multer = require("../config/multer.config");
 
 class HotelManagerService {
   static async registerHotel(payload, role = "HOTEL_MANAGER") {
@@ -98,6 +89,7 @@ class HotelManagerService {
       return new Promise((resolve, reject) => {
         cloudinary.uploader.upload(file.path, function (error, result) {
           if (error) {
+            throw new BadRequestError("Error: Can not push image");
             reject(error);
             return;
           }
@@ -114,7 +106,12 @@ class HotelManagerService {
               uploadedImages.push(result.url);
               resolve(uploadedImage);
             })
-            .catch((err) => reject(err));
+            .catch((err) => {
+              throw new BadRequestError(
+                "Error: Can not push image tp database"
+              );
+              reject(err);
+            });
         });
       });
     });
@@ -122,6 +119,29 @@ class HotelManagerService {
     await Promise.all(uploadPromises);
 
     return uploadedImages;
+  }
+
+  static async getUtilityList() {
+    const foundUtilityList = await db.Utility.findAll();
+
+    if (!foundUtilityList) {
+      throw new BadRequestError("Error: Can not get Utils list");
+    }
+
+    return foundUtilityList;
+  }
+
+  static async addUtility(hotelId, payload) {
+    const addedUtility = await db.HotelUtility.create({
+      id_hotel: hotelId,
+      id_utility: payload.id_utility,
+    });
+
+    if (!addedUtility) {
+      throw new BadRequestError(`Error: Can not add Utils to your hotel`);
+    }
+
+    return addedUtility;
   }
 
   static async addRoom(hotelId, payload) {
@@ -176,11 +196,11 @@ class HotelManagerService {
     }
   }
 
+  static async updateOrder() {}
+
   static async updateHotelInfo() {}
 
   static async deleteHotelInfo() {}
-
-  static async updateOrder() {}
 }
 
 module.exports = HotelManagerService;

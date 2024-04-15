@@ -18,6 +18,7 @@ router
   .use(verifyToken)
   .use(verifyHotelAuth)
   .get("/get-info", asyncHandler(HotelManagerController.getInfo))
+  .post("add-utility", asyncHandler())
   .post(
     "/upload-images",
     multer.array("images"),
