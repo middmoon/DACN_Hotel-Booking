@@ -6,6 +6,7 @@ import {
   apiGetPublicProvince,
   apiGetPublicWard,
 } from "../../redux/apiRequest";
+import InputReadOnly from "./InputReadOnly";
 const CrPost_Address = () => {
   const { useState } = require("react");
   const [stre, setStre] = useState([]);
@@ -92,19 +93,6 @@ const CrPost_Address = () => {
             label="Phường / Xã"
           />
         </div>
-
-        {/* <input
-          type="text"
-          readOnly
-          className="input_show"
-          value={`${
-            district
-              ? `${districts.find((item) => item.code === district.full_name)},`
-              : ""
-          } ${province ? `${province},` : ""} ${
-            ward ? wards.find((item) => item.code === ward.full_name) : ""
-          }`}
-        /> */}
       </div>
     </div>
   );

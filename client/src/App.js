@@ -11,7 +11,7 @@ import Registerhotels from "./pages/Access/registerHotels";
 import AboutUs from "./components/aboutUs/AboutUs";
 import Createpost from "./pages/HotelManage/CreatePost";
 import Dashboard from "./pages/HotelManage/Dashboard";
-import { Room } from "./pages/HotelManage/Room";
+import Room from "./pages/HotelManage/Room";
 import Profile from "./pages/HotelManage/profile";
 
 function App() {
