@@ -70,7 +70,7 @@ const Login = () => {
                   placeholder="Mật Khẩu"
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <button type="submit" className="buton">
+                <button type="submit" className="butonn">
                   Đăng Nhập
                 </button>
               </div>
