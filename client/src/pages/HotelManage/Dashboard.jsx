@@ -76,7 +76,7 @@ const Dashboard = () => {
             <div className="main-Title">Virtual Tour</div>
             <div className="main-img">
               <img
-                src="https://www.vntousa.org/images/users/images/news/halong.jpg"
+                src="https://i0.wp.com/cms.babbel.news/wp-content/uploads/2018/07/Refresh_French_CanadianFrench.png?resize=640%2C360"
                 alt=""
                 className="main-Img"
               />
