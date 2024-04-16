@@ -32,15 +32,9 @@ class UserController {
   };
 
   makeOrder = async (req, res, next) => {
-    if (req.user._id != req.params._id) {
-      throw new BadRequestError(
-        "There are some things wrong with your informations"
-      );
-    }
-
     new OK({
       message: "Make order  OK",
-      metadata: await UserService.makeOrder(req._id, req.params.hotel_id),
+      metadata: await UserService.makeOrder(req._id, req.body),
     }).send(res);
   };
 }

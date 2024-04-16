@@ -146,7 +146,7 @@ class HotelManagerService {
 
   static async addRoom(hotelId, payload) {
     const addedRoom = await db.Room.create({
-      id_hotel: payload.id_hotel,
+      id_hotel: hotelId,
       room_number: payload.room_number,
       is_ordered: false,
       price: payload.price,
