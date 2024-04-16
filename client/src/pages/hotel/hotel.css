@@ -150,3 +150,42 @@
   color: #0071c2;
   transition: ease-in-out 0.3s;
 }
+
+.Ubility-content {
+  padding: 20px 0px 10px 0px;
+  display: flex;
+  gap: 10px;
+}
+
+.hotel-Available {
+  width: 100%;
+  max-width: 1024px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  border-top: rgb(206, 206, 206) solid 0.5px;
+}
+
+.ht-table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.table-Content-title {
+  display: flex;
+  background-color: #0071c2;
+  color: white;
+}
+
+.table-Content-title span {
+  padding: 5px;
+  border: black solid 0.4px;
+}
+.table-Content {
+  display: flex;
+}
+
+.table-Content span {
+  padding: 5px;
+  border: black solid 0.4px;
+}

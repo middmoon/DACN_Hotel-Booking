@@ -33,9 +33,6 @@ function AuthRoute(role, navigate) {
     case "HOTEL_MANAGER":
       navigate("/hotel-manage/Dashboard");
       break;
-    case "ADMIN":
-      navigate("/admin");
-      break;
     default:
       break;
   }

@@ -26,6 +26,10 @@ const Navbars = () => {
     navigate("/lg");
   };
 
+  const handleHome = () => {
+    navigate("/");
+  };
+
   const handleLogout = () => {
     const user = {
       _id: state?.metadata.user._id,
@@ -44,7 +48,13 @@ const Navbars = () => {
   return (
     <div className="navbar">
       <div className="navContainer">
-        <span className="logo">MidmoonBooking</span>
+        <span
+          className="logo"
+          onClick={handleHome}
+          style={{ cursor: "pointer" }}
+        >
+          MidmoonBooking
+        </span>
         {state ? (
           <>
             <div className="navItems">

@@ -9,6 +9,9 @@ import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import MailList from "../../components/mailList/Mail.List";
 import Footerr from "../../components/footer/Footer";
 import { useState } from "react";
+import { faSquareParking } from "@fortawesome/free-solid-svg-icons";
+import { faWifi } from "@fortawesome/free-solid-svg-icons";
+import HotelRule from "./hotelRule/HotelRule";
 
 const Hotels = () => {
   const [slideNumber, setSlideNumber] = useState(0);
@@ -32,41 +35,57 @@ const Hotels = () => {
     {
       src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/357642217.jpg?k=194ad42880d94b85857a2f54a524cc9adde1bb0fca768154d3dead1db83335cf&o=&hp=1",
     },
-    
   ];
 
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
-  }
+  };
 
   const handleMove = (direction) => {
     let newSlideNumber;
-    if(direction === "l"){
+    if (direction === "l") {
       newSlideNumber = slideNumber === 0 ? 5 : slideNumber - 1;
     } else {
       newSlideNumber = slideNumber === 5 ? 0 : slideNumber + 1;
     }
 
     setSlideNumber(newSlideNumber);
-  }
+  };
+
   return (
     <div className="a">
       <Navbar />
       <Header type="list" />
       <div className="hotelContainer">
-        {
-          open &&
-            <div className="slider" onClick={() => setOpen(false)}>
-          <FontAwesomeIcon icon={faXmark} className="close" onClick={() => setOpen(false)}/>
-          <FontAwesomeIcon icon={faLeftLong} className="arrow" onClick={(e) => { e.stopPropagation(); handleMove("l"); }} />
-          <div className="sliderWrapper">
-            <img src={photos[slideNumber].src} alt="" className="sliderImg" />
+        {open && (
+          <div className="slider" onClick={() => setOpen(false)}>
+            <FontAwesomeIcon
+              icon={faXmark}
+              className="close"
+              onClick={() => setOpen(false)}
+            />
+            <FontAwesomeIcon
+              icon={faLeftLong}
+              className="arrow"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleMove("l");
+              }}
+            />
+            <div className="sliderWrapper">
+              <img src={photos[slideNumber].src} alt="" className="sliderImg" />
+            </div>
+            <FontAwesomeIcon
+              icon={faRightLong}
+              className="arrow"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleMove("r");
+              }}
+            />
           </div>
-          <FontAwesomeIcon icon={faRightLong} className="arrow" onClick={(e) => { e.stopPropagation(); handleMove("r"); }}/>
-          </div>
-        
-        }
+        )}
         <div className="hotelWrapper">
           <button className="bookNow">Đặt ngay</button>
           <h1 className="hotelTitle">LENS HOTEL</h1>
@@ -76,9 +95,14 @@ const Hotels = () => {
           </div>
 
           <div className="hotelImages">
-            {photos.map((photo,i) => (
+            {photos.map((photo, i) => (
               <div className="hotelImgWrapper">
-                <img onClick={()=>handleOpen(i)} src={photo.src} alt="" className="hotelImg" />
+                <img
+                  onClick={() => handleOpen(i)}
+                  src={photo.src}
+                  alt=""
+                  className="hotelImg"
+                />
               </div>
             ))}
           </div>
@@ -108,9 +132,134 @@ const Hotels = () => {
               <button>Đặt ngay!</button>
             </div>
           </div>
+          <div className="hotelUbility">
+            <h1 style={{ fontSize: "15px" }}>
+              Các tiện nghi được ưa chuộng nhất
+            </h1>
+            <div className="Ubility-content">
+              <div
+                style={{
+                  display: "flex",
+                  gap: "5px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faSquareParking}
+                  style={{ color: "green" }}
+                />
+                <span style={{ fontWeight: "500", fontSize: "12px" }}>
+                  Chỗ đỗ xe miễn phí
+                </span>
+              </div>
 
-
+              <div
+                style={{
+                  display: "flex",
+                  gap: "5px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faWifi} style={{ color: "green" }} />
+                <span style={{ fontWeight: "500", fontSize: "12px" }}>
+                  Wifi miễn phí
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div className="hotel-Available">
+          <h1 style={{ fontSize: "25px", paddingTop: "10px" }}>Đặt phòng</h1>
+          <div className="ht-table">
+            <div className="table-Content-title">
+              <span style={{ flex: "2" }}>Chi tiết phòng</span>
+              <span style={{ flex: "2" }}>Loại phòng</span>
+              <span style={{ flex: "1" }}></span>
+            </div>
+            <div className="table-Content">
+              <span style={{ flex: "2" }}>
+                <p style={{ color: "#0071c2", fontWeight: "500" }}>
+                  Phòng Deluxe giường đôi có ban công
+                </p>
+                <p>một giường đôi cực lớn</p>
+              </span>
+              <span
+                style={{
+                  flex: "2",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                Deluxe
+              </span>
+              <span
+                style={{
+                  flex: "1",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  style={{
+                    padding: "10px",
+                    backgroundColor: "#0071c2",
+                    color: "white",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Đặt ngay
+                </p>
+              </span>
+            </div>
+            <div className="table-Content">
+              <span style={{ flex: "2" }}>
+                <p style={{ color: "#0071c2", fontWeight: "500" }}>
+                  Phòng Standard giường đôi
+                </p>
+                <p>một giường đôi </p>
+              </span>
+              <span
+                style={{
+                  flex: "2",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                Standard
+              </span>
+              <span
+                style={{
+                  flex: "1",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  style={{
+                    padding: "10px",
+                    backgroundColor: "#0071c2",
+                    color: "white",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Đặt ngay
+                </p>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <HotelRule />
+
         <MailList />
         <Footerr />
       </div>
