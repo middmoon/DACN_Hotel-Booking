@@ -20,12 +20,30 @@ class HotelController {
   };
 
   uploadImages = async (req, res, next) => {
-    console.log(`req.files--------------------------`);
-
-    console.log(req.files);
     new OK({
       message: "create new Hotel with a Manager OK",
       metadata: await HotelManagerService.uploadImages(req._id, req.files),
+    }).send(res);
+  };
+
+  getUtilityList = async (req, res, next) => {
+    new OK({
+      message: "Get Utility List OK",
+      metadata: await HotelManagerService.getUtilityList(),
+    }).send(res);
+  };
+
+  addUtility = async (req, res, next) => {
+    new OK({
+      message: "Get Utility List OK",
+      metadata: await HotelManagerService.addUtility(req._id, req.body),
+    }).send(res);
+  };
+
+  addRoom = async (req, res, next) => {
+    new OK({
+      message: "Add Room OK",
+      metadata: await HotelManagerService.addRoom(req._id, req.body),
     }).send(res);
   };
 }
