@@ -15,7 +15,7 @@ const router = express.Router();
 const routes = [
   "/hotel",
   "/user",
-  "/utility",
+  // "/utility",
   // "/post",
   "/review",
   // "/discount",

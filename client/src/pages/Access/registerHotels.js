@@ -88,7 +88,7 @@ const Registerhotels = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3030/v2/api/hotel/register",
+        "http://localhost:3030/v2/api/hotel-manage/register",
         formData,
         {
           headers: {

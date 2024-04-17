@@ -83,7 +83,7 @@ const Navbars = () => {
           <>
             <div className="navItems">
               <button onClick={handleRegisterHT} className="navButton1">
-                List your property
+                Register for hotel
               </button>
               <button onClick={handleRegister} className="navButton2">
                 Register
