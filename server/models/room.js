@@ -7,6 +7,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Define associations here if needed
       Room.belongsTo(models.Hotel, { foreignKey: "id_hotel" });
+
+      Room.hasMany(models.RoomOrder, { foreignKey: "id_room" });
     }
   }
 

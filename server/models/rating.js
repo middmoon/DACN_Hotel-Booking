@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       // Define associations here if needed
       Rating.belongsTo(models.Hotel, { foreignKey: "id_hotel" });
       Rating.belongsTo(models.User, { foreignKey: "id_user" });
+      Rating.hasOne(models.Order, { foreignKey: "id_order" });
     }
   }
 
@@ -23,6 +24,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       id_user: {
+        type: DataTypes.INTEGER,
+      },
+      id_order: {
         type: DataTypes.INTEGER,
       },
       comment: {

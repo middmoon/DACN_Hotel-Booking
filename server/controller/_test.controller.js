@@ -9,6 +9,13 @@ class TestController {
       metadata: await TestService.test_GetDetailHotel(req.params._id),
     }).send(res);
   };
+
+  testPostMethod = async (req, res, next) => {
+    new OK({
+      message: "Get detail OK",
+      metadata: await TestService.testPostMethod(req.body),
+    }).send(res);
+  };
 }
 
 module.exports = new TestController();

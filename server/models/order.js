@@ -10,15 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Order.belongsTo(models.Hotel, {
-        foreignKey: "id_hotel",
-      });
-      Order.belongsTo(models.User, {
-        foreignKey: "id_user",
-      });
-      Order.belongsTo(models.Room, {
-        foreignKey: "id_room",
-      });
+      Order.belongsTo(models.Hotel, { foreignKey: "id_hotel" });
+      Order.belongsTo(models.User, { foreignKey: "id_user" });
+      Order.belongsTo(models.Rating, { foreignKey: "id_order" });
     }
   }
 
@@ -35,9 +29,6 @@ module.exports = (sequelize, DataTypes) => {
       id_hotel: {
         type: DataTypes.INTEGER,
       },
-      id_room: {
-        type: DataTypes.INTEGER,
-      },
       status: {
         type: DataTypes.ENUM("PRE_ORDER", "ON_ORDER", "DONE", "CANCEL"),
       },
@@ -48,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
       },
       total_price: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.BIGINT.UNSIGNED,
       },
     },
     {

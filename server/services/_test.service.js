@@ -1,6 +1,6 @@
 "use strict";
 
-const { NotFoundError } = require("../core/error.response");
+const { NotFoundError, BadRequestError } = require("../core/error.response");
 const db = require("../models");
 const hotel = require("../models/hotel");
 
@@ -39,6 +39,14 @@ class TestService {
     }
 
     return null;
+  }
+
+  static async testPostMethod(payload) {
+    if (!payload) {
+      throw new BadRequestError("Error: Can not send data from client");
+    }
+
+    return payload;
   }
 }
 

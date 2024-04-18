@@ -9,6 +9,7 @@ router
   .use("/hotel-manage", require("./hotel.manager"))
   .use("/hotel", require("./hotel"))
   .use("/province", require("./address"))
-  .use("/admin", require("./admin"));
+  .use("/admin", require("./admin"))
+  .use("/test", require("./_api.test"));
 
 module.exports = router;
