@@ -99,7 +99,7 @@
 
 .slider {
   width: 100%;
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
