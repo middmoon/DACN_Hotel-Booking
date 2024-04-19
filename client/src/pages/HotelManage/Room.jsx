@@ -1,7 +1,9 @@
 import React from "react";
 import "./css/room.css";
 import { useState } from "react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 import InputForm from "./CreatePost_Components/InputForm";
 const Room = () => {
   // đóng mở component
@@ -9,6 +11,51 @@ const Room = () => {
   const handleOpen = (i) => {
     setOpen(true);
   };
+
+  //Lay data
+  const [payLoad, SetpayLoad] = useState({
+    roomNumber: "",
+    roomType: "",
+    price: 0,
+    start: "",
+    end: "",
+    status: "",
+    image: "",
+  });
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3030/v2/api/test/post-method",
+        payLoad,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Data sent successfully", payLoad);
+      } else {
+        console.error("Failed to send data to the server");
+        alert("tài khoản đã tồn tại");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    SetpayLoad((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   return (
     <div>
       <div className="p-7">
@@ -24,7 +71,7 @@ const Room = () => {
       <table className="w-full table-fixed">
         <thead style={{ textAlign: "center" }}>
           <tr className="py-2">
-            <th className="border p-2">Mã phòng</th>
+            <th className="border p-2">Số phòng</th>
             <th className="border p-2">Loại phòng</th>
             <th className="border p-2">Giá</th>
             <th className="border p-2">Ngày bắt đầu</th>
@@ -44,18 +91,75 @@ const Room = () => {
 
       {open && (
         <div className="CreateRoom" onClick={() => setOpen(false)}>
-          <div
-            className="CreateRoom-Content"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <InputForm label="Số phòng" />
-            <InputForm label="Loại phòng(VIP/STD)" />
-            <InputForm label="Giá tiền" />
-            <InputForm label="Ngày bắt đầu" />
-            <InputForm label="Ngày kết thúc" />
-          </div>
+          <form className="CreateRoom-Content" onSubmit={handleSubmit}>
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <InputForm
+                onChange={handleChange}
+                name="roomNumber"
+                label="Số phòng"
+              />
+              <InputForm
+                onChange={handleChange}
+                name="roomType"
+                label="Loại phòng(VIP/STD)"
+              />
+              <input
+                onChange={handleChange}
+                name="roomType"
+                type="Type"
+                id="form3Example4c"
+                className="form-control"
+              />
+              <InputForm label="Giá tiền(VND)" />
+              <InputForm label="Trạng thái" />
+              <InputForm label="Ngày bắt đầu" />
+              <InputForm label="Ngày kết thúc" />
+
+              {/* Hinh anh */}
+              <div style={{ paddingTop: "30px" }}>
+                <h2 className="Address_title">Hình ảnh</h2>
+                <small>Cập nhật hình ảnh</small>
+                <div>
+                  <label
+                    style={{
+                      borderRadius: "5px",
+                      width: "100%",
+                      border: "dashed 2px",
+                      height: "300px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "10px",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    htmlFor="file"
+                  >
+                    <FontAwesomeIcon
+                      style={{ fontSize: "100px", color: "#003580" }}
+                      icon={faCamera}
+                    />
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "400",
+                        color: "#003580",
+                      }}
+                    >
+                      Thêm ảnh
+                    </span>
+                  </label>
+                  <input hidden type="file" id="file" />
+                </div>
+              </div>
+              <button type="submit" className="createRoom-btn">
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
       )}
     </div>

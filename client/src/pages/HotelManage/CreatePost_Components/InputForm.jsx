@@ -1,12 +1,19 @@
 import React from "react";
 
-const InputForm = ({ label, value }) => {
+const InputForm = ({ label, value, setValue, name, Change }) => {
   return (
     <div className="ovv_content">
-      <label htmlFor="title" style={{ fontWeight: "500" }}>
+      <label htmlFor="form3Example3c" style={{ fontWeight: "500" }}>
         {label}
       </label>
-      <input type="text" id="title" className="ovv_input" />
+      <input
+        name={name}
+        type="text"
+        id="form3Example3c"
+        className="form-control"
+        value={value}
+        onChange={Change}
+      />
     </div>
   );
 };
