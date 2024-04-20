@@ -93,20 +93,25 @@ const Room = () => {
         <div className="CreateRoom" onClick={() => setOpen(false)}>
           <form className="CreateRoom-Content" onSubmit={handleSubmit}>
             <div
+              className="CreateRoom-Ct"
               onClick={(e) => {
                 e.stopPropagation();
               }}
             >
-              <InputForm
+              <label htmlFor="form3Example3c" style={{ fontWeight: "500" }}>
+                Số phòng
+              </label>
+              <input
                 onChange={handleChange}
                 name="roomNumber"
-                label="Số phòng"
+                type="Type"
+                id="form3Example4c"
+                className="form-control"
               />
-              <InputForm
-                onChange={handleChange}
-                name="roomType"
-                label="Loại phòng(VIP/STD)"
-              />
+
+              <label htmlFor="form3Example3c" style={{ fontWeight: "500" }}>
+                {"Loại phòng(STD/VIP)"}
+              </label>
               <input
                 onChange={handleChange}
                 name="roomType"
@@ -114,11 +119,50 @@ const Room = () => {
                 id="form3Example4c"
                 className="form-control"
               />
-              <InputForm label="Giá tiền(VND)" />
-              <InputForm label="Trạng thái" />
-              <InputForm label="Ngày bắt đầu" />
-              <InputForm label="Ngày kết thúc" />
 
+              <label htmlFor="form3Example3c" style={{ fontWeight: "500" }}>
+                {"Giá tiền(VND)"}
+              </label>
+              <input
+                onChange={handleChange}
+                name="price"
+                type="Type"
+                id="form3Example4c"
+                className="form-control"
+              />
+
+              <label htmlFor="form3Example3c" style={{ fontWeight: "500" }}>
+                {"Ngày bắt đầu"}
+              </label>
+              <input
+                onChange={handleChange}
+                name="start"
+                type="Type"
+                id="form3Example4c"
+                className="form-control"
+              />
+
+              <label htmlFor="form3Example3c" style={{ fontWeight: "500" }}>
+                {"Ngày kết thúc"}
+              </label>
+              <input
+                onChange={handleChange}
+                name="end"
+                type="Type"
+                id="form3Example4c"
+                className="form-control"
+              />
+
+              <label htmlFor="form3Example3c" style={{ fontWeight: "500" }}>
+                {"Trạng thái"}
+              </label>
+              <input
+                onChange={handleChange}
+                name="status"
+                type="Type"
+                id="form3Example4c"
+                className="form-control"
+              />
               {/* Hinh anh */}
               <div style={{ paddingTop: "30px" }}>
                 <h2 className="Address_title">Hình ảnh</h2>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const InputForm = ({ label, value, setValue, name, Change }) => {
+var InputForm = ({ label, value, setValue, name, Change }) => {
   return (
     <div className="ovv_content">
       <label htmlFor="form3Example3c" style={{ fontWeight: "500" }}>
