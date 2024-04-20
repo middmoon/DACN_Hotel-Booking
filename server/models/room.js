@@ -8,7 +8,12 @@ module.exports = (sequelize, DataTypes) => {
       // Define associations here if needed
       Room.belongsTo(models.Hotel, { foreignKey: "id_hotel" });
 
-      Room.hasMany(models.RoomOrder, { foreignKey: "id_room" });
+      Room.hasMany(models.RoomOrder, { foreignKey: "id_order" });
+
+      Room.belongsToMany(models.Order, {
+        through: "RoomOrder",
+        foreignKey: "id_order",
+      });
     }
   }
 

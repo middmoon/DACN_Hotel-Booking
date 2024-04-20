@@ -19,8 +19,10 @@ router
   .use(verifyToken)
   .put("/update/:_id", asyncHandler(UserController.updateUserInfo))
   .get("/:_id", asyncHandler(UserController.getUserInfo))
-  .post("/make-order", asyncHandler(UserController.makeOrder))
+
   .post("/refesh", asyncHandler(AccessController.refresh))
-  .delete("/logout", asyncHandler(AccessController.logout));
+  .delete("/logout", asyncHandler(AccessController.logout))
+
+  .post("/make-order", asyncHandler(UserController.makeOrder));
 
 module.exports = router;

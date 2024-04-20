@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   class RoomOrder extends Model {
     static associate(models) {
       // Define associations here if needed
-      RoomOrder.belongsTo(models.Room, { foreignKey: "id_room" });
-      RoomOrder.belongsTo(models.Order, { foreignKey: "id_order" });
+      RoomOrder.hasMany(models.Room, { foreignKey: "_id" });
+      RoomOrder.hasMany(models.Order, { foreignKey: "_id" });
     }
   }
 

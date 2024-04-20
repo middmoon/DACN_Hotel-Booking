@@ -9,6 +9,20 @@ const { getInfoData } = require("../utils");
 const cloudinary = require("../config/cloudinary.config");
 
 class HotelManagerService {
+  static async getHotelIdForOwner(userId) {
+    const foundHotel = await db.Hotel.findOne({
+      where: {
+        id_manager: userId,
+      },
+    });
+
+    if (!foundHotel) {
+      throw new NotFoundError("Can not find the hotel");
+    }
+
+    return foundHotel._id;
+  }
+
   static async registerHotel(payload, role = "HOTEL_MANAGER") {
     // sign up manager
     const newManager = await AccessService.signUp(
@@ -44,8 +58,11 @@ class HotelManagerService {
     }
   }
 
-  static async getInfo(hotelId) {
-    const foundHotel = await db.Hotel.findByPk(hotelId, {
+  static async getInfo(userId) {
+    const foundHotel = await db.Hotel.findOne({
+      where: {
+        id_manager: userId,
+      },
       include: [
         {
           model: db.Ward,
@@ -65,10 +82,32 @@ class HotelManagerService {
         },
         {
           model: db.HotelImage,
-          attributes: ["_id", "hote_image"],
+          attributes: ["_id", "image_url"],
         },
+        {
+          model: db.Utility,
+          through: {
+            model: db.HotelUtility,
+            attributes: [],
+          },
+          attributes: ["_id", "utility_name", "utility_icon"],
+        },
+        {
+          model: db.Room,
+        },
+
+        // {
+        //   model: db.HotelUtility,
+        //   attributes: ["_id", "utility_name", "utility_icon"],
+        //   include: [
+        //     {
+        //       model: db.Utility,
+        //       attributes: ["_id", "utility_name", "utility_icon"],
+        //     },
+        //   ],
+        // },
       ],
-      // attributes: { exclude: ["code_ward"] },
+      // attributes: { exclude: ["id_hotel"] },
     });
 
     if (!foundHotel) {
@@ -82,23 +121,25 @@ class HotelManagerService {
     }
   }
 
-  static async uploadImages(hotelId, files) {
+  static async uploadImages(userId, files) {
+    const hotelId = await this.getHotelIdForOwner(userId);
+
     const uploadedImages = [];
 
     const uploadPromises = files.map((file, index) => {
       return new Promise((resolve, reject) => {
         cloudinary.uploader.upload(file.path, function (error, result) {
           if (error) {
-            throw new BadRequestError("Error: Can not push image");
-            reject(error);
-            return;
+            throw new BadRequestError(
+              `Error: Can not push image ---- Erorr-Detail: ${error}`
+            );
           }
           // Create the hotel image in the database
           console.log(`result--- ${result}`);
 
           db.HotelImage.create({
             id_hotel: hotelId,
-            hote_image: result.url,
+            image_url: result.url,
           })
             .then((uploadedImage) => {
               console.log(`result URL--- ${result.url}`);
@@ -108,9 +149,8 @@ class HotelManagerService {
             })
             .catch((err) => {
               throw new BadRequestError(
-                "Error: Can not push image tp database"
+                `Error: Can not push image tp database ---- Erorr-Detail: ${err}`
               );
-              reject(err);
             });
         });
       });
@@ -131,7 +171,22 @@ class HotelManagerService {
     return foundUtilityList;
   }
 
-  static async addUtility(hotelId, payload) {
+  static async addUtility(userId, payload) {
+    const hotelId = await this.getHotelIdForOwner(userId);
+
+    const existingUtility = await db.HotelUtility.findOne({
+      where: {
+        id_hotel: hotelId,
+        id_utility: payload.id_utility,
+      },
+    });
+
+    if (existingUtility) {
+      throw new BadRequestError(
+        `Error:  This utility already exists in your hotel`
+      );
+    }
+
     const addedUtility = await db.HotelUtility.create({
       id_hotel: hotelId,
       id_utility: payload.id_utility,
@@ -142,26 +197,6 @@ class HotelManagerService {
     }
 
     return addedUtility;
-  }
-
-  static async addRoom(hotelId, payload) {
-    const addedRoom = await db.Room.create({
-      id_hotel: hotelId,
-      room_number: payload.room_number,
-      is_ordered: false,
-      price: payload.price,
-      type_name: payload.type_name,
-    });
-
-    if (!addedRoom) {
-      throw new BadRequestError("ERR: Can not add room for your hotel");
-    }
-
-    if (addedRoom) {
-      return {
-        room: addedRoom,
-      };
-    }
   }
 
   static async getAllOrder() {
@@ -178,7 +213,7 @@ class HotelManagerService {
     }
   }
 
-  static async getOrder(order_status) {
+  static async getOrderWithStatus(order_status) {
     const orderList = await db.Order.findAll({
       where: {
         status: order_status,
@@ -195,12 +230,6 @@ class HotelManagerService {
       };
     }
   }
-
-  static async updateOrder() {}
-
-  static async updateHotelInfo() {}
-
-  static async deleteHotelInfo() {}
 }
 
 module.exports = HotelManagerService;

@@ -13,6 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       Order.belongsTo(models.Hotel, { foreignKey: "id_hotel" });
       Order.belongsTo(models.User, { foreignKey: "id_user" });
       Order.belongsTo(models.Rating, { foreignKey: "id_order" });
+
+      Order.hasMany(models.RoomOrder, { foreignKey: "id_order" });
+
+      Order.belongsToMany(models.Hotel, {
+        through: "RoomOrder",
+        foreignKey: "id_order",
+      });
     }
   }
 

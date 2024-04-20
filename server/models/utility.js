@@ -6,6 +6,11 @@ module.exports = (sequelize, DataTypes) => {
   class Utility extends Model {
     static associate(models) {
       Utility.hasMany(models.HotelUtility, { foreignKey: "id_utility" });
+
+      Utility.belongsToMany(models.Hotel, {
+        through: "HotelUtility",
+        foreignKey: "id_utility",
+      });
     }
   }
 

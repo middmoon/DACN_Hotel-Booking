@@ -2,7 +2,7 @@
 
 const { OK } = require("../core/success.response");
 const HotelManagerService = require("../services/hotel.manager.service");
-const HotelService = require("../services/hotel.service");
+const RoomService = require("../services/room.service");
 
 class HotelController {
   registerHotel = async (req, res, next) => {
@@ -35,7 +35,7 @@ class HotelController {
 
   addUtility = async (req, res, next) => {
     new OK({
-      message: "Get Utility List OK",
+      message: "Add Utility List OK",
       metadata: await HotelManagerService.addUtility(req._id, req.body),
     }).send(res);
   };
@@ -43,8 +43,19 @@ class HotelController {
   addRoom = async (req, res, next) => {
     new OK({
       message: "Add Room OK",
-      metadata: await HotelManagerService.addRoom(req._id, req.body),
+      metadata: await RoomService.addRoom(req._id, req.body),
     }).send(res);
+  };
+
+  updateRoom = async (req, res, next) => {
+    new OK({
+      message: "update Room OK",
+      metadata: await RoomService.updateRoom(
+        req._id,
+        req.params.roomId,
+        req.body
+      ),
+    }).se;
   };
 }
 

@@ -7,10 +7,19 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Define associations here if needed
       Hotel.belongsTo(models.Ward, { foreignKey: "code_ward" });
+
       Hotel.belongsTo(models.User, { foreignKey: "id_manager" });
+
       Hotel.hasMany(models.HotelImage, { foreignKey: "id_hotel" });
 
+      Hotel.hasMany(models.Room, { foreignKey: "id_hotel" });
+
       Hotel.hasMany(models.HotelUtility, { foreignKey: "id_hotel" });
+
+      Hotel.belongsToMany(models.Utility, {
+        through: "HotelUtility",
+        foreignKey: "id_hotel",
+      });
     }
   }
 
