@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   class HotelUtility extends Model {
     static associate(models) {
       // Define associations here if needed
-      HotelUtility.belongsTo(models.Hotel, { foreignKey: "id_hotel" });
-      HotelUtility.belongsTo(models.Utility, { foreignKey: "id_utility" });
+      HotelUtility.hasMany(models.Hotel, { foreignKey: "_id" });
+      HotelUtility.hasMany(models.Utility, { foreignKey: "_id" });
     }
   }
 
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "HotelUtility",
       tableName: "hotel_utility",
-      timestamps: true,
+      timestamps: false,
       charset: "utf8",
       collate: "utf8_general_ci",
     }

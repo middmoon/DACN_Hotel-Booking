@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require("express");
 const router = express.Router();
 const asyncHandler = require("express-async-handler");
@@ -7,7 +9,9 @@ const {
   verifyHotelAuth,
   verifyToken,
 } = require("../../middleware/auth.middleware");
+
 const multer = require("../../config/multer.config");
+
 router
   .get("/", (req, res) => {
     res.send("hotel manager test api");
@@ -26,6 +30,7 @@ router
     "/upload-images",
     multer.array("images"),
     asyncHandler(HotelManagerController.uploadImages)
-  );
+  )
+  .use("/room", require("./room"));
 
 module.exports = router;

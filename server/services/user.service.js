@@ -6,9 +6,9 @@ const db = require("../models");
 const User = db.User;
 
 class UserService {
-  static async getUserInfoById(id_user) {
+  static async getUserInfoById(userId) {
     const foundUser = await User.findOne({
-      where: { _id: id_user },
+      where: { _id: userId },
       attributes: { exclude: ["password", "_id", "role"] },
       raw: true,
     });
@@ -24,12 +24,12 @@ class UserService {
     }
   }
 
-  static async updateUserInfo(id_user, payload) {
+  static async updateUserInfo(userId, payload) {
     const updatedUser = await User.update(
       { payload },
       {
         where: {
-          _id: id_user,
+          _id: userId,
         },
       }
     );
@@ -45,9 +45,9 @@ class UserService {
     }
   }
 
-  static async makeOrder(id_user, payload) {
+  static async makeOrder(userId, payload) {
     const makedOrder = await db.Order.create({
-      id_user: id_user,
+      userId: userId,
       id_hotel: payload.id_hotel,
       start_day: payload.start_day,
       end_day: payload.end_day,
@@ -65,6 +65,8 @@ class UserService {
       };
     }
   }
+
+  static async getAllOrder(userId) {}
 }
 
 module.exports = UserService;

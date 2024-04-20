@@ -45,7 +45,7 @@ class TestService {
     if (!payload) {
       throw new BadRequestError("Error: Can not send data from client");
     }
-
+    console.log(payload);
     return payload;
   }
 }
