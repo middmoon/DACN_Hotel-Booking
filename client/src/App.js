@@ -13,6 +13,7 @@ import Createpost from "./pages/HotelManage/CreatePost";
 import Dashboard from "./pages/HotelManage/Dashboard";
 import Room from "./pages/HotelManage/Room";
 import Profile from "./pages/HotelManage/profile";
+import Ordered from "./pages/HotelManage/Ordered";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="Dashboard" element={<Dashboard />} />
             <Route path="Room" element={<Room />} />
             <Route path="Profile" element={<Profile />} />
+            <Route path="Ordered" element={<Ordered />} />
           </Route>
         </Routes>
       </Router>

@@ -16,8 +16,8 @@ const menuSidebar = [
   },
   {
     id: 4,
-    text: "Create Room",
-    path: "/hotel-manage/create-post",
+    text: "Ordered",
+    path: "/hotel-manage/Ordered",
   },
 ];
 

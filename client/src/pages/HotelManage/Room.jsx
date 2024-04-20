@@ -17,9 +17,6 @@ const Room = () => {
     roomNumber: "",
     roomType: "",
     price: 0,
-    start: "",
-    end: "",
-    status: "",
     image: "",
   });
 
@@ -72,20 +69,29 @@ const Room = () => {
         <thead style={{ textAlign: "center" }}>
           <tr className="py-2">
             <th className="border p-2">Số phòng</th>
-            <th className="border p-2">Loại phòng</th>
             <th className="border p-2">Giá</th>
+            <th className="border p-2">Loại phòng</th>
+            <th className="border p-2">Trạng thái</th>
             <th className="border p-2">Ngày bắt đầu</th>
             <th className="border p-2">Ngày kết thúc</th>
-            <th className="border p-2">Trạng thái</th>
             <th className="border p-2">Tổng tiền</th>
+            <th className="border p-2"></th>
           </tr>
         </thead>
         <tbody>
-          {/* <tr>
-            <th>S</th>
-            <th>A</th>
-            <th>Y</th>
-          </tr> */}
+          <tr style={{ textAlign: "center", fontSize: "13px" }}>
+            <th className="border p-2 font-normal">123</th>
+            <th className="border p-2 font-normal">1000</th>
+            <th className="border p-2 font-normal">STD</th>
+            <th className="border p-2 font-normal">ordered</th>
+            <th className="border p-2 font-normal">12/5/2024</th>
+            <th className="border p-2 font-normal">16/5/2024</th>
+            <th className="border p-2 font-normal">5000</th>
+            <th className="flex justify-center items-center gap-2 p-2 font-normal text-blue-700">
+              <button className="border-b-2 border-blue-700">Chỉnh sửa</button>|
+              <button className="border-b-2 border-blue-700">Chi tiết</button>
+            </th>
+          </tr>
         </tbody>
       </table>
 
@@ -112,13 +118,17 @@ const Room = () => {
               <label htmlFor="form3Example3c" style={{ fontWeight: "500" }}>
                 {"Loại phòng(STD/VIP)"}
               </label>
-              <input
+              <select
+                id="roomType"
+                className="form-control"
+                value={payLoad.roomType}
                 onChange={handleChange}
                 name="roomType"
-                type="Type"
-                id="form3Example4c"
-                className="form-control"
-              />
+              >
+                <option value="">Chọn loại phòng</option>
+                <option value="STD">STD</option>
+                <option value="VIP">VIP</option>
+              </select>
 
               <label htmlFor="form3Example3c" style={{ fontWeight: "500" }}>
                 {"Giá tiền(VND)"}
@@ -131,38 +141,6 @@ const Room = () => {
                 className="form-control"
               />
 
-              <label htmlFor="form3Example3c" style={{ fontWeight: "500" }}>
-                {"Ngày bắt đầu"}
-              </label>
-              <input
-                onChange={handleChange}
-                name="start"
-                type="Type"
-                id="form3Example4c"
-                className="form-control"
-              />
-
-              <label htmlFor="form3Example3c" style={{ fontWeight: "500" }}>
-                {"Ngày kết thúc"}
-              </label>
-              <input
-                onChange={handleChange}
-                name="end"
-                type="Type"
-                id="form3Example4c"
-                className="form-control"
-              />
-
-              <label htmlFor="form3Example3c" style={{ fontWeight: "500" }}>
-                {"Trạng thái"}
-              </label>
-              <input
-                onChange={handleChange}
-                name="status"
-                type="Type"
-                id="form3Example4c"
-                className="form-control"
-              />
               {/* Hinh anh */}
               <div style={{ paddingTop: "30px" }}>
                 <h2 className="Address_title">Hình ảnh</h2>
