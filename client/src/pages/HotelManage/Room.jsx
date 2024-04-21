@@ -53,6 +53,7 @@ const Room = () => {
     }));
   };
 
+  //Hiển thị
   return (
     <div>
       <div className="p-7">
@@ -126,7 +127,7 @@ const Room = () => {
                 name="roomType"
               >
                 <option value="">Chọn loại phòng</option>
-                <option value="STD">STD</option>
+                <option value="STD">Standard</option>
                 <option value="VIP">VIP</option>
               </select>
 

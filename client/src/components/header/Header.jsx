@@ -14,7 +14,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-
+import axios from "axios";
 const Header = ({ type }) => {
   const state = useSelector((useState) => useState.auth.login.currentUser);
   const navigate = useNavigate();
@@ -49,6 +49,40 @@ const Header = ({ type }) => {
       };
     });
   };
+  // search item
+  const handleSearch1 = async () => {
+    const startDate = format(date[0].startDate, "MM/dd/yyyy");
+    const endDate = format(date[0].endDate, "MM/dd/yyyy");
+    const searchData = {
+      destination: destination,
+      daystart: startDate,
+      dayend: endDate,
+      options: options,
+    };
+    console.log("Search Data:", searchData);
+    try {
+      const response = await axios.post(
+        "http://localhost:3030/v2/api/test/post-method",
+        searchData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Data sent successfully", searchData);
+        navigate("/hotels", { state: { destination, date, options } }); // Điều hướng và truyền dữ liệu
+      } else {
+        console.error("Failed to send data to the server");
+        alert("tài khoản đã tồn tại");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div>
       {state ? (
@@ -317,7 +351,7 @@ const Header = ({ type }) => {
                     </div>
 
                     <div className="headerSearchItem">
-                      <button className="headerBtn" onClick={handleSearch}>
+                      <button className="headerBtn" onClick={handleSearch1}>
                         Search
                       </button>
                     </div>
