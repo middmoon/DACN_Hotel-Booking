@@ -5,9 +5,7 @@ const HotelController = require("../../controller/hotel.controller");
 const hotelManagerController = require("../../controller/hotel.manager.controller");
 
 router
-  .get("/", (req, res) => {
-    res.send("hotel test api");
-  })
+  .get("/", asyncHandler(HotelController.searchHotel))
   .get("/:_id", asyncHandler(HotelController.getHotelInfo));
 
 module.exports = router;

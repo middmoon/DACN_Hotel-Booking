@@ -53,6 +53,7 @@ class UserService {
       end_day: payload.end_day,
       status: "PRE_ORDER",
       total_price: payload.total_price,
+      total_person: payload.total_person,
     });
 
     if (!makedOrder) {

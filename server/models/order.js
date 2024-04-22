@@ -42,11 +42,27 @@ module.exports = (sequelize, DataTypes) => {
       start_day: {
         type: DataTypes.DATE,
       },
+      total_person: {
+        type: DataTypes.INTEGER.UNSIGNED,
+      },
       end_day: {
         type: DataTypes.DATE,
       },
       total_price: {
         type: DataTypes.BIGINT.UNSIGNED,
+      },
+      // virtul
+      total_day: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          const endDay = this.getDataValue("end_day");
+          const startDay = this.getDataValue("start_day");
+          if (endDay && startDay) {
+            const diffTime = Math.abs(endDay - startDay);
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          }
+          return null;
+        },
       },
     },
     {

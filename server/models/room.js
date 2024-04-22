@@ -35,6 +35,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
       },
       //
+      num_of_bed: {
+        type: DataTypes.TINYINT.UNSIGNED,
+      },
       price: {
         type: DataTypes.BIGINT.UNSIGNED,
       },

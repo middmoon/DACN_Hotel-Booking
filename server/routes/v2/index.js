@@ -10,6 +10,7 @@ router
   .use("/hotel", require("./hotel"))
   .use("/province", require("./address"))
   .use("/admin", require("./admin"))
-  .use("/test", require("./_api.test"));
+  .use("/test", require("./_api.test"))
+  .use("/search", require("./search"));
 
 module.exports = router;
