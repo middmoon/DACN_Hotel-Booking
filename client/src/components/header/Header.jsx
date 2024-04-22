@@ -21,9 +21,7 @@ const Header = ({ type }) => {
   const handleLogin = () => {
     navigate("/lg");
   };
-  const handleSearch = () => {
-    navigate("/hotels", { state: { destination, date, options } });
-  };
+
   const [openDate, setOpenDate] = useState(false);
   const [date, setDate] = useState([
     {
@@ -50,7 +48,7 @@ const Header = ({ type }) => {
     });
   };
   // search item
-  const handleSearch1 = async () => {
+  const handleSearch = async () => {
     const startDate = format(date[0].startDate, "MM/dd/yyyy");
     const endDate = format(date[0].endDate, "MM/dd/yyyy");
     const searchData = {
@@ -351,7 +349,7 @@ const Header = ({ type }) => {
                     </div>
 
                     <div className="headerSearchItem">
-                      <button className="headerBtn" onClick={handleSearch1}>
+                      <button className="headerBtn" onClick={handleSearch}>
                         Search
                       </button>
                     </div>

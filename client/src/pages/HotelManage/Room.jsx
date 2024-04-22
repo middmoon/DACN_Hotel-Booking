@@ -14,8 +14,8 @@ const Room = () => {
 
   //Lay data
   const [payLoad, SetpayLoad] = useState({
-    roomNumber: "",
-    roomType: "",
+    room_number: "",
+    type_name: "",
     price: 0,
     image: "",
   });
@@ -110,7 +110,7 @@ const Room = () => {
               </label>
               <input
                 onChange={handleChange}
-                name="roomNumber"
+                name="room_number"
                 type="Type"
                 id="form3Example4c"
                 className="form-control"
@@ -120,11 +120,11 @@ const Room = () => {
                 {"Loại phòng(STD/VIP)"}
               </label>
               <select
-                id="roomType"
+                id="type_name"
                 className="form-control"
-                value={payLoad.roomType}
+                value={payLoad.type_name}
                 onChange={handleChange}
-                name="roomType"
+                name="type_name"
               >
                 <option value="">Chọn loại phòng</option>
                 <option value="STD">Standard</option>
