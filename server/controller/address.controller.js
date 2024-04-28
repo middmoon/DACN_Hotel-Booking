@@ -1,9 +1,7 @@
 "use strict";
 
-const { BadRequestError, NotFoundError } = require("../core/error.response");
 const { OK } = require("../core/success.response");
 const AddressService = require("../services/address.service");
-const { getUserInfoById } = require("../services/user.service");
 
 class AddressController {
   getProvinces = async (req, res, next) => {

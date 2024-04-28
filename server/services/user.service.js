@@ -47,11 +47,12 @@ class UserService {
 
   static async makeOrder(userId, payload) {
     const makedOrder = await db.Order.create({
-      userId: userId,
+      id_user: userId,
       id_hotel: payload.id_hotel,
       start_day: payload.start_day,
       end_day: payload.end_day,
       status: "PRE_ORDER",
+      total_room: payload.total_room,
       total_price: payload.total_price,
       total_person: payload.total_person,
     });

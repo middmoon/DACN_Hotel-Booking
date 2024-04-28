@@ -20,6 +20,8 @@ module.exports = (sequelize, DataTypes) => {
         through: "HotelUtility",
         foreignKey: "id_hotel",
       });
+
+      Hotel.hasMany(models.Order, { foreignKey: "id_hotel" });
     }
   }
 

@@ -2,17 +2,7 @@
 require("dotenv").config();
 
 const db = require("../models");
-const { BadRequestError, NotFoundError } = require("../core/error.response");
-const AccessService = require("./access.service");
-const { getInfoData } = require("../utils");
-
-const cloudinary = require("cloudinary").v2;
-
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUD_API_KEY,
-  api_secret: process.env.API_SECRET,
-});
+const { NotFoundError } = require("../core/error.response");
 
 class HotelService {
   static async getHotelInfo(hotelId) {

@@ -5,7 +5,7 @@ const { BadRequestError, NotFoundError } = require("../core/error.response");
 const { getInfoData } = require("../utils");
 const HotelManagerService = require("./hotel.manager.service");
 
-class RoomService {
+class ManagerRoomService {
   static async getAllRoom(userId) {
     const hotelId = await HotelManagerService.getHotelIdForOwner(userId);
 
@@ -20,6 +20,25 @@ class RoomService {
     }
 
     return hotelList;
+  }
+
+  static async getRoomWithStatus(userId, status) {
+    const hotelId = await HotelManagerService.getHotelIdForOwner(userId);
+
+    const foundRooms = await db.Room.findAll({
+      where: {
+        id_hotel: hotelId,
+        is_ordered: status,
+      },
+    });
+
+    if (!foundRooms) {
+      throw new BadRequestError("Error: Can not get room with status");
+    }
+
+    return {
+      foundRooms,
+    };
   }
 
   static async addRoom(userId, payload) {
@@ -52,7 +71,7 @@ class RoomService {
     });
 
     if (!room) {
-      throw new BadRequestError("ERR: Can not update room for your hotel");
+      throw new BadRequestError("ERR: Can not find room for your hotel");
     }
 
     const updatedRoom = await room.update({
@@ -61,10 +80,14 @@ class RoomService {
       is_ordered: payload.is_ordered,
     });
 
+    if (!room) {
+      throw new BadRequestError("ERR: Can not update room for your hotel");
+    }
+
     return {
       updatedRoom,
     };
   }
 }
 
-module.exports = RoomService;
+module.exports = ManagerRoomService;

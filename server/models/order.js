@@ -45,6 +45,9 @@ module.exports = (sequelize, DataTypes) => {
       total_person: {
         type: DataTypes.INTEGER.UNSIGNED,
       },
+      total_room: {
+        type: DataTypes.INTEGER.UNSIGNED,
+      },
       end_day: {
         type: DataTypes.DATE,
       },

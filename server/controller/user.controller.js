@@ -37,6 +37,13 @@ class UserController {
       metadata: await UserService.makeOrder(req._id, req.body),
     }).send(res);
   };
+
+  getAllOrder = async (req, res, next) => {
+    new OK({
+      message: "Make order  OK",
+      metadata: await UserService.makeOrder(req._id, req.body),
+    }).send(res);
+  };
 }
 
 module.exports = new UserController();

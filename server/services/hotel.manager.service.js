@@ -95,6 +95,15 @@ class HotelManagerService {
         {
           model: db.Room,
         },
+        {
+          model: db.Order,
+          include: [
+            {
+              model: db.RoomOrder,
+              include: [db.Room],
+            },
+          ],
+        },
 
         // {
         //   model: db.HotelUtility,
@@ -197,38 +206,6 @@ class HotelManagerService {
     }
 
     return addedUtility;
-  }
-
-  static async getAllOrder() {
-    const orderList = await db.Order.findAll({});
-
-    if (!orderList) {
-      throw new BadRequestError("ERR: Can not get your orders");
-    }
-
-    if (orderList) {
-      return {
-        orders: orderList,
-      };
-    }
-  }
-
-  static async getOrderWithStatus(order_status) {
-    const orderList = await db.Order.findAll({
-      where: {
-        status: order_status,
-      },
-    });
-
-    if (!orderList) {
-      throw new BadRequestError("ERR: Can not get your orders");
-    }
-
-    if (orderList) {
-      return {
-        orders: orderList,
-      };
-    }
   }
 }
 

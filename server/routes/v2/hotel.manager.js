@@ -3,8 +3,9 @@
 const express = require("express");
 const router = express.Router();
 const asyncHandler = require("express-async-handler");
-const HotelController = require("../../controller/hotel.controller");
-const HotelManagerController = require("../../controller/hotel.manager.controller");
+const ManagerController = require("../../controller/manager.controller");
+const ManagerRoomController = require("../../controller/manager.room.controller");
+
 const {
   verifyHotelAuth,
   verifyToken,
@@ -16,21 +17,23 @@ router
   .get("/", (req, res) => {
     res.send("hotel manager test api");
   })
-  .post("/register", asyncHandler(HotelManagerController.registerHotel))
-  .get("/get-utility-list", asyncHandler(HotelManagerController.getUtilityList))
+  .post("/register", asyncHandler(ManagerController.registerHotel))
+  .get("/get-utility-list", asyncHandler(ManagerController.getUtilityList))
 
   // Auth method
   .use(verifyToken)
   .use(verifyHotelAuth)
-  .get("/get-info", asyncHandler(HotelManagerController.getInfo))
-  .post("/add-utility", asyncHandler(HotelManagerController.addUtility))
-  .post("/add-room", asyncHandler(HotelManagerController.addRoom))
+  .get("/get-info", asyncHandler(ManagerController.getInfo))
+  .post("/add-utility", asyncHandler(ManagerController.addUtility))
+  .post("/add-room", asyncHandler(ManagerRoomController.addRoom))
 
   .post(
     "/upload-images",
     multer.array("images"),
-    asyncHandler(HotelManagerController.uploadImages)
+    asyncHandler(ManagerController.uploadImages)
   )
-  .use("/room", require("./room"));
+
+  .use("/room", require("./hotel.manager.room"))
+  .use("/order", require("./hotel.manager.order"));
 
 module.exports = router;
