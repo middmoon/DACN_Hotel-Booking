@@ -30,11 +30,11 @@ const Ordered = () => {
           Authorization: `${accessToken}`,
         };
         const response = await axios.get(
-          "http://localhost:3030/v2/api/hotel-manage/room",
+          "http://localhost:3030/v2/api/hotel-manage/room/available",
           { headers }
         );
 
-        setRooms(response.data.metadata);
+        setRooms(response.data.metadata.foundRooms);
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu phòng:", error);
       }
@@ -61,6 +61,7 @@ const Ordered = () => {
           </tr>
         </thead>
         <tbody>
+          {/* đoạn này sẽ lấy thông tin từ API */}
           <tr style={{ textAlign: "center", fontSize: "13px" }}>
             <th className="border p-2 font-normal">123</th>
             <th className="border p-2 font-normal">ordered</th>
@@ -79,6 +80,7 @@ const Ordered = () => {
         </tbody>
       </table>
 
+      {/* hiển thị khi nhấn chỉnh sửa  */}
       {open && (
         <div className="ordered_opt" onClick={() => setOpen(false)}>
           <div
@@ -130,6 +132,7 @@ const Ordered = () => {
         </div>
       )}
 
+      {/* hiển thị khi nhấn thêm phòng */}
       {open2 && (
         <div className="ordered_opt" onClick={() => setOpen2(false)}>
           <div
@@ -152,6 +155,7 @@ const Ordered = () => {
                   </tr>
                 </thead>
                 <tbody>
+                  {/* api lấy tất cả các phòng */}
                   {Object.values(rooms).map((room) => (
                     <tr
                       key={room._id}
