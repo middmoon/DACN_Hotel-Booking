@@ -41,6 +41,25 @@ class ManagerRoomService {
     };
   }
 
+  static async getDetailRoom(userId, roomId) {
+    const hotelId = await HotelManagerService.getHotelIdForOwner(userId);
+
+    const foundRoom = await db.Room.findOne({
+      where: {
+        _id: roomId,
+        id_hotel: hotelId,
+      },
+    });
+
+    if (!foundRoom) {
+      throw new NotFoundError("Error: Can not get room detail");
+    }
+
+    return {
+      foundRoom,
+    };
+  }
+
   static async addRoom(userId, payload) {
     const hotelId = await HotelManagerService.getHotelIdForOwner(userId);
 

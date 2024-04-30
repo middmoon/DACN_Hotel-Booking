@@ -32,6 +32,31 @@ class ManagerOrderService {
     }
   }
 
+  static async getDetailOrder(userId, orderId) {
+    const hotelId = await HotelManagerService.getHotelIdForOwner(userId);
+
+    const foundOrder = await db.Order.findOne({
+      where: {
+        _id: orderId,
+        id_hotel: hotelId,
+      },
+      include: [
+        {
+          model: db.RoomOrder,
+          include: [db.Room],
+        },
+      ],
+    });
+
+    if (!foundOrder) {
+      throw new NotFoundError("Error: Can not get order detail");
+    }
+
+    return {
+      foundOrder,
+    };
+  }
+
   static async getOrderWithStatus(userId, status) {
     const hotelId = await HotelManagerService.getHotelIdForOwner(userId);
 
@@ -91,21 +116,28 @@ class ManagerOrderService {
       throw new NotFoundError("ERR: Can not find order for your hotel");
     }
 
-    const updateedOrder = await foundOrder.update({
-      status: payload.status,
-      total_price: payload.total_price,
-      start_day: payload.start_day,
-      end_day: payload.end_day,
-      total_person: payload.total_person,
-      total_room: payload.total_room,
+    const room = await db.Room.findOne({
+      where: { _id: payload.id_room },
     });
 
-    if (!foundOrder) {
-      throw new BadRequestError("ERR: Can not update order for your hotel");
+    if (!room) {
+      throw new NotFoundError("ERR: Room not found");
+    }
+
+    const newRoomOrder = await db.RoomOrder.create({
+      id_order: orderId,
+      id_room: payload.id_room,
+      start_day: payload.start_day,
+      end_day: payload.end_day,
+      total_price: payload.total_price,
+    });
+
+    if (!newRoomOrder) {
+      throw new NotFoundError("ERR: Can update Room Order");
     }
 
     return {
-      updateedOrder,
+      newRoomOrder,
     };
   }
 }

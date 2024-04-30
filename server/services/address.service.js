@@ -1,8 +1,8 @@
 "use strict";
 
 require("dotenv").config();
-const { where } = require("sequelize");
 const { NotFoundError } = require("../core/error.response");
+const { Op } = require("sequelize");
 const db = require("../models");
 
 const Province = db.Province;
@@ -40,6 +40,50 @@ class AddressService {
       throw new NotFoundError("Can not get Ward");
     } else {
       return { ward };
+    }
+  }
+
+  static async searchPlace(search) {
+    const query = search.query;
+    try {
+      const provinces = await Province.findAll({
+        where: {
+          [Op.or]: [
+            { name: { [Op.like]: `%${query}%` } },
+            { name_en: { [Op.like]: `%${query}%` } },
+            { full_name: { [Op.like]: `%${query}%` } },
+          ],
+        },
+        limit: 2,
+      });
+
+      const districts = await District.findAll({
+        where: {
+          [Op.or]: [
+            { name: { [Op.like]: `%${query}%` } },
+            { name_en: { [Op.like]: `%${query}%` } },
+            { full_name: { [Op.like]: `%${query}%` } },
+          ],
+        },
+        limit: 4,
+      });
+
+      // const wards = await Ward.findAll({
+      //   where: {
+      //     [Op.or]: [
+      //       { name: { [Op.like]: `%${query}%` } },
+      //       { name_en: { [Op.like]: `%${query}%` } },
+      //       { full_name: { [Op.like]: `%${query}%` } },
+      //     ],
+      //   },
+      //   limit: 4,
+      // });
+
+      const place = [...provinces, ...districts];
+      return { place };
+    } catch (error) {
+      console.error("Error while searching:", error);
+      throw new Error("Internal server error");
     }
   }
 }

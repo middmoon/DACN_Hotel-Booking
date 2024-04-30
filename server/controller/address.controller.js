@@ -28,6 +28,13 @@ class AddressController {
       ),
     }).send(res);
   };
+
+  searchPlace = async (req, res, next) => {
+    new OK({
+      message: "Seach place OK",
+      metadata: await AddressService.searchPlace(req.query),
+    }).send(res);
+  };
 }
 
 module.exports = new AddressController();

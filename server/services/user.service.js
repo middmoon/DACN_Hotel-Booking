@@ -68,7 +68,9 @@ class UserService {
     }
   }
 
-  static async getAllOrder(userId) {}
+  static async getHotelList() {
+    const hotelList = await db.Hotel.find;
+  }
 }
 
 module.exports = UserService;

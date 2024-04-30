@@ -41,6 +41,16 @@ class ManagerRoomController {
       metadata: await ManagerRoomService.getRoomWithStatus(req._id, true),
     }).send(res);
   };
+
+  getDetailRoom = async (req, res, next) => {
+    new OK({
+      message: "get detail room OK",
+      metadata: await ManagerRoomService.getDetailRoom(
+        req._id,
+        res.params.roomId
+      ),
+    }).send(res);
+  };
 }
 
 module.exports = new ManagerRoomController();

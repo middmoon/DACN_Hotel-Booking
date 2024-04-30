@@ -45,10 +45,31 @@ class ManagerOrderController {
     }).send(res);
   };
 
+  getDetailOrder = async (req, res, next) => {
+    new OK({
+      message: "get detail order OK",
+      metadata: await ManagerOrderService.getDetailOrder(
+        req._id,
+        res.params.orderId
+      ),
+    }).send(res);
+  };
+
   updateOrder = async (req, res, next) => {
     new OK({
       message: "update order OK",
       metadata: await ManagerOrderService.updateOrder(
+        req._id,
+        req.params.orderId,
+        req.body
+      ),
+    }).send(res);
+  };
+
+  addRoomToOrder = async (req, res, next) => {
+    new OK({
+      message: "add room to order OK",
+      metadata: await ManagerOrderService.addRoomToOrder(
         req._id,
         req.params.orderId,
         req.body
