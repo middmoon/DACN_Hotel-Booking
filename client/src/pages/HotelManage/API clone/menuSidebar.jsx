@@ -11,7 +11,7 @@ const menuSidebar = [
   },
   {
     id: 3,
-    text: "Ordered",
+    text: "Order",
     path: "/hotel-manage/Ordered",
   },
   {
