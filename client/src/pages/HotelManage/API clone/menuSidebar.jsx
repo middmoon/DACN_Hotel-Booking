@@ -11,13 +11,13 @@ const menuSidebar = [
   },
   {
     id: 3,
-    text: "Profile",
-    path: "/hotel-manage/Profile",
+    text: "Ordered",
+    path: "/hotel-manage/Ordered",
   },
   {
     id: 4,
-    text: "Ordered",
-    path: "/hotel-manage/Ordered",
+    text: "Profile",
+    path: "/hotel-manage/Profile",
   },
 ];
 

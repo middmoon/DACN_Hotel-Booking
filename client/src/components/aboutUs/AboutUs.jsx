@@ -1,13 +1,18 @@
-import "./aboutUs.css"
+import About from "../about/About";
+import Header from "../header/Header";
+import Navbars from "../navbar/navBar";
+import "./aboutUs.css";
 
 const AboutUs = () => {
-    return(
-        <div className="wrapper-a">
-           about us
-        </div>
-    
-    )
-}
+  return (
+    <div>
+      <Navbars />
+      <Header />
+      <div className="homeContainer">
+        <About />
+      </div>
+    </div>
+  );
+};
 
-
-export default AboutUs
+export default AboutUs;

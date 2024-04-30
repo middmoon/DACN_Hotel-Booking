@@ -1,41 +1,73 @@
 import React from "react";
 import "./css/room.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import InputForm from "./CreatePost_Components/InputForm";
 const Room = () => {
+  const state = useSelector((useState) => useState.auth.login.currentUser);
+  const accessToken = state?.metadata.accessToken;
+
   // đóng mở component
   const [open, setOpen] = useState(false);
+  const [rooms, setRooms] = useState([]);
   const handleOpen = (i) => {
     setOpen(true);
   };
+  //Lay data phòng
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `${accessToken}`,
+        };
+        const response = await axios.get(
+          "http://localhost:3030/v2/api/hotel-manage/room",
+          { headers }
+        );
+
+        setRooms(response.data.metadata);
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu phòng:", error);
+      }
+    };
+
+    fetchRooms();
+  }, []);
 
   //Lay data
   const [payLoad, SetpayLoad] = useState({
     room_number: "",
     type_name: "",
     price: 0,
-    image: "",
   });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    if (!payLoad.room_number || !payLoad.type_name || !payLoad.price) {
+      alert("Vui lòng điền đầy đủ thông tin trước khi gửi.");
+      return;
+    }
     try {
       const response = await axios.post(
-        "http://localhost:3030/v2/api/test/post-method",
+        "http://localhost:3030/v2/api/hotel-manage/add-room",
         payLoad,
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${accessToken}`,
           },
         }
       );
 
       if (response.status === 200) {
         console.log("Data sent successfully", payLoad);
+        window.location.reload();
       } else {
         console.error("Failed to send data to the server");
         alert("tài khoản đã tồn tại");
@@ -80,19 +112,29 @@ const Room = () => {
           </tr>
         </thead>
         <tbody>
-          <tr style={{ textAlign: "center", fontSize: "13px" }}>
-            <th className="border p-2 font-normal">123</th>
-            <th className="border p-2 font-normal">1000</th>
-            <th className="border p-2 font-normal">STD</th>
-            <th className="border p-2 font-normal">ordered</th>
-            <th className="border p-2 font-normal">12/5/2024</th>
-            <th className="border p-2 font-normal">16/5/2024</th>
-            <th className="border p-2 font-normal">5000</th>
-            <th className="flex justify-center items-center gap-2 p-2 font-normal text-blue-700">
-              <button className="border-b-2 border-blue-700">Chỉnh sửa</button>|
-              <button className="border-b-2 border-blue-700">Chi tiết</button>
-            </th>
-          </tr>
+          {Object.values(rooms).map((room) => (
+            <tr
+              key={room._id}
+              style={{ textAlign: "center", fontSize: "13px" }}
+            >
+              <th className="border p-2 font-normal">{room.room_number}</th>
+              <th className="border p-2 font-normal">{room.price}</th>
+              <th className="border p-2 font-normal">{room.type_name}</th>
+              <th className="border p-2 font-normal">
+                {room.is_ordered ? "Ordered" : "Available"}
+              </th>
+              <th className="border p-2 font-normal">12/5/2024</th>
+              <th className="border p-2 font-normal">16/5/2024</th>
+              <th className="border p-2 font-normal">5000</th>
+              <th className="flex justify-center items-center gap-2 p-2 font-normal text-blue-700">
+                <button className="border-b-2 border-blue-700">
+                  Chỉnh sửa
+                </button>
+                |
+                <button className="border-b-2 border-blue-700">Chi tiết</button>
+              </th>
+            </tr>
+          ))}
         </tbody>
       </table>
 
@@ -143,7 +185,7 @@ const Room = () => {
               />
 
               {/* Hinh anh */}
-              <div style={{ paddingTop: "30px" }}>
+              {/* <div style={{ paddingTop: "30px" }}>
                 <h2 className="Address_title">Hình ảnh</h2>
                 <small>Cập nhật hình ảnh</small>
                 <div>
@@ -177,7 +219,7 @@ const Room = () => {
                   </label>
                   <input hidden type="file" id="file" />
                 </div>
-              </div>
+              </div> */}
               <button type="submit" className="createRoom-btn">
                 Submit
               </button>
