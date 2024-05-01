@@ -35,7 +35,6 @@ const Registerhotels = () => {
     hotel_name: "",
     house_number: "",
     street_name: "",
-    ward_code: "",
   });
 
   useEffect(() => {
@@ -88,7 +87,7 @@ const Registerhotels = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3030/v2/api/hotel-manage/register",
+        "http://localhost:3030/v2/api/test/post-method",
         formData,
         {
           headers: {
@@ -115,7 +114,33 @@ const Registerhotels = () => {
       [name]: value,
     }));
 
-    if (name === "code_ward") {
+    if (name === "province_code") {
+      const selectedProvinceCode =
+        event.target.options[event.target.selectedIndex].getAttribute(
+          "data-province-code"
+        );
+      if (selectedProvinceCode) {
+        setFormData((prevData) => ({
+          ...prevData,
+          province_code: selectedProvinceCode,
+        }));
+      }
+    }
+
+    if (name === "district_code") {
+      const selectedDistrictCode =
+        event.target.options[event.target.selectedIndex].getAttribute(
+          "data-district-code"
+        );
+      if (selectedDistrictCode) {
+        setFormData((prevData) => ({
+          ...prevData,
+          district_code: selectedDistrictCode,
+        }));
+      }
+    }
+
+    if (name === "ward_code") {
       const selectedWard =
         event.target.options[event.target.selectedIndex].getAttribute(
           "data-code"
@@ -129,7 +154,18 @@ const Registerhotels = () => {
       }
     }
   };
+  //lấy thêm mã cho province - district
+  const handleDistrictChange = (e) => {
+    const selectedDistrict = e.target.value;
+    setDistrict(selectedDistrict);
+    handleChange(e);
+  };
 
+  const handleProvinceChange = (e) => {
+    const selectedProvince = e.target.value;
+    setProvince(selectedProvince);
+    handleChange(e);
+  };
   return (
     <div>
       <div className="background2"></div>
@@ -176,7 +212,8 @@ const Registerhotels = () => {
 
                 <select
                   value={province}
-                  onChange={(e) => setProvince(e.target.value)}
+                  onChange={handleProvinceChange}
+                  name="province_code"
                   className="form-control"
                 >
                   <option value="">Chọn Thành Phố / Tỉnh</option>
@@ -190,13 +227,18 @@ const Registerhotels = () => {
 
                 <select
                   value={district}
-                  onChange={(e) => setDistrict(e.target.value)}
+                  onChange={handleDistrictChange}
+                  name="district_code"
                   className="form-control"
                 >
                   <option value="">Chọn Thành Quận / Huyện</option>
                   {districts &&
                     districts.map((dst) => (
-                      <option value={dst.code} key={dst.code}>
+                      <option
+                        value={dst.code}
+                        key={dst.code}
+                        data-province-code={dst.code}
+                      >
                         {dst.full_name}
                       </option>
                     ))}
