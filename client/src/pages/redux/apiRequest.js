@@ -38,6 +38,8 @@ function AuthRoute(role, navigate) {
   }
 }
 
+axios.defaults.withCredentials = true;
+
 export const loginUser = async (user, dispatch, navigate) => {
   dispatch(loginStart());
   try {

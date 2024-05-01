@@ -39,6 +39,12 @@ module.exports = (sequelize, DataTypes) => {
       code_ward: {
         type: DataTypes.STRING(20),
       },
+      code_district: {
+        type: DataTypes.STRING(20),
+      },
+      code_province: {
+        type: DataTypes.STRING(20),
+      },
       id_manager: {
         type: DataTypes.INTEGER,
       },

@@ -17,11 +17,20 @@ class AccessController {
     const loginResponse = await AccessService.login(req.body);
     const { accessToken, refreshToken, user } = loginResponse.metadata;
 
-    res.cookie("refreshToken", refreshToken, {
+    res.cookie("accessToken", accessToken, {
+      maxAge: 100 * 60 * 1000,
       httpOnly: true,
       secure: false,
       path: "/",
-      sameSite: "Lax",
+      sameSite: "strict",
+    });
+
+    res.cookie("refreshToken", refreshToken, {
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      secure: false,
+      path: "/",
+      sameSite: "strict",
     });
 
     new OK({
@@ -57,7 +66,7 @@ class AccessController {
 
   logout = async (req, res, next) => {
     res.clearCookie("refreshToken");
-
+    res.clearCookie("accessToken");
     new OK({
       message: "Logout OK",
       metadata: await AccessService.logout(req.user),
