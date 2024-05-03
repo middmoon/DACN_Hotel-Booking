@@ -12,6 +12,27 @@ const Ordered = () => {
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [rooms, setRooms] = useState([]);
+  const [selectedRoom, setSelectedRoom] = useState();
+  const [selectedRooms, setSelectedRooms] = useState([]);
+  const handleRoomSelection = (room) => {
+    setSelectedRoom(room);
+    setOpen(true);
+    setOpen2(false);
+    const isSelected = selectedRooms.some(
+      (selectedRoom) => selectedRoom._id === room._id
+    );
+
+    if (isSelected) {
+      // Nếu đã được chọn, loại bỏ khỏi danh sách
+      const updatedRooms = selectedRooms.filter(
+        (selectedRoom) => selectedRoom._id !== room._id
+      );
+      setSelectedRooms(updatedRooms);
+    } else {
+      // Nếu chưa được chọn, thêm vào danh sách
+      setSelectedRooms([...selectedRooms, room]);
+    }
+  };
 
   const handleOpen = (i) => {
     setOpen(true);
@@ -22,6 +43,41 @@ const Ordered = () => {
 
   //Lay data phòng
 
+  // useEffect(() => {
+  //   const fetchRooms = async () => {
+  //     try {
+  //       const headers = {
+  //         "Content-Type": "application/json",
+  //         Authorization: `${accessToken}`,
+  //       };
+  //       const response = await axios.get(
+  //         "http://localhost:3030/v2/api/hotel-manage/room/available",
+  //         { headers }
+  //       );
+
+  //       setRooms(response.data.metadata.foundRooms);
+  //       console.log(setRooms);
+  //     } catch (error) {
+  //       console.error("Lỗi khi lấy dữ liệu phòng:", error);
+  //     }
+  //   };
+
+  //   fetchRooms();
+  // }, []);
+
+  //lưu lại thông tin khi reload page
+  const handleConfirmation = () => {
+    localStorage.setItem("selectedRooms", JSON.stringify(selectedRooms));
+  };
+
+  // Tải thông tin từ Local Storage khi tải lại trang
+  useEffect(() => {
+    const storedSelectedRooms = localStorage.getItem("selectedRooms");
+    if (storedSelectedRooms) {
+      setSelectedRooms(JSON.parse(storedSelectedRooms));
+    }
+  }, []);
+
   useEffect(() => {
     const fetchRooms = async () => {
       try {
@@ -30,11 +86,12 @@ const Ordered = () => {
           Authorization: `${accessToken}`,
         };
         const response = await axios.get(
-          "http://localhost:3030/v2/api/hotel-manage/room/available",
+          "http://localhost:3030/v2/api/hotel-manage/room/",
           { headers }
         );
 
-        setRooms(response.data.metadata.foundRooms);
+        setRooms(response.data.metadata);
+        console.log(setRooms);
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu phòng:", error);
       }
@@ -126,7 +183,42 @@ const Ordered = () => {
                   onClick={() => handleOpen2()}
                 />
               </div>
-              <div style={{ height: "400px" }}></div>
+              <div style={{ height: "400px" }}>
+                {/* Hiển thị danh sách các phòng đã chọn */}
+                <div style={{ paddingTop: "30px" }}>
+                  {selectedRooms.map((selectedRoom) => (
+                    <div>
+                      <div
+                        style={{ display: "flex", gap: "100px" }}
+                        key={selectedRoom._id}
+                      >
+                        <p style={{ width: "200px" }}>
+                          Số phòng: {selectedRoom.room_number}
+                        </p>
+                        <p style={{ width: "200px" }}>
+                          Giá: {selectedRoom.price}
+                        </p>
+                        <p style={{ width: "200px" }}>
+                          Loại phòng: {selectedRoom.type_name}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div>
+              <button
+                style={{
+                  padding: "10px",
+                  backgroundColor: "green",
+                  borderRadius: "5px",
+                  color: "white",
+                }}
+                onClick={handleConfirmation()}
+              >
+                Xác nhận
+              </button>
             </div>
           </div>
         </div>
@@ -170,7 +262,10 @@ const Ordered = () => {
                       </th>
 
                       <th className="flex justify-center items-center gap-2 p-2 font-normal text-blue-700">
-                        <button className="border-b-2 border-blue-700">
+                        <button
+                          className="border-b-2 border-blue-700"
+                          onClick={() => handleRoomSelection(room)}
+                        >
                           chọn
                         </button>
                       </th>

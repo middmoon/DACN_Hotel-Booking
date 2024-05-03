@@ -127,10 +127,6 @@ const Room = () => {
               <th className="border p-2 font-normal">16/5/2024</th>
               <th className="border p-2 font-normal">5000</th>
               <th className="flex justify-center items-center gap-2 p-2 font-normal text-blue-700">
-                <button className="border-b-2 border-blue-700">
-                  Chỉnh sửa
-                </button>
-                |
                 <button className="border-b-2 border-blue-700">Chi tiết</button>
               </th>
             </tr>

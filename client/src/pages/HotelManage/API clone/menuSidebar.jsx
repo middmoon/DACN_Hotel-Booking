@@ -19,6 +19,11 @@ const menuSidebar = [
     text: "Profile",
     path: "/hotel-manage/Profile",
   },
+  {
+    id: 5,
+    text: "Profile Hotel",
+    path: "/hotel-manage/Profile_ht",
+  },
 ];
 
 export default menuSidebar;

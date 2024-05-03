@@ -14,6 +14,7 @@ import Dashboard from "./pages/HotelManage/Dashboard";
 import Room from "./pages/HotelManage/Room";
 import Profile from "./pages/HotelManage/profile";
 import Ordered from "./pages/HotelManage/Ordered";
+import Profile_ht from "./pages/HotelManage/Profile_ht";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="Room" element={<Room />} />
             <Route path="Profile" element={<Profile />} />
             <Route path="Ordered" element={<Ordered />} />
+            <Route path="Profile_ht" element={<Profile_ht />} />
           </Route>
         </Routes>
       </Router>
