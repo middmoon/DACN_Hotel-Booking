@@ -44,6 +44,8 @@ class HotelManagerService {
       house_number: payload.house_number,
       street_name: payload.street_name,
       code_ward: payload.ward_code,
+      code_district: payload.district_code,
+      code_province: payload.province_code,
       status: "ACTIVE",
     });
 
@@ -92,18 +94,18 @@ class HotelManagerService {
           },
           attributes: ["_id", "utility_name", "utility_icon"],
         },
-        {
-          model: db.Room,
-        },
-        {
-          model: db.Order,
-          include: [
-            {
-              model: db.RoomOrder,
-              include: [db.Room],
-            },
-          ],
-        },
+        // {
+        //   model: db.Room,
+        // },
+        // {
+        //   model: db.Order,
+        //   include: [
+        //     {
+        //       model: db.RoomOrder,
+        //       include: [db.Room],
+        //     },
+        //   ],
+        // },
 
         // {
         //   model: db.HotelUtility,

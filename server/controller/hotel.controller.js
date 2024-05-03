@@ -15,7 +15,15 @@ class HotelController {
     console.log(req.query);
     new OK({
       message: "get hotel info OK",
-      // metadata: await HotelService.getHotelInfo(req.params._id),
+      //metadata: await HotelService.getHotelInfo(req.params._id),
+    }).send(res);
+  };
+
+  getHotelList = async (req, res, next) => {
+    //console.log(req.query);
+    new OK({
+      message: "get hotel info OK",
+      metadata: await HotelService.getHotelList_v2(req.query),
     }).send(res);
   };
 }

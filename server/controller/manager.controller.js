@@ -5,6 +5,7 @@ const HotelManagerService = require("../services/hotel.manager.service");
 
 class ManagerController {
   registerHotel = async (req, res, next) => {
+    console.log(req.body);
     new OK({
       message: "create new Hotel with a Manager OK",
       metadata: await HotelManagerService.registerHotel(req.body),

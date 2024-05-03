@@ -65,7 +65,7 @@ class AddressService {
             { full_name: { [Op.like]: `%${query}%` } },
           ],
         },
-        limit: 4,
+        limit: 7,
       });
 
       // const wards = await Ward.findAll({
@@ -79,8 +79,8 @@ class AddressService {
       //   limit: 4,
       // });
 
-      const place = [...provinces, ...districts];
-      return { place };
+      // const place = [...provinces, ...districts];
+      return { provinces, districts };
     } catch (error) {
       console.error("Error while searching:", error);
       throw new Error("Internal server error");
