@@ -144,13 +144,9 @@ export const apiGetPublicWard = (district_code) =>
 export const apiGetNewPosts = (images) =>
   new Promise(async (resolve, reject) => {
     try {
-      const REACT_APP_CLOUD_NAME = process.env.REACT_APP_CLOUD_NAME;
-      if (!REACT_APP_CLOUD_NAME) {
-        throw new Error("REACT_APP_CLOUD_NAME is not defined");
-      }
       const response = await axiosDefaults({
         method: "post",
-        url: `https://api.cloudinary.com/v1_1/${REACT_APP_CLOUD_NAME}/image/upload`,
+        url: `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
         data: images,
       });
       resolve(response);

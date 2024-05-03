@@ -7,6 +7,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
 const Profile_ht = () => {
+  const handleFiles = (e) => {
+    e.stopPropagation();
+    let files = e.target.files;
+    let images = new FormData();
+  };
   return (
     <div className="p-7 flex flex-col items-center">
       <h1 className="w-full text-start CreatePost-Header">
@@ -52,7 +57,13 @@ const Profile_ht = () => {
                 Thêm ảnh
               </span>
             </label>
-            <input hidden type="file" id="file" />
+            <input
+              onChange={handleFiles}
+              hidden
+              type="file"
+              id="file"
+              multiple
+            />
           </div>
         </div>
       </div>
