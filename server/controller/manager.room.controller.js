@@ -47,7 +47,7 @@ class ManagerRoomController {
       message: "get detail room OK",
       metadata: await ManagerRoomService.getDetailRoom(
         req._id,
-        res.params.roomId
+        req.params.roomId
       ),
     }).send(res);
   };
