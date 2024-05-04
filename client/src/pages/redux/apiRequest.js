@@ -155,19 +155,19 @@ export const apiGetNewPosts = (images) =>
     }
   });
 
-export const apiUploadImages = () =>
-  new Promise(async (resolve, reject) => {
-    try {
-      const REACT_APP_CLOUD_NAME = process.env.REACT_APP_CLOUD_NAME;
-      if (!REACT_APP_CLOUD_NAME) {
-        throw new Error("REACT_APP_CLOUD_NAME is not defined");
-      }
-      const response = await axiosDefaults({
-        method: "post",
-        url: `https://api.cloudinary.com/v1_1/${REACT_APP_CLOUD_NAME}/image/upload`,
-      });
-      resolve(response);
-    } catch (error) {
-      reject(error);
-    }
-  });
+export const apiUploadImages = async (images) => {
+  try {
+    const response = await axios({
+      method: "post",
+      url: `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
+      data: images,
+      params: {
+        upload_preset: process.env.REACT_APP_UPLOAD_ASSETS_NAME,
+      },
+      withCredentials: false,
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};

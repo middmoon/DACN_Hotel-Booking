@@ -5,12 +5,19 @@ import InputForm from "./CreatePost_Components/InputForm";
 import Button from "react-bootstrap/esm/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { apiUploadImages } from "../redux/apiRequest";
 
 const Profile_ht = () => {
-  const handleFiles = (e) => {
+  const handleFiles = async (e) => {
     e.stopPropagation();
-    let files = e.target.files;
-    let images = new FormData();
+    const files = e.target.files;
+    const images = new FormData();
+    for (let i in files) {
+      images.append("file", i);
+      images.append("upload_preset", process.env.REACT_APP_UPLOAD_ASSETS_NAME);
+      const response = await apiUploadImages(images);
+      console.log(response);
+    }
   };
   return (
     <div className="p-7 flex flex-col items-center">

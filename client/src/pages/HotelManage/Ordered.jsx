@@ -43,27 +43,27 @@ const Ordered = () => {
 
   //Lay data phòng
 
-  // useEffect(() => {
-  //   const fetchRooms = async () => {
-  //     try {
-  //       const headers = {
-  //         "Content-Type": "application/json",
-  //         Authorization: `${accessToken}`,
-  //       };
-  //       const response = await axios.get(
-  //         "http://localhost:3030/v2/api/hotel-manage/room/available",
-  //         { headers }
-  //       );
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `${accessToken}`,
+        };
+        const response = await axios.get(
+          "http://localhost:3030/v2/api/hotel-manage/room/available",
+          { headers }
+        );
 
-  //       setRooms(response.data.metadata.foundRooms);
-  //       console.log(setRooms);
-  //     } catch (error) {
-  //       console.error("Lỗi khi lấy dữ liệu phòng:", error);
-  //     }
-  //   };
+        setRooms(response.data.metadata.foundRooms);
+        console.log(setRooms);
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu phòng:", error);
+      }
+    };
 
-  //   fetchRooms();
-  // }, []);
+    fetchRooms();
+  }, []);
 
   //lưu lại thông tin khi reload page
   const handleConfirmation = () => {
@@ -78,27 +78,27 @@ const Ordered = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const fetchRooms = async () => {
-      try {
-        const headers = {
-          "Content-Type": "application/json",
-          Authorization: `${accessToken}`,
-        };
-        const response = await axios.get(
-          "http://localhost:3030/v2/api/hotel-manage/room/",
-          { headers }
-        );
+  // useEffect(() => {
+  //   const fetchRooms = async () => {
+  //     try {
+  //       const headers = {
+  //         "Content-Type": "application/json",
+  //         Authorization: `${accessToken}`,
+  //       };
+  //       const response = await axios.get(
+  //         "http://localhost:3030/v2/api/hotel-manage/room/",
+  //         { headers }
+  //       );
 
-        setRooms(response.data.metadata);
-        console.log(setRooms);
-      } catch (error) {
-        console.error("Lỗi khi lấy dữ liệu phòng:", error);
-      }
-    };
+  //       setRooms(response.data.metadata);
+  //       console.log(setRooms);
+  //     } catch (error) {
+  //       console.error("Lỗi khi lấy dữ liệu phòng:", error);
+  //     }
+  //   };
 
-    fetchRooms();
-  }, []);
+  //   fetchRooms();
+  // }, []);
 
   return (
     <div>

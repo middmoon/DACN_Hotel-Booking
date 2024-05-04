@@ -180,42 +180,6 @@ const Room = () => {
                 className="form-control"
               />
 
-              {/* Hinh anh */}
-              {/* <div style={{ paddingTop: "30px" }}>
-                <h2 className="Address_title">Hình ảnh</h2>
-                <small>Cập nhật hình ảnh</small>
-                <div>
-                  <label
-                    style={{
-                      borderRadius: "5px",
-                      width: "100%",
-                      border: "dashed 2px",
-                      height: "300px",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "10px",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    htmlFor="file"
-                  >
-                    <FontAwesomeIcon
-                      style={{ fontSize: "100px", color: "#003580" }}
-                      icon={faCamera}
-                    />
-                    <span
-                      style={{
-                        fontSize: "20px",
-                        fontWeight: "400",
-                        color: "#003580",
-                      }}
-                    >
-                      Thêm ảnh
-                    </span>
-                  </label>
-                  <input hidden type="file" id="file" />
-                </div>
-              </div> */}
               <button type="submit" className="createRoom-btn">
                 Submit
               </button>
