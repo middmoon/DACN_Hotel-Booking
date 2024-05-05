@@ -13,7 +13,7 @@ router
   .get("/done", asyncHandler(MnagerOrderController.getDoneOrder))
   .get("/cancel", asyncHandler(MnagerOrderController.getCancelOrder))
   .patch(
-    "/add-room/:orderId",
+    "/:orderId/add-room",
     asyncHandler(MnagerOrderController.addRoomToOrder)
   )
   .patch("/update/:orderId", asyncHandler(MnagerOrderController.updateOrder));
