@@ -96,23 +96,17 @@ class UserOrderService {
       updateedOrder,
     };
   }
-  // chua xong
+
   static async cancelOrder(userId, orderId) {
     const foundOrder = await db.Order.findOne({
       where: {
         _id: orderId,
         id_user: userId,
       },
-      include: [
-        {
-          model: db.RoomOrder,
-          include: [db.Room],
-        },
-      ],
     });
 
     if (!foundOrder) {
-      throw new NotFoundError("ERR: Can not find order detail for user");
+      throw new NotFoundError("ERR: Can not find the order for user");
     }
 
     const cancelOrder = await foundOrder.update({
@@ -120,7 +114,7 @@ class UserOrderService {
     });
 
     if (!cancelOrder) {
-      throw new NotFoundError("ERR: Can not update order for user");
+      throw new NotFoundError("ERR: Can not cancal this order for user");
     }
 
     return {

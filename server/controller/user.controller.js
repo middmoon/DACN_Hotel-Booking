@@ -30,27 +30,6 @@ class UserController {
       metadata: await UserService.updateUserInfo(req.params._id),
     }).send(res);
   };
-
-  makeOrder = async (req, res, next) => {
-    new OK({
-      message: "Make order OK",
-      metadata: await UserService.makeOrder(req._id, req.body),
-    }).send(res);
-  };
-
-  getAllOrder = async (req, res, next) => {
-    new OK({
-      message: "Get all order OK",
-      metadata: await UserService.getAllOrder(req._id, req.body),
-    }).send(res);
-  };
-
-  getOrderDetail = async (req, res, next) => {
-    new OK({
-      message: "Get detail order OK",
-      metadata: await UserService.getOrderDetail(req._id, req.params.orderId),
-    }).send(res);
-  };
 }
 
 module.exports = new UserController();
