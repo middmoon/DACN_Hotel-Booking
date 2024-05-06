@@ -140,8 +140,11 @@
   font-weight: 500;
   cursor: pointer;
   width: 270px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
-
+.dropdown-search:empty {
+  box-shadow: none;
+}
 .dropdown-row:hover {
   background-color: rgb(221, 221, 221);
 }
