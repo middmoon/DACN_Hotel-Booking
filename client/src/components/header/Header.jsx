@@ -1,10 +1,11 @@
 import "./header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState, useEffect } from "react";
 import { faBed } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import { faPerson } from "@fortawesome/free-solid-svg-icons";
 import { DateRange } from "react-date-range";
-import { useState } from "react";
+
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
@@ -30,7 +31,8 @@ const Header = ({ type }) => {
       key: "selection",
     },
   ]);
-
+  const [search, setSearch] = useState([]);
+  const [search2, setSearch2] = useState([]);
   const [destination, setDestination] = useState("");
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
@@ -47,6 +49,33 @@ const Header = ({ type }) => {
     });
   };
   // search item
+  useEffect(() => {
+    const fetchSearch = async (destination) => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3030/v2/api/search/place?query=${destination}`
+        );
+
+        setSearch([
+          ...response.data.metadata.provinces,
+          ...response.data.metadata.districts,
+        ]);
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu phòng:", error);
+      }
+    };
+
+    fetchSearch(destination);
+  }, [destination]);
+
+  const onSearch = (searchTerm) => {
+    setDestination(searchTerm);
+  };
+
+  const onChange = (e) => {
+    setDestination(e.target.value);
+  };
+
   const handleSearch = async () => {
     const startDate = format(date[0].startDate, "MM/dd/yyyy");
     const endDate = format(date[0].endDate, "MM/dd/yyyy");
@@ -56,7 +85,7 @@ const Header = ({ type }) => {
       dayend: endDate,
       options: options,
     };
-    console.log("Search Data:", searchData);
+
     try {
       const response = await axios.post(
         "http://localhost:3030/v2/api/test/post-method",
@@ -105,8 +134,32 @@ const Header = ({ type }) => {
                         type="text"
                         placeholder="Where are you going?"
                         className="headerSearchInput"
-                        onChange={(e) => setDestination(e.target.value)}
+                        onChange={(e) => onChange(e)}
+                        value={destination}
                       />
+
+                      <div className="dropdown-search">
+                        {Array.isArray(search) &&
+                          search
+                            .filter((item) => {
+                              const searchTerm = destination.toLowerCase();
+                              const fullName = item.name_en.toLowerCase();
+                              return (
+                                searchTerm &&
+                                fullName.startsWith(searchTerm) &&
+                                fullName !== searchTerm
+                              );
+                            })
+                            .map((item) => (
+                              <div
+                                onClick={() => onSearch(item.name_en)}
+                                className="dropdown-row"
+                                key={item.id}
+                              >
+                                {item.name_en}
+                              </div>
+                            ))}
+                      </div>
                     </div>
 
                     <div className="headerSearchItem">
@@ -224,8 +277,32 @@ const Header = ({ type }) => {
                         type="text"
                         placeholder="Where are you going?"
                         className="headerSearchInput"
-                        onChange={(e) => setDestination(e.target.value)}
+                        onChange={(e) => onChange(e)}
+                        value={destination}
                       />
+
+                      <div className="dropdown-search">
+                        {Array.isArray(search) &&
+                          search
+                            .filter((item) => {
+                              const searchTerm = destination.toLowerCase();
+                              const fullName = item.name_en.toLowerCase();
+                              return (
+                                searchTerm &&
+                                fullName.startsWith(searchTerm) &&
+                                fullName !== searchTerm
+                              );
+                            })
+                            .map((item) => (
+                              <div
+                                onClick={() => onSearch(item.name_en)}
+                                className="dropdown-row"
+                                key={item.id}
+                              >
+                                {item.name_en}
+                              </div>
+                            ))}
+                      </div>
                     </div>
 
                     <div className="headerSearchItem">

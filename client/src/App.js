@@ -15,6 +15,7 @@ import Room from "./pages/HotelManage/Room";
 import Profile from "./pages/HotelManage/profile";
 import Ordered from "./pages/HotelManage/Ordered";
 import Profile_ht from "./pages/HotelManage/Profile_ht";
+import Test from "./pages/test";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/registerHotels" element={<Registerhotels />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/test" element={<Test />} />
           {/* hotel manager */}
           <Route path="/hotel-manage/*" element={<HotelManage />}>
             <Route path="create-post" element={<Createpost />} />
