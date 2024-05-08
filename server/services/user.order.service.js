@@ -5,7 +5,7 @@ const { NotFoundError } = require("../core/error.response");
 const { getInfoData } = require("../utils");
 
 class UserOrderService {
-  static async userMakeOrder(userId, payload) {
+  static async makeOrder(userId, payload) {
     const makedOrder = await db.Order.create({
       id_user: userId,
       id_hotel: payload.id_hotel,
@@ -67,7 +67,6 @@ class UserOrderService {
     };
   }
 
-  // chua xong
   static async updateOrder(userId, orderId, payload) {
     const hotelId = await HotelManagerService.getHotelIdForOwner(userId);
 
