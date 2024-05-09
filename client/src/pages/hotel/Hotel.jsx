@@ -8,12 +8,33 @@ import { faRightLong } from "@fortawesome/free-solid-svg-icons";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import MailList from "../../components/mailList/Mail.List";
 import Footerr from "../../components/footer/Footer";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { faSquareParking } from "@fortawesome/free-solid-svg-icons";
 import { faWifi } from "@fortawesome/free-solid-svg-icons";
 import HotelRule from "./hotelRule/HotelRule";
-
+import { useParams } from "react-router-dom";
+import axios from "axios";
 const Hotels = () => {
+  const { id } = useParams();
+  const [hotel, setHotel] = useState(null);
+
+  //Lấy dữ liệu ks
+  useEffect(() => {
+    const fetchHotelDetail = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3030/v2/api/hotel/detail/${id}`
+        );
+        setHotel(response.data.metadata.hotel);
+        console.log(hotel);
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu khách sạn:", error);
+      }
+    };
+
+    fetchHotelDetail();
+  }, [id]);
+
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const photos = [
