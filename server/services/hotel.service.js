@@ -25,6 +25,18 @@ class HotelService {
             },
           ],
         },
+        {
+          model: db.HotelImage,
+          attributes: ["_id", "image_url"],
+        },
+        {
+          model: db.Utility,
+          through: {
+            model: db.HotelUtility,
+            attributes: [],
+          },
+          attributes: ["_id", "utility_name", "utility_icon"],
+        },
       ],
       // attributes: { exclude: ["code_ward"] },
     });
