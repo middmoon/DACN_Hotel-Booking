@@ -16,7 +16,7 @@ const SearchItem = () => {
   const [date, setDate] = useState(location.state.date);
   const [options, setOptions] = useState(location.state.options);
   const [room, setRoom] = useState(location.state.options.room);
-  console.log(room);
+  console.log(code_destination);
   const [openDate, setOpenDate] = useState(false);
   const [hotel, setHotel] = useState([]);
 
