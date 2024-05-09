@@ -7,7 +7,7 @@ class HotelController {
   getHotelInfo = async (req, res, next) => {
     new OK({
       message: "get hotel info OK",
-      metadata: await HotelService.getHotelInfo(req.params._id),
+      metadata: await HotelService.getHotelInfo(req.params.hotelId),
     }).send(res);
   };
 
