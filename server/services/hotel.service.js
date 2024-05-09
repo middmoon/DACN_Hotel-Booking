@@ -2,7 +2,7 @@
 require("dotenv").config();
 
 const db = require("../models");
-const { NotFoundError } = require("../core/error.response");
+const { NotFoundError, BadRequestError } = require("../core/error.response");
 const { Op } = require("sequelize");
 
 class HotelService {
@@ -41,13 +41,16 @@ class HotelService {
       // attributes: { exclude: ["code_ward"] },
     });
 
-    if (!foundHotel) {
+    const avgPrices = await this.getAvgPrice(hotelId);
+
+    if (!foundHotel || !avgPrices) {
       throw new NotFoundError("Error: Can not find the Hotel");
     }
 
-    if (foundHotel) {
+    if (foundHotel && avgPrices) {
       return {
         hotel: foundHotel,
+        avgPrice: avgPrices,
       };
     }
   }
@@ -105,6 +108,26 @@ class HotelService {
         hotel: foundHotel,
       };
     }
+  }
+
+  static async getAvgPrice(hotelId) {
+    const avgPrices = await db.Room.findAll({
+      attributes: [
+        "type_name",
+        [db.sequelize.fn("AVG", db.sequelize.col("price")), "avg_price"],
+      ],
+      where: {
+        id_hotel: hotelId,
+        type_name: ["STD", "VIP"],
+      },
+      group: "type_name",
+    });
+
+    if (!avgPrices) {
+      throw new BadRequestError("ERR: Can not get price");
+    }
+
+    return avgPrices;
   }
 
   static async getHotelList_v2(search) {
