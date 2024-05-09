@@ -8,12 +8,33 @@ import { faRightLong } from "@fortawesome/free-solid-svg-icons";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import MailList from "../../components/mailList/Mail.List";
 import Footerr from "../../components/footer/Footer";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { faSquareParking } from "@fortawesome/free-solid-svg-icons";
 import { faWifi } from "@fortawesome/free-solid-svg-icons";
 import HotelRule from "./hotelRule/HotelRule";
-
+import { useParams } from "react-router-dom";
+import axios from "axios";
 const Hotels = () => {
+  const { id } = useParams();
+  const [hotel, setHotel] = useState([]);
+
+  //Lấy dữ liệu ks
+  useEffect(() => {
+    const fetchHotelDetail = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3030/v2/api/hotel/detail/${id}`
+        );
+        setHotel(response.data.metadata.hotel);
+        console.log(hotel);
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu khách sạn:", error);
+      }
+    };
+
+    fetchHotelDetail(id);
+  }, [id]);
+
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const photos = [
@@ -37,11 +58,18 @@ const Hotels = () => {
     },
   ];
 
+  const hotelImages = hotel.HotelImages
+    ? hotel.HotelImages.slice(0, 6).map((image) => ({
+        src: image.image_url,
+        _id: image._id,
+      }))
+    : [];
+
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
   };
-
+  //js chuyen hinh qua lai
   const handleMove = (direction) => {
     let newSlideNumber;
     if (direction === "l") {
@@ -57,212 +85,226 @@ const Hotels = () => {
     <div className="a">
       <Navbar />
       <Header type="list" />
-      <div className="hotelContainer">
-        {open && (
-          <div className="slider" onClick={() => setOpen(false)}>
-            <FontAwesomeIcon
-              icon={faXmark}
-              className="close"
-              onClick={() => setOpen(false)}
-            />
-            <FontAwesomeIcon
-              icon={faLeftLong}
-              className="arrow"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleMove("l");
-              }}
-            />
-            <div className="sliderWrapper">
-              <img src={photos[slideNumber].src} alt="" className="sliderImg" />
-            </div>
-            <FontAwesomeIcon
-              icon={faRightLong}
-              className="arrow"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleMove("r");
-              }}
-            />
-          </div>
-        )}
-        <div className="hotelWrapper">
-          <button className="bookNow">Đặt ngay</button>
-          <h1 className="hotelTitle">LENS HOTEL</h1>
-          <div className="hotelAddress">
-            <FontAwesomeIcon icon={faLocationDot} />
-            <span>36 To Hien Thanh, DaLat,VietNam</span>
-          </div>
-
-          <div className="hotelImages">
-            {photos.map((photo, i) => (
-              <div className="hotelImgWrapper">
+      {Object.keys(hotel).length > 0 && (
+        <div className="hotelContainer" key={hotel._id}>
+          {open && (
+            <div className="slider" onClick={() => setOpen(false)}>
+              <FontAwesomeIcon
+                icon={faXmark}
+                className="close"
+                onClick={() => setOpen(false)}
+              />
+              <FontAwesomeIcon
+                icon={faLeftLong}
+                className="arrow"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleMove("l");
+                }}
+              />
+              <div className="sliderWrapper">
                 <img
-                  onClick={() => handleOpen(i)}
-                  src={photo.src}
+                  src={hotelImages[slideNumber].src}
                   alt=""
-                  className="hotelImg"
+                  className="sliderImg"
                 />
               </div>
-            ))}
-          </div>
-          <div className="hotelDetails">
-            <div className="hotelDetailsTexts">
-              <h1 className="hotelTitle">Stay in heart of DaLat</h1>
-              <p className="hotelDesc">
-                Nằm ở Đà Lạt, cách Công viên Yersin 19 phút đi bộ, RAON Bazan
-                Hotel - STAY 24H cung cấp chỗ nghỉ có khu vườn, chỗ đậu xe riêng
-                miễn phí và phòng chờ chung. Khách sạn 3 sao này có dịch vụ
-                phòng và dịch vụ tiền sảnh. Chỗ nghỉ cung cấp lễ tân 24/24, dịch
-                vụ đưa đón sân bay, bếp chung và Wi-Fi miễn phí ở toàn bộ chỗ
-                nghỉ.
-                <br></br>
-                <br></br>
-                Tại khách sạn, tất cả các phòng có bàn làm việc, TV màn hình
-                phẳng, phòng tắm riêng, ga trải giường và khăn tắm. Các căn đều
-                có minibar.
-              </p>
-            </div>
-            <div className="hotelDetailsPrice">
-              <h1>Điểm nổi bật của chỗ nghỉ</h1>
-              <span>
-                Địa điểm hàng đầu: Được khách gần đây đánh giá cao (8,9 điểm)
-              </span>
-              <span>Có bãi đậu xe riêng miễn phí ở khách sạn này</span>
-              <button>Đặt ngay!</button>
-            </div>
-          </div>
-          <div className="hotelUbility">
-            <h1 style={{ fontSize: "15px" }}>
-              Các tiện nghi được ưa chuộng nhất
-            </h1>
-            <div className="Ubility-content">
-              <div
-                style={{
-                  display: "flex",
-                  gap: "5px",
-                  justifyContent: "center",
-                  alignItems: "center",
+              <FontAwesomeIcon
+                icon={faRightLong}
+                className="arrow"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleMove("r");
                 }}
-              >
-                <FontAwesomeIcon
-                  icon={faSquareParking}
-                  style={{ color: "green" }}
-                />
-                <span style={{ fontWeight: "500", fontSize: "12px" }}>
-                  Chỗ đỗ xe miễn phí
-                </span>
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  gap: "5px",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faWifi} style={{ color: "green" }} />
-                <span style={{ fontWeight: "500", fontSize: "12px" }}>
-                  Wifi miễn phí
-                </span>
-              </div>
+              />
             </div>
-          </div>
-        </div>
-
-        <div className="hotel-Available">
-          <h1 style={{ fontSize: "25px", paddingTop: "10px" }}>Đặt phòng</h1>
-          <div className="ht-table">
-            <div className="table-Content-title">
-              <span style={{ flex: "2" }}>Chi tiết phòng</span>
-              <span style={{ flex: "2" }}>Loại phòng</span>
-              <span style={{ flex: "1" }}></span>
+          )}
+          <div className="hotelWrapper">
+            <button className="bookNow">Đặt ngay</button>
+            <h1 className="hotelTitle">{hotel.hotel_name}</h1>
+            <div className="hotelAddress">
+              <FontAwesomeIcon icon={faLocationDot} />
+              <span>{hotel.full_address}</span>
             </div>
-            <div className="table-Content">
-              <span style={{ flex: "2" }}>
-                <p style={{ color: "#0071c2", fontWeight: "500" }}>
-                  Phòng Deluxe giường đôi có ban công
+
+            <div className="hotelImages">
+              {hotelImages.map((photo, i) => (
+                <div className="hotelImgWrapper" key={photo._id}>
+                  <img
+                    onClick={() => handleOpen(i)}
+                    src={photo.src}
+                    alt=""
+                    className="hotelImg"
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="hotelDetails">
+              <div className="hotelDetailsTexts">
+                <h1 className="hotelTitle">Stay in heart</h1>
+                <p className="hotelDesc">
+                  Lavender Central Hotel chào đón du khách với nước ép cam tươi
+                  mát và nằm cách Cầu Thê Húc cũng như Hồ Hoàn Kiếm đẹp như
+                  tranh vẽ chỉ 3 phút đi bộ. Khách sạn trang nhã này cung cấp
+                  dịch vụ lễ tân 24 giờ và WiFi miễn phí ở tất cả các khu vực.
+                  Tọa lạc ở trung tâm Khu Phố Cổ Hà Nội, chỗ nghỉ nằm trong bán
+                  kính chỉ 5 phút lái xe từ các điểm tham quan đậm nét lịch sử
+                  như Quảng trường Ba Đình và Lăng Chủ tịch Hồ Chí Minh. Sân bay
+                  quốc tế Nội Bài cách đó 45 phút lái xe.
+                  <br></br>
+                  <br></br>
+                  Pha trộn giữa lối trang trí truyền thống với tiện nghi hiện
+                  đại, phòng nghỉ gắn máy điều hòa tại đây có TV truyền hình cáp
+                  màn hình phẳng, khu vực ghế ngồi và ấm đun nước điện. Phòng
+                  tắm riêng đi kèm đồ vệ sinh cá nhân miễn phí và máy sấy tóc.
+                  Du khách có thể tham quan quanh khu vực một cách dễ dàng với
+                  dịch vụ cho thuê xe đạp và xe hơi. Dịch vụ văn phòng và bàn
+                  đặt tour nằm trong số các tiện nghi của chỗ nghỉ. Dịch vụ đưa
+                  đón sân bay cũng được cung cấp với một khoản phụ phí để tạo
+                  thuận tiện cho khách.
                 </p>
-                <p>một giường đôi cực lớn</p>
-              </span>
-              <span
-                style={{
-                  flex: "2",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                Deluxe
-              </span>
-              <span
-                style={{
-                  flex: "1",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <p
+              </div>
+              <div className="hotelDetailsPrice">
+                <h1>Điểm nổi bật của chỗ nghỉ</h1>
+                <span>
+                  Địa điểm hàng đầu: Được khách gần đây đánh giá cao (8,9 điểm)
+                </span>
+                <span>Có bãi đậu xe riêng miễn phí ở khách sạn này</span>
+                <button>Đặt ngay!</button>
+              </div>
+            </div>
+            <div className="hotelUbility">
+              <h1 style={{ fontSize: "15px" }}>
+                Các tiện nghi được ưa chuộng nhất
+              </h1>
+              <div className="Ubility-content">
+                <div
                   style={{
-                    padding: "10px",
-                    backgroundColor: "#0071c2",
-                    color: "white",
-                    borderRadius: "10px",
-                    cursor: "pointer",
+                    display: "flex",
+                    gap: "5px",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  Đặt ngay
-                </p>
-              </span>
-            </div>
-            <div className="table-Content">
-              <span style={{ flex: "2" }}>
-                <p style={{ color: "#0071c2", fontWeight: "500" }}>
-                  Phòng Standard giường đôi
-                </p>
-                <p>một giường đôi </p>
-              </span>
-              <span
-                style={{
-                  flex: "2",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                Standard
-              </span>
-              <span
-                style={{
-                  flex: "1",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <p
+                  <FontAwesomeIcon
+                    icon={faSquareParking}
+                    style={{ color: "green" }}
+                  />
+                  <span style={{ fontWeight: "500", fontSize: "12px" }}>
+                    Chỗ đỗ xe miễn phí
+                  </span>
+                </div>
+
+                <div
                   style={{
-                    padding: "10px",
-                    backgroundColor: "#0071c2",
-                    color: "white",
-                    borderRadius: "10px",
-                    cursor: "pointer",
+                    display: "flex",
+                    gap: "5px",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  Đặt ngay
-                </p>
-              </span>
+                  <FontAwesomeIcon icon={faWifi} style={{ color: "green" }} />
+                  <span style={{ fontWeight: "500", fontSize: "12px" }}>
+                    Wifi miễn phí
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
+
+          <div className="hotel-Available">
+            <h1 style={{ fontSize: "25px", paddingTop: "10px" }}>Đặt phòng</h1>
+            <div className="ht-table">
+              <div className="table-Content-title">
+                <span style={{ flex: "2" }}>Chi tiết phòng</span>
+                <span style={{ flex: "2" }}>Loại phòng</span>
+                <span style={{ flex: "1" }}></span>
+              </div>
+              <div className="table-Content">
+                <span style={{ flex: "2" }}>
+                  <p style={{ color: "#0071c2", fontWeight: "500" }}>
+                    Phòng Deluxe giường đôi có ban công
+                  </p>
+                  <p>một giường đôi cực lớn</p>
+                </span>
+                <span
+                  style={{
+                    flex: "2",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  Deluxe
+                </span>
+                <span
+                  style={{
+                    flex: "1",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <p
+                    style={{
+                      padding: "10px",
+                      backgroundColor: "#0071c2",
+                      color: "white",
+                      borderRadius: "10px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Đặt ngay
+                  </p>
+                </span>
+              </div>
+              <div className="table-Content">
+                <span style={{ flex: "2" }}>
+                  <p style={{ color: "#0071c2", fontWeight: "500" }}>
+                    Phòng Standard giường đôi
+                  </p>
+                  <p>một giường đôi </p>
+                </span>
+                <span
+                  style={{
+                    flex: "2",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  Standard
+                </span>
+                <span
+                  style={{
+                    flex: "1",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <p
+                    style={{
+                      padding: "10px",
+                      backgroundColor: "#0071c2",
+                      color: "white",
+                      borderRadius: "10px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Đặt ngay
+                  </p>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <HotelRule />
+
+          <MailList />
+          <Footerr />
         </div>
-
-        <HotelRule />
-
-        <MailList />
-        <Footerr />
-      </div>
+      )}
     </div>
   );
 };

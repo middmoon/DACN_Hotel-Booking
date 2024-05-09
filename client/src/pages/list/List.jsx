@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Header from "../../components/header/Header";
 import Navbar from "../../components/navbar/navBar";
 import "./list.css";
@@ -9,8 +10,13 @@ import SearchItem from "../../components/searchItem/SearchItem";
 const List = () => {
   const location = useLocation();
   const [destination, setDestination] = useState(location.state.destination);
+  const [code_destination, setCodeDestination] = useState(
+    location.state.code_destination
+  );
   const [date, setDate] = useState(location.state.date);
   const [options, setOptions] = useState(location.state.options);
+  const [room, setRoom] = useState(location.state.options.room);
+
   const [openDate, setOpenDate] = useState(false);
 
   return (

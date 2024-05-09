@@ -34,6 +34,7 @@ const Header = ({ type }) => {
   const [search, setSearch] = useState([]);
   const [search2, setSearch2] = useState([]);
   const [destination, setDestination] = useState("");
+  const [code_destination, setCodeDestination] = useState("");
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
     quantity: 1,
@@ -60,6 +61,7 @@ const Header = ({ type }) => {
           ...response.data.metadata.provinces,
           ...response.data.metadata.districts,
         ]);
+        console.log(search);
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu phòng:", error);
       }
@@ -68,8 +70,9 @@ const Header = ({ type }) => {
     fetchSearch(destination);
   }, [destination]);
 
-  const onSearch = (searchTerm) => {
+  const onSearch = (searchTerm, code) => {
     setDestination(searchTerm);
+    setCodeDestination(code);
   };
 
   const onChange = (e) => {
@@ -79,15 +82,22 @@ const Header = ({ type }) => {
   const handleSearch = async () => {
     const startDate = format(date[0].startDate, "MM/dd/yyyy");
     const endDate = format(date[0].endDate, "MM/dd/yyyy");
-    const searchData = {
-      destination: destination,
-      daystart: startDate,
-      dayend: endDate,
-      options: options,
-    };
 
     try {
-      const response = await axios.post(
+      const response = await axios.get(
+        `http://localhost:3030/v2/api/search/place?query=${destination}`
+      );
+
+      const searchData = {
+        destination: destination,
+        code: code_destination,
+        daystart: startDate,
+        dayend: endDate,
+        quantity: options.quantity,
+        room: options.room,
+      };
+
+      const postResponse = await axios.post(
         "http://localhost:3030/v2/api/test/post-method",
         searchData,
         {
@@ -97,15 +107,25 @@ const Header = ({ type }) => {
         }
       );
 
-      if (response.status === 200) {
+      if (postResponse.status === 200) {
         console.log("Data sent successfully", searchData);
-        navigate("/hotels", { state: { destination, date, options } }); // Điều hướng và truyền dữ liệu
+        navigate("/hotels", {
+          state: { destination, date, options, code_destination },
+        });
       } else {
         console.error("Failed to send data to the server");
-        alert("tài khoản đã tồn tại");
+        alert("Tài khoản đã tồn tại");
       }
     } catch (error) {
       console.error("Error:", error);
+    }
+  };
+  //lấy code province nếu nó là district
+  const getCode = (item) => {
+    if (item.hasOwnProperty("province_code")) {
+      return item.province_code;
+    } else {
+      return item.code;
     }
   };
 
@@ -152,7 +172,9 @@ const Header = ({ type }) => {
                             })
                             .map((item) => (
                               <div
-                                onClick={() => onSearch(item.name_en)}
+                                onClick={() =>
+                                  onSearch(item.name_en, getCode(item))
+                                }
                                 className="dropdown-row"
                                 key={item.id}
                               >
@@ -295,7 +317,9 @@ const Header = ({ type }) => {
                             })
                             .map((item) => (
                               <div
-                                onClick={() => onSearch(item.name_en)}
+                                onClick={() =>
+                                  onSearch(item.name_en, getCode(item))
+                                }
                                 className="dropdown-row"
                                 key={item.id}
                               >
