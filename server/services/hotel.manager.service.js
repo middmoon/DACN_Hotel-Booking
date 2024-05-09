@@ -135,6 +135,19 @@ class HotelManagerService {
   static async uploadImages(userId, files) {
     const hotelId = await this.getHotelIdForOwner(userId);
 
+    // check max 6
+    const imgCount = await db.HotelImage.count({
+      where: { id_hotel: hotelId },
+    });
+
+    const remainingSlots = 6 - imgCount;
+
+    if (files.length > remainingSlots) {
+      throw new Error(
+        `ERR: Limit iamge is 6, you can only upload ${remainingSlots} images`
+      );
+    }
+
     const uploadedImages = [];
 
     const uploadPromises = files.map((file, index) => {
