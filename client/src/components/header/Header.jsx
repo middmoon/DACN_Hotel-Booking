@@ -76,6 +76,12 @@ const Header = ({ type }) => {
 
   const onChange = (e) => {
     setDestination(e.target.value);
+    const newCodeDestination = getCode(
+      search.find(
+        (item) => item.name_en.toLowerCase() === e.target.value.toLowerCase()
+      ) || {}
+    );
+    setCodeDestination(newCodeDestination);
   };
 
   const handleSearch = async () => {

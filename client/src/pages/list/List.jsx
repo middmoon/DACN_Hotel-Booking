@@ -17,7 +17,6 @@ const List = () => {
   const [options, setOptions] = useState(location.state.options);
   const [room, setRoom] = useState(location.state.options.room);
   const [startDate, setStartDate] = useState(location.state.startDate);
-  console.log(startDate);
   const [openDate, setOpenDate] = useState(false);
 
   return (
