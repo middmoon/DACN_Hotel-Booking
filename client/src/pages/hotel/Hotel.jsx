@@ -14,9 +14,63 @@ import { faWifi } from "@fortawesome/free-solid-svg-icons";
 import HotelRule from "./hotelRule/HotelRule";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { format } from "date-fns";
+import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 const Hotels = () => {
+  const location = useLocation();
+  const state = useSelector((useState) => useState.auth.login.currentUser);
+  const accessToken = state?.metadata.accessToken;
+
+  const [date, setDate] = useState(location.state.date);
+  const [destination, setDestination] = useState(location.state.destination);
+  const [options, setOptions] = useState(location.state.options);
   const { id } = useParams();
   const [hotel, setHotel] = useState([]);
+  const [price, setPrice] = useState([]);
+  const [selectedRoomPrice, setSelectedRoomPrice] = useState(0);
+  //lay gia tien cua phong cap nhat len form data
+  const handleRoomSelection = (selectedPrice) => {
+    setSelectedRoomPrice(selectedPrice);
+  };
+
+  //lay du lieu order
+  const sendFormDataToAPI = async () => {
+    const startDate = format(date[0].startDate, "MM/dd/yyyy");
+    const endDate = format(date[0].endDate, "MM/dd/yyyy");
+    try {
+      const searchData = {
+        id_hotel: hotel._id,
+        start_day: startDate,
+        end_day: endDate,
+        total_price: selectedRoomPrice,
+        total_room: options.room,
+        total_person: options.quantity,
+      };
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `${accessToken}`,
+      };
+      const response = await axios.post(
+        "http://localhost:3030/v2/api/user/order/make-order",
+        searchData,
+        {
+          headers,
+        }
+      );
+      console.log("Gui du lieu thanh cong:", response.data);
+    } catch (error) {
+      alert("Đăng nhập hoặc đăng ký trước khi đặt phong");
+      console.error("Error sending form data to API:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Check if selectedRoomPrice is valid (not 0) before sending form data
+    if (selectedRoomPrice !== 0) {
+      sendFormDataToAPI();
+    }
+  }, [selectedRoomPrice]);
 
   //Lấy dữ liệu ks
   useEffect(() => {
@@ -26,7 +80,7 @@ const Hotels = () => {
           `http://localhost:3030/v2/api/hotel/detail/${id}`
         );
         setHotel(response.data.metadata.hotel);
-        console.log(hotel);
+        setPrice(response.data.metadata.avgPrice);
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu khách sạn:", error);
       }
@@ -37,26 +91,6 @@ const Hotels = () => {
 
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
-  const photos = [
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/499873746.jpg?k=1371aa53da917d471a0dc30c3a50354afed0d074a8198670a40d0b9d033f9254&o=&hp=1",
-    },
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/521259718.jpg?k=02bb7f3f4a9f4a29a20b29aa7cf67d96a1141c25bdbe5f5e0f2cfa77401a9089&o=&hp=1",
-    },
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/353019098.jpg?k=3beb07bc739e46674c68f2739c5abe970d07acb06e064a9ca3191fd3b3e0580a&o=&hp=1",
-    },
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/357638688.jpg?k=31905867c855f7780710fa4fa1be6d7bbbe422b748180e7baa5356493a093a1a&o=&hp=1",
-    },
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/353019105.jpg?k=0fccf1b3fb942f7b35de91745bcff66cebf53eaa623f948752bf9a4582104409&o=&hp=1",
-    },
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/357642217.jpg?k=194ad42880d94b85857a2f54a524cc9adde1bb0fca768154d3dead1db83335cf&o=&hp=1",
-    },
-  ];
 
   const hotelImages = hotel.HotelImages
     ? hotel.HotelImages.slice(0, 6).map((image) => ({
@@ -217,85 +251,79 @@ const Hotels = () => {
             <div className="ht-table">
               <div className="table-Content-title">
                 <span style={{ flex: "2" }}>Chi tiết phòng</span>
-                <span style={{ flex: "2" }}>Loại phòng</span>
+                <span style={{ flex: "2", textAlign: "center" }}>
+                  Loại phòng
+                </span>
+                <span style={{ flex: "2", textAlign: "center" }}>Giá tiền</span>
                 <span style={{ flex: "1" }}></span>
               </div>
-              <div className="table-Content">
-                <span style={{ flex: "2" }}>
-                  <p style={{ color: "#0071c2", fontWeight: "500" }}>
-                    Phòng Deluxe giường đôi có ban công
-                  </p>
-                  <p>một giường đôi cực lớn</p>
-                </span>
-                <span
-                  style={{
-                    flex: "2",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  Deluxe
-                </span>
-                <span
-                  style={{
-                    flex: "1",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <p
+
+              {price.map((price) => (
+                <div key={price.type_name} className="table-Content">
+                  <span style={{ flex: "2" }}>
+                    {price.type_name === "VIP" && (
+                      <>
+                        <p style={{ color: "#0071c2", fontWeight: "500" }}>
+                          Phòng Deluxe giường đôi có ban công
+                        </p>
+                        <p>một giường đôi cực lớn</p>
+                      </>
+                    )}
+                    {price.type_name === "STD" && (
+                      <>
+                        <p style={{ color: "#0071c2", fontWeight: "500" }}>
+                          Phòng Standard giường đôi
+                        </p>
+                        <p>một giường đôi</p>
+                      </>
+                    )}
+                  </span>
+                  {/* Room type */}
+                  <span
                     style={{
-                      padding: "10px",
-                      backgroundColor: "#0071c2",
-                      color: "white",
-                      borderRadius: "10px",
-                      cursor: "pointer",
+                      flex: "2",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
-                    Đặt ngay
-                  </p>
-                </span>
-              </div>
-              <div className="table-Content">
-                <span style={{ flex: "2" }}>
-                  <p style={{ color: "#0071c2", fontWeight: "500" }}>
-                    Phòng Standard giường đôi
-                  </p>
-                  <p>một giường đôi </p>
-                </span>
-                <span
-                  style={{
-                    flex: "2",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  Standard
-                </span>
-                <span
-                  style={{
-                    flex: "1",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <p
+                    {price.type_name}
+                  </span>
+                  {/* Room price */}
+                  <span
                     style={{
-                      padding: "10px",
-                      backgroundColor: "#0071c2",
-                      color: "white",
-                      borderRadius: "10px",
-                      cursor: "pointer",
+                      flex: "2",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
-                    Đặt ngay
-                  </p>
-                </span>
-              </div>
+                    {price.avg_price} VNĐ
+                  </span>
+                  {/* Button to select room */}
+                  <span
+                    style={{
+                      flex: "1",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <p
+                      style={{
+                        padding: "10px",
+                        backgroundColor: "#0071c2",
+                        color: "white",
+                        borderRadius: "10px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => handleRoomSelection(price.avg_price)}
+                    >
+                      Đặt ngay
+                    </p>
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
 

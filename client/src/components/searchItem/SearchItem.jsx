@@ -6,7 +6,9 @@ import { useNavigate } from "react-router-dom";
 const SearchItem = () => {
   const navigate = useNavigate();
   const handleSearch = (hotelId) => {
-    navigate(`/hotels/${hotelId}`);
+    navigate(`/hotels/${hotelId}`, {
+      state: { destination, date, options, code_destination },
+    });
   };
   const location = useLocation();
   const [destination, setDestination] = useState(location.state.destination);
@@ -16,7 +18,7 @@ const SearchItem = () => {
   const [date, setDate] = useState(location.state.date);
   const [options, setOptions] = useState(location.state.options);
   const [room, setRoom] = useState(location.state.options.room);
-  console.log(code_destination);
+
   const [openDate, setOpenDate] = useState(false);
   const [hotel, setHotel] = useState([]);
 

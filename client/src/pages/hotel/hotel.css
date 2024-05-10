@@ -49,6 +49,7 @@
   object-fit: cover;
   height: 100%;
   padding-bottom: 5px;
+  height: 250px;
 }
 
 .hotelDetails {
