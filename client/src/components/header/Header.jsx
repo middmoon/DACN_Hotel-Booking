@@ -61,7 +61,6 @@ const Header = ({ type }) => {
           ...response.data.metadata.provinces,
           ...response.data.metadata.districts,
         ]);
-        console.log(search);
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu phòng:", error);
       }
@@ -77,6 +76,12 @@ const Header = ({ type }) => {
 
   const onChange = (e) => {
     setDestination(e.target.value);
+    const newCodeDestination = getCode(
+      search.find(
+        (item) => item.name_en.toLowerCase() === e.target.value.toLowerCase()
+      ) || {}
+    );
+    setCodeDestination(newCodeDestination);
   };
 
   const handleSearch = async () => {
@@ -110,7 +115,14 @@ const Header = ({ type }) => {
       if (postResponse.status === 200) {
         console.log("Data sent successfully", searchData);
         navigate("/hotels", {
-          state: { destination, date, options, code_destination },
+          state: {
+            destination,
+            date,
+            options,
+            code_destination,
+            startDate,
+            endDate,
+          },
         });
       } else {
         console.error("Failed to send data to the server");

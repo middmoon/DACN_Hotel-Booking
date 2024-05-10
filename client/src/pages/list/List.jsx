@@ -16,7 +16,7 @@ const List = () => {
   const [date, setDate] = useState(location.state.date);
   const [options, setOptions] = useState(location.state.options);
   const [room, setRoom] = useState(location.state.options.room);
-
+  const [startDate, setStartDate] = useState(location.state.startDate);
   const [openDate, setOpenDate] = useState(false);
 
   return (
@@ -92,17 +92,6 @@ const List = () => {
             <button>Search</button>
           </div>
           <div className="listResult">
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
             <SearchItem />
           </div>
         </div>
