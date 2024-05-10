@@ -11,6 +11,6 @@ router
   .get("/available", asyncHandler(ManagerRoomService.getavailableRoom))
   .get("/ordered", asyncHandler(ManagerRoomService.getOrderedRoom))
   .patch("/update/:roomId", asyncHandler(ManagerRoomService.updateRoom))
-  .get("/:roomId", asyncHandler(ManagerRoomService.getDetailRoom));
+  .get("/detail/:roomId", asyncHandler(ManagerRoomService.getDetailRoom));
 
 module.exports = router;
