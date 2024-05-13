@@ -18,7 +18,7 @@ router
   .post("/login", asyncHandler(AccessController.login))
   .use(verifyToken)
   .put("/update/:_id", asyncHandler(UserController.updateUserInfo))
-  .get("/:_id", asyncHandler(UserController.getUserInfo))
+  .get("/detail/:_id", asyncHandler(UserController.getUserInfo))
   .post("/refesh", asyncHandler(AccessController.refresh))
   .delete("/logout", asyncHandler(AccessController.logout))
   .use("/order", require("./user.order"));
