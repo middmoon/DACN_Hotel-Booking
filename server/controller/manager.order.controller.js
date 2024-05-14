@@ -50,7 +50,7 @@ class ManagerOrderController {
       message: "get detail order OK",
       metadata: await ManagerOrderService.getDetailOrder(
         req._id,
-        res.params.orderId
+        req.params.orderId
       ),
     }).send(res);
   };
