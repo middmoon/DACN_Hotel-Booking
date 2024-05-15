@@ -12,7 +12,7 @@ const Ordered = () => {
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [rooms, setRooms] = useState([]);
-  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [selectedRoom] = useState(null);
   const [orders, SetOrders] = useState([]);
   const [orderIds, setOrderIds] = useState([]);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
@@ -75,8 +75,6 @@ const Ordered = () => {
 
   //add room cho order
   const handleRoomSelection = async (room) => {
-    setSelectedRoom(room);
-
     try {
       const headers = {
         "Content-Type": "application/json",
@@ -130,6 +128,20 @@ const Ordered = () => {
     fetchRooms();
   }, []);
 
+  //màu chữ
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "ON_ORDER":
+        return "text-blue-500"; // blue text color
+      case "PRE_ORDER":
+        return "text-green-500"; // green text color
+      case "CANCEL":
+        return "text-red-500"; // red text color
+      default:
+        return ""; // default text color
+    }
+  };
+
   return (
     <div>
       <div className="p-7">
@@ -166,7 +178,14 @@ const Ordered = () => {
                 key={order._id}
               >
                 <th className="border p-2 font-normal">{order._id}</th>
-                <th className="border p-2 font-normal">{order.status}</th>
+                <th
+                  className={`border p-2 font-normal font-semibold ${getStatusColor(
+                    order.status
+                  )}`}
+                >
+                  {order.status}
+                </th>
+
                 <th className="border p-2 font-normal">
                   {formatDate(startDate)}
                 </th>

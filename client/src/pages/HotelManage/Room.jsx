@@ -32,6 +32,7 @@ const Room = () => {
         );
 
         setRooms(response.data.metadata);
+        console.log(rooms);
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu phòng:", error);
       }
@@ -120,9 +121,14 @@ const Room = () => {
               <th className="border p-2 font-normal">{room.room_number}</th>
               <th className="border p-2 font-normal">{room.price}</th>
               <th className="border p-2 font-normal">{room.type_name}</th>
-              <th className="border p-2 font-normal">
+              <th
+                className={`border p-2  font-semibold ${
+                  room.is_ordered ? "text-red-500" : "text-green-500"
+                }`}
+              >
                 {room.is_ordered ? "Ordered" : "Available"}
               </th>
+
               <th className="border p-2 font-normal">12/5/2024</th>
               <th className="border p-2 font-normal">16/5/2024</th>
               <th className="border p-2 font-normal">5000</th>
