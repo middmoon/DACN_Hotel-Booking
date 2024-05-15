@@ -239,7 +239,13 @@ const Ordered = () => {
                 </div>
                 <div className="ordered-detail-R">
                   <p>{orderDetails._id}</p>
-                  <p>{orderDetails.status}</p>
+                  <p
+                    className={`font-semibold ${getStatusColor(
+                      orderDetails.status
+                    )}`}
+                  >
+                    {orderDetails.status}
+                  </p>
                   <p>{new Date(orderDetails.start_day).toLocaleDateString()}</p>
                   <p>{new Date(orderDetails.end_day).toLocaleDateString()}</p>
                   <p>{orderDetails.total_price}</p>
