@@ -25,7 +25,7 @@ class KeyService {
         role: foundUser.role,
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "100m" }
+      { expiresIn: "10d" }
     );
 
     const refreshToken = jwt.sign(

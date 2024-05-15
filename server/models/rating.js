@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       // Define associations here if needed
       Rating.belongsTo(models.Hotel, { foreignKey: "id_hotel" });
       Rating.belongsTo(models.User, { foreignKey: "id_user" });
-      Rating.hasOne(models.Order, { foreignKey: "id_order" });
+      Rating.belongsTo(models.Order, { foreignKey: "id_order" });
     }
   }
 

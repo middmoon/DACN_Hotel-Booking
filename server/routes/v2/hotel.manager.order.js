@@ -12,7 +12,7 @@ router
   .get("/on-order", asyncHandler(ManagerOrderController.getOnOrder))
   .get("/done", asyncHandler(ManagerOrderController.getDoneOrder))
   .get("/cancel", asyncHandler(ManagerOrderController.getCancelOrder))
-  .patch(
+  .post(
     "/:orderId/add-room",
     asyncHandler(ManagerOrderController.addRoomToOrder)
   )

@@ -13,12 +13,18 @@ class ManagerOrderService {
       where: {
         id_hotel: hotelId,
       },
-      include: [
-        {
-          model: db.RoomOrder,
-          include: [db.Room],
-        },
-      ],
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+      // include: [
+      //   {
+      //     model: db.Room,
+      //     through: {
+      //       model: db.RoomOrder,
+      //       //attributes: [],
+      //     },
+      //   },
+      // ],
     });
 
     if (!orderList) {
@@ -42,10 +48,19 @@ class ManagerOrderService {
       },
       include: [
         {
-          model: db.RoomOrder,
-          include: [db.Room],
+          model: db.Room,
+          through: {
+            model: db.RoomOrder,
+            attributes: [],
+          },
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
         },
       ],
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
     });
 
     if (!foundOrder) {
@@ -106,39 +121,63 @@ class ManagerOrderService {
   }
 
   static async addRoomToOrder(userId, orderId, payload) {
-    const hotelId = await HotelManagerService.getHotelIdForOwner(userId);
+    const transaction = await db.sequelize.transaction();
 
-    const foundOrder = await db.Order.findOne({
-      where: { _id: orderId, id_hotel: hotelId },
-    });
+    try {
+      const hotelId = await HotelManagerService.getHotelIdForOwner(userId);
 
-    if (!foundOrder) {
-      throw new NotFoundError("ERR: Can not find order for your hotel");
+      // Find the order
+      let foundOrder = await db.Order.findOne({
+        where: { _id: orderId, id_hotel: hotelId },
+        transaction,
+      });
+
+      if (!foundOrder) {
+        throw new NotFoundError("ERR: Cannot find order for your hotel");
+      }
+
+      if (foundOrder.status === "PRE_ORDER") {
+        foundOrder = await foundOrder.update(
+          { status: "ON_ORDER" },
+          { transaction }
+        );
+      }
+
+      let room = await db.Room.findOne({
+        where: { _id: payload.id_room },
+        transaction,
+      });
+
+      if (!room) {
+        throw new NotFoundError("ERR: Room not found");
+      }
+
+      if (!room.is_ordered) {
+        await room.update({ is_ordered: true }, { transaction });
+      }
+
+      const newRoomOrder = await db.RoomOrder.create(
+        {
+          id_order: orderId,
+          id_room: payload.id_room,
+          start_day: payload.start_day,
+          end_day: payload.end_day,
+          total_price: payload.total_price,
+        },
+        { transaction }
+      );
+
+      if (!newRoomOrder) {
+        throw new NotFoundError("ERR: Cannot create Room Order");
+      }
+
+      await transaction.commit();
+
+      return { newRoomOrder };
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
     }
-
-    const room = await db.Room.findOne({
-      where: { _id: payload.id_room },
-    });
-
-    if (!room) {
-      throw new NotFoundError("ERR: Room not found");
-    }
-
-    const newRoomOrder = await db.RoomOrder.create({
-      id_order: orderId,
-      id_room: payload.id_room,
-      start_day: payload.start_day,
-      end_day: payload.end_day,
-      total_price: payload.total_price,
-    });
-
-    if (!newRoomOrder) {
-      throw new NotFoundError("ERR: Can update Room Order");
-    }
-
-    return {
-      newRoomOrder,
-    };
   }
 }
 

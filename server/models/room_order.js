@@ -13,10 +13,6 @@ module.exports = (sequelize, DataTypes) => {
 
   RoomOrder.init(
     {
-      _id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-      },
       id_room: {
         type: DataTypes.INTEGER,
       },
