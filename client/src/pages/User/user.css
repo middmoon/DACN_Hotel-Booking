@@ -1,0 +1,16 @@
+.OrderContainer {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.OrdTitle {
+  width: 1024px;
+  font-size: 30px;
+}
+
+.homeDecrip {
+  width: 1024px;
+}

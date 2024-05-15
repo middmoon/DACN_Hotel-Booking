@@ -31,7 +31,6 @@ const SearchItem = () => {
         );
 
         setHotel(response.data.metadata.hotel);
-        console.log(hotel);
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu phòng:", error);
       }

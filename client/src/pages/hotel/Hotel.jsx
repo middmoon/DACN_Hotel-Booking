@@ -14,8 +14,9 @@ import { faWifi } from "@fortawesome/free-solid-svg-icons";
 import HotelRule from "./hotelRule/HotelRule";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { format } from "date-fns";
+import { format, differenceInDays } from "date-fns";
 import { useLocation } from "react-router-dom";
+
 import { useDispatch, useSelector } from "react-redux";
 const Hotels = () => {
   const location = useLocation();
@@ -36,31 +37,36 @@ const Hotels = () => {
 
   //lay du lieu order
   const sendFormDataToAPI = async () => {
-    const startDate = format(date[0].startDate, "MM/dd/yyyy");
-    const endDate = format(date[0].endDate, "MM/dd/yyyy");
+    const startDate = date[0].startDate;
+    const endDate = date[0].endDate;
     try {
+      const numberOfDays = differenceInDays(endDate, startDate);
+      const totalPrice = numberOfDays * selectedRoomPrice;
+
       const searchData = {
         id_hotel: hotel._id,
-        start_day: startDate,
-        end_day: endDate,
-        total_price: selectedRoomPrice,
+        start_day: format(startDate, "yyyy-MM-dd"),
+        end_day: format(endDate, "yyyy-MM-dd"),
+        total_price: totalPrice,
         total_room: options.room,
         total_person: options.quantity,
       };
+
       const headers = {
         "Content-Type": "application/json",
         Authorization: `${accessToken}`,
       };
+
       const response = await axios.post(
         "http://localhost:3030/v2/api/user/order/make-order",
         searchData,
-        {
-          headers,
-        }
+        { headers }
       );
+
       console.log("Gui du lieu thanh cong:", response.data);
+      alert("Đặt phòng thành công");
     } catch (error) {
-      alert("Đăng nhập hoặc đăng ký trước khi đặt phong");
+      alert("Đăng nhập hoặc đăng ký trước khi đặt phòng");
       console.error("Error sending form data to API:", error);
     }
   };

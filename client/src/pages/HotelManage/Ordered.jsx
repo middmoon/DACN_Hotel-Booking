@@ -12,33 +12,99 @@ const Ordered = () => {
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [rooms, setRooms] = useState([]);
-  const [selectedRoom, setSelectedRoom] = useState();
-  const [selectedRooms, setSelectedRooms] = useState([]);
-  const handleRoomSelection = (room) => {
-    setSelectedRoom(room);
-    setOpen(true);
-    setOpen2(false);
-    const isSelected = selectedRooms.some(
-      (selectedRoom) => selectedRoom._id === room._id
-    );
+  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [orders, SetOrders] = useState([]);
+  const [orderIds, setOrderIds] = useState([]);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const [orderDetails, setOrderDetails] = useState(null);
+  const [selectedOrderId2, setSelectedOrderId2] = useState(null);
+  //lay du lieu order
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `${accessToken}`,
+        };
+        const response = await axios.get(
+          "http://localhost:3030/v2/api/hotel-manage/order",
+          { headers }
+        );
 
-    if (isSelected) {
-      // Nếu đã được chọn, loại bỏ khỏi danh sách
-      const updatedRooms = selectedRooms.filter(
-        (selectedRoom) => selectedRoom._id !== room._id
+        SetOrders(response.data.metadata.orders);
+        const ids = response.data.metadata.orders.map((order) => order._id);
+        setOrderIds(ids);
+        console.log(orderIds);
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu phòng:", error);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  // lay order details
+  useEffect(() => {
+    if (selectedOrderId !== null) {
+      const fetchOrderDetails = async () => {
+        try {
+          const headers = {
+            "Content-Type": "application/json",
+            Authorization: `${accessToken}`,
+          };
+          const response = await axios.get(
+            `http://localhost:3030/v2/api/hotel-manage/order/detail/${selectedOrderId}`,
+            { headers }
+          );
+
+          setOrderDetails(response.data.metadata.foundOrder);
+          console.log(orderDetails);
+        } catch (error) {
+          console.error("Lỗi khi lấy chi tiết đơn hàng:", error);
+        }
+      };
+
+      fetchOrderDetails();
+    }
+  }, [selectedOrderId]);
+
+  const handleOrderClick = (orderId) => {
+    setSelectedOrderId(orderId);
+    setOpen(true);
+  };
+
+  //add room cho order
+  const handleRoomSelection = async (room) => {
+    setSelectedRoom(room);
+
+    try {
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `${accessToken}`,
+      };
+
+      const response = await axios.post(
+        `http://localhost:3030/v2/api/hotel-manage/order/${selectedOrderId2}/add-room`,
+        {
+          id_room: room._id,
+          start_day: orderDetails.start_day,
+          end_day: orderDetails.end_day,
+          total_price: room.price,
+        },
+        { headers }
       );
-      setSelectedRooms(updatedRooms);
-    } else {
-      // Nếu chưa được chọn, thêm vào danh sách
-      setSelectedRooms([...selectedRooms, room]);
+      alert("thêm phòng thành công");
+      console.log("Phòng đã được thêm ", response.data);
+      window.location.reload();
+    } catch (error) {
+      console.error("Lỗi khi thêm phòng vào đơn hàng:", error);
     }
   };
 
-  const handleOpen = (i) => {
-    setOpen(true);
-  };
-  const handleOpen2 = (i) => {
+  const handleOpen2 = (orderId2) => {
+    setSelectedOrderId2(orderId2);
     setOpen2(true);
+    console.log(selectedOrderId2);
   };
 
   //Lay data phòng
@@ -56,7 +122,6 @@ const Ordered = () => {
         );
 
         setRooms(response.data.metadata.foundRooms);
-        console.log(setRooms);
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu phòng:", error);
       }
@@ -64,41 +129,6 @@ const Ordered = () => {
 
     fetchRooms();
   }, []);
-
-  //lưu lại thông tin khi reload page
-  const handleConfirmation = () => {
-    localStorage.setItem("selectedRooms", JSON.stringify(selectedRooms));
-  };
-
-  // Tải thông tin từ Local Storage khi tải lại trang
-  useEffect(() => {
-    const storedSelectedRooms = localStorage.getItem("selectedRooms");
-    if (storedSelectedRooms) {
-      setSelectedRooms(JSON.parse(storedSelectedRooms));
-    }
-  }, []);
-
-  // useEffect(() => {
-  //   const fetchRooms = async () => {
-  //     try {
-  //       const headers = {
-  //         "Content-Type": "application/json",
-  //         Authorization: `${accessToken}`,
-  //       };
-  //       const response = await axios.get(
-  //         "http://localhost:3030/v2/api/hotel-manage/room/",
-  //         { headers }
-  //       );
-
-  //       setRooms(response.data.metadata);
-  //       console.log(setRooms);
-  //     } catch (error) {
-  //       console.error("Lỗi khi lấy dữ liệu phòng:", error);
-  //     }
-  //   };
-
-  //   fetchRooms();
-  // }, []);
 
   return (
     <div>
@@ -118,27 +148,52 @@ const Ordered = () => {
           </tr>
         </thead>
         <tbody>
-          {/* đoạn này sẽ lấy thông tin từ API */}
-          <tr style={{ textAlign: "center", fontSize: "13px" }}>
-            <th className="border p-2 font-normal">123</th>
-            <th className="border p-2 font-normal">ordered</th>
-            <th className="border p-2 font-normal">12/5/2024</th>
-            <th className="border p-2 font-normal">16/5/2024</th>
-            <th className="border p-2 font-normal">5000</th>
-            <th className="border flex justify-center items-center gap-2 p-2 font-normal text-blue-700">
-              <button
-                className="border-b-2 border-blue-700"
-                onClick={() => handleOpen()}
+          {Object.values(orders).map((order) => {
+            //CHuyen ngay
+            const startDate = new Date(order.start_day);
+            const endDate = new Date(order.end_day);
+            const formatDate = (date) => {
+              const day = date.getDate();
+              const month = date.getMonth() + 1;
+              const year = date.getFullYear();
+              return `${day}/${month}/${year}`;
+            };
+            //tinh so ngay thue và tính tiền
+
+            return (
+              <tr
+                style={{ textAlign: "center", fontSize: "13px" }}
+                key={order._id}
               >
-                Chỉnh sửa
-              </button>
-            </th>
-          </tr>
+                <th className="border p-2 font-normal">{order._id}</th>
+                <th className="border p-2 font-normal">{order.status}</th>
+                <th className="border p-2 font-normal">
+                  {formatDate(startDate)}
+                </th>
+                <th className="border p-2 font-normal">
+                  {formatDate(endDate)}
+                </th>
+                <th className="border p-2 font-normal">
+                  {order.total_price} VNĐ
+                </th>
+                <th className="border p-2 font-normal text-blue-700">
+                  <div className="flex justify-center items-center gap-2">
+                    <button
+                      className="border-b-2 border-blue-700"
+                      onClick={() => handleOrderClick(order._id)}
+                    >
+                      Chỉnh sửa
+                    </button>
+                  </div>
+                </th>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
 
       {/* hiển thị khi nhấn chỉnh sửa  */}
-      {open && (
+      {open && orderDetails && (
         <div className="ordered_opt" onClick={() => setOpen(false)}>
           <div
             className="Create-Ord"
@@ -164,11 +219,11 @@ const Ordered = () => {
                   <p>Tổng tiền:</p>
                 </div>
                 <div className="ordered-detail-R">
-                  <p>123</p>
-                  <p>Available</p>
-                  <p>null</p>
-                  <p>null</p>
-                  <p>null</p>
+                  <p>{orderDetails._id}</p>
+                  <p>{orderDetails.status}</p>
+                  <p>{new Date(orderDetails.start_day).toLocaleDateString()}</p>
+                  <p>{new Date(orderDetails.end_day).toLocaleDateString()}</p>
+                  <p>{orderDetails.total_price}</p>
                 </div>
               </div>
             </div>
@@ -180,45 +235,10 @@ const Ordered = () => {
                 <FontAwesomeIcon
                   style={{ color: "green", cursor: "pointer" }}
                   icon={faPlus}
-                  onClick={() => handleOpen2()}
+                  onClick={() => handleOpen2(orderDetails._id)}
                 />
               </div>
-              <div style={{ height: "400px" }}>
-                {/* Hiển thị danh sách các phòng đã chọn */}
-                <div style={{ paddingTop: "30px" }}>
-                  {selectedRooms.map((selectedRoom) => (
-                    <div>
-                      <div
-                        style={{ display: "flex", gap: "100px" }}
-                        key={selectedRoom._id}
-                      >
-                        <p style={{ width: "200px" }}>
-                          Số phòng: {selectedRoom.room_number}
-                        </p>
-                        <p style={{ width: "200px" }}>
-                          Giá: {selectedRoom.price}
-                        </p>
-                        <p style={{ width: "200px" }}>
-                          Loại phòng: {selectedRoom.type_name}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div>
-              <button
-                style={{
-                  padding: "10px",
-                  backgroundColor: "green",
-                  borderRadius: "5px",
-                  color: "white",
-                }}
-                onClick={handleConfirmation()}
-              >
-                Xác nhận
-              </button>
+              <div>{/* Hiển thị danh sách các phòng đã chọn */}</div>
             </div>
           </div>
         </div>

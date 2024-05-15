@@ -1,71 +1,75 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
-const Test = () => {
-  const [value, setValue] = useState("");
-  const [search, setSearch] = useState([]);
-  const [search2, setSearch2] = useState([]);
-  const onChange = (e) => {
-    setValue(e.target.value);
-  };
+function App() {
+  const [rooms, setRooms] = useState([]); // Danh sách phòng từ API
+  const [selectedRooms, setSelectedRooms] = useState([]); // Danh sách phòng đã chọn
+  const [showRooms, setShowRooms] = useState(false); // State để hiển thị danh sách phòng
 
-  const onSearch = (searchTerm) => {
-    setValue(searchTerm);
-    console.log("search", searchTerm);
-  };
-
+  // Gọi API lấy phòng
   useEffect(() => {
-    const fetchSearch = async (query) => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3030/v2/api/search/place?query=${query}`
-        );
+    fetchRooms();
+  }, []);
 
-        setSearch([
-          ...response.data.metadata.provinces,
-          ...response.data.metadata.districts,
-        ]);
-        setSearch2(response.data.metadata.districts);
-        console.log(response.data.metadata);
-      } catch (error) {
-        console.error("Lỗi khi lấy dữ liệu phòng:", error);
-      }
-    };
+  const fetchRooms = async () => {
+    try {
+      const response = await fetch("API_LAY_PHONG_URL");
+      const data = await response.json();
+      setRooms(data);
+    } catch (error) {
+      console.error("Error fetching rooms:", error);
+    }
+  };
 
-    fetchSearch(value);
-  }, [value]);
+  // Xử lý khi chọn phòng
+  const handleRoomSelect = async (room) => {
+    try {
+      const response = await fetch("API_GUI_THONG_TIN_PHONG_URL", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ room }),
+      });
+      const data = await response.json();
+
+      // Cập nhật danh sách phòng đã chọn
+      setSelectedRooms((prevSelectedRooms) => [...prevSelectedRooms, data]);
+
+      // Ẩn danh sách phòng sau khi chọn
+      setShowRooms(false);
+    } catch (error) {
+      console.error("Error selecting room:", error);
+    }
+  };
 
   return (
     <div>
-      <div>
-        <h1>search</h1>
-        <input type="text" value={value} onChange={onChange} />
-      </div>
-
-      <div style={{ backgroundColor: "black" }}>
-        {Array.isArray(search) &&
-          search
-            .filter((item) => {
-              const searchTerm = value.toLowerCase();
-              const fullName = item.name_en.toLowerCase();
-              return (
-                searchTerm &&
-                fullName.startsWith(searchTerm) &&
-                fullName !== searchTerm
-              );
-            })
-            .map((item) => (
-              <div
-                onClick={() => onSearch(item.name_en)}
-                className="dropdown-row"
-                key={item.id}
-              >
-                {item.name_en}
-              </div>
+      <button onClick={() => setShowRooms(true)}>
+        Hiển thị danh sách phòng
+      </button>
+      {showRooms && (
+        <div>
+          <h2>Danh sách phòng</h2>
+          <ul>
+            {rooms.map((room) => (
+              <li key={room.id}>
+                {room.name}{" "}
+                <button onClick={() => handleRoomSelect(room)}>Chọn</button>
+              </li>
             ))}
+          </ul>
+        </div>
+      )}
+      <div>
+        <h2>Danh sách phòng đã chọn</h2>
+        <ul>
+          {selectedRooms.map((room, index) => (
+            <li key={index}>{room.name}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );
-};
+}
 
-export default Test;
+export default App;

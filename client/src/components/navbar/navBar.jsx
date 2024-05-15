@@ -64,10 +64,8 @@ const Navbars = () => {
                 id="basic-nav-dropdown"
               >
                 <div className="navbtItems">
-                  <NavDropdown.Item href="#action/3.2">Order</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">
-                    Setting
-                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/User/order">Order</NavDropdown.Item>
+                  <NavDropdown.Item href="">Setting</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={handleLogout}>
                     log out
