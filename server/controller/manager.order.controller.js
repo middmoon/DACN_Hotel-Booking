@@ -76,6 +76,16 @@ class ManagerOrderController {
       ),
     }).send(res);
   };
+
+  checkOutOrder = async (req, res, next) => {
+    new OK({
+      message: "check out oke",
+      metadata: await ManagerOrderService.checkOutOrder(
+        req._id,
+        req.params.orderId
+      ),
+    }).send(res);
+  };
 }
 
 module.exports = new ManagerOrderController();

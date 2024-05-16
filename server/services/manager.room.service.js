@@ -107,6 +107,29 @@ class ManagerRoomService {
       updatedRoom,
     };
   }
+
+  static async updateStatusRoom(hotelId, status, roomId) {
+    const foundRoom = await db.Room.findOne({
+      where: {
+        id_hotel: hotelId,
+        _id: roomId,
+      },
+    });
+
+    if (!foundRoom) {
+      throw new NotFoundError("ERR: Can not find room");
+    }
+
+    const updatedRoom = await foundRoom.update({
+      is_ordered: status,
+    });
+
+    if (!updatedRoom) {
+      throw new NotFoundError("ERR: Can not update room");
+    }
+
+    return true;
+  }
 }
 
 module.exports = ManagerRoomService;

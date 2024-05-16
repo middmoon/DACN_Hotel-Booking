@@ -16,6 +16,10 @@ router
     "/:orderId/add-room",
     asyncHandler(ManagerOrderController.addRoomToOrder)
   )
+  .put(
+    "/check-out/:orderId",
+    asyncHandler(ManagerOrderController.checkOutOrder)
+  )
   .patch("/update/:orderId", asyncHandler(ManagerOrderController.updateOrder));
 
 module.exports = router;

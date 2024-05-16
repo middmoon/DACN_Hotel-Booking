@@ -2,8 +2,9 @@
 
 const db = require("../models");
 const { BadRequestError, NotFoundError } = require("../core/error.response");
-const { getInfoData } = require("../utils");
 const HotelManagerService = require("./hotel.manager.service");
+const ManagerRoomService = require("./manager.room.service");
+const { forEach } = require("lodash");
 
 class ManagerOrderService {
   static async getAllOrder(userId) {
@@ -54,7 +55,7 @@ class ManagerOrderService {
             attributes: [],
           },
           attributes: {
-            exclude: ["createdAt", "updatedAt"],
+            exclude: ["createdAt", "updatedAt", "is_ordered"],
           },
         },
       ],
@@ -136,6 +137,10 @@ class ManagerOrderService {
         throw new NotFoundError("ERR: Cannot find order for your hotel");
       }
 
+      if (foundOrder.status === "DONE") {
+        throw new NotFoundError("ERR: This order is DONE can not update");
+      }
+
       if (foundOrder.status === "PRE_ORDER") {
         foundOrder = await foundOrder.update(
           { status: "ON_ORDER" },
@@ -144,7 +149,7 @@ class ManagerOrderService {
       }
 
       let room = await db.Room.findOne({
-        where: { _id: payload.id_room },
+        where: { _id: payload.id_room, id_hotel: hotelId },
         transaction,
       });
 
@@ -171,9 +176,82 @@ class ManagerOrderService {
         throw new NotFoundError("ERR: Cannot create Room Order");
       }
 
+      //const updatedOrder = await this.updatePrice(userId, orderId);
+
       await transaction.commit();
 
+      // if (!newRoomOrder) {
+      //   throw new BadRequestError("ERR: Can not update price for order");
+      // }
       return { newRoomOrder };
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
+    }
+  }
+
+  static async updatePrice(userId, orderId) {
+    const foundOrder = await this.getDetailOrder(userId, orderId);
+
+    if (!foundOrder) {
+      throw new NotFoundError("ERR: Can not get order detail");
+    }
+
+    const rooms = foundOrder.Rooms;
+
+    console.log(foundOrder);
+
+    if (!rooms || rooms.length === 0) {
+      throw new NotFoundError("ERR: No rooms found in the order");
+    }
+
+    const total_day = foundOrder.total_day;
+    let price = 0;
+
+    rooms.forEach((r) => {
+      price += r.price * total_day;
+    });
+
+    const updatedOrder = await foundOrder.update({
+      total_price: price,
+    });
+
+    if (!updatedOrder) {
+      throw new NotFoundError("ERR: Can not update price of order");
+    }
+
+    return updatedOrder;
+  }
+
+  static async checkOutOrder(userId, orderId) {
+    const transaction = await db.sequelize.transaction();
+
+    try {
+      const hotelId = await HotelManagerService.getHotelIdForOwner(userId);
+
+      const foundOrder = await db.Order.findOne({
+        where: { _id: orderId, id_hotel: hotelId },
+        include: [db.RoomOrder],
+        transaction,
+      });
+
+      if (!foundOrder) {
+        throw new NotFoundError("ERR: Cannot find order for your hotel");
+      }
+
+      const listRoomId = foundOrder.RoomOrders.map((room) => room.id_room);
+
+      await Promise.all(
+        listRoomId.map((roomId) =>
+          ManagerRoomService.updateStatusRoom(hotelId, false, roomId)
+        )
+      );
+
+      await foundOrder.update({ status: "DONE" }, { transaction });
+
+      await transaction.commit();
+
+      return "Check out order OK";
     } catch (error) {
       await transaction.rollback();
       throw error;
