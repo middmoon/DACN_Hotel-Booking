@@ -14,3 +14,10 @@
 .homeDecrip {
   width: 1300px;
 }
+
+.ordered-detail-UR {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 30%;
+}

@@ -94,6 +94,9 @@ const User = () => {
   return (
     <div>
       <Navbars />
+      <div className="header_user">
+        <img src="/IMG/Home/user_ord.jpg" alt="" />
+      </div>
       <div className="OrderContainer">
         <div className="homeDecrip">
           <div className="p-7 ">
@@ -189,7 +192,7 @@ const User = () => {
                     <p>Ngày kết thúc:</p>
                     <p>Tổng tiền:</p>
                   </div>
-                  <div className="ordered-detail-R">
+                  <div className="yordered-detail-UR">
                     <p>{orderDetails._id}</p>
                     <p
                       className={`font-semibold ${getStatusColor(
@@ -204,6 +207,7 @@ const User = () => {
                     <p>{new Date(orderDetails.end_day).toLocaleDateString()}</p>
                     <p>{orderDetails.total_price}</p>
                   </div>
+                  <div>abc</div>
                 </div>
               </div>
             </div>
