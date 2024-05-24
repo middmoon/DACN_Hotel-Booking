@@ -1,15 +1,12 @@
-// Define a basic middleware class
 class Middleware {
   constructor() {
     this.middlewares = [];
   }
 
-  // Method to add middleware functions
   use(middleware) {
     this.middlewares.push(middleware);
   }
 
-  // Method to run all middleware functions
   run(context, next) {
     let index = -1;
 
@@ -41,7 +38,6 @@ class Middleware {
   }
 }
 
-// Example middleware functions
 const middleware1 = async (context, next) => {
   console.log("Middleware 1");
   await next();
@@ -57,23 +53,18 @@ const middleware3 = async (context, next) => {
   await next();
 };
 
-// Create an instance of Middleware
 const middleware = new Middleware();
 
-// Add middleware functions
 middleware.use(middleware1);
 middleware.use(middleware2);
 middleware.use(middleware3);
 
-// Define your main function
 const mainFunction = async () => {
   console.log("Start");
 
-  // Call the middleware stack
   await middleware.run({}, async () => {
     console.log("End");
   });
 };
 
-// Run the main function
 mainFunction();

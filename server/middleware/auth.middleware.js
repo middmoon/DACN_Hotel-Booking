@@ -22,16 +22,16 @@ const verifyToken = asyncHandler(async (req, res, next) => {
   });
 });
 
-const verifyAdminAuth = (req, res, next) => {
-  if (req.user.role === "ADMIN") {
+const verifyHotelAuth = (req, res, next) => {
+  if (req.user.role === "HOTEL_MANAGER") {
     next();
   } else {
     throw new AuthFailureError("Insufficient privileges");
   }
 };
 
-const verifyHotelAuth = (req, res, next) => {
-  if (req.user.role === "HOTEL_MANAGER") {
+const verifyAdminAuth = (req, res, next) => {
+  if (req.user.role === "ADMIN") {
     next();
   } else {
     throw new AuthFailureError("Insufficient privileges");
