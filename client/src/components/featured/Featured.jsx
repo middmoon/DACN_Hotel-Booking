@@ -1,46 +1,64 @@
 import "./featured.css";
 import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 const Featured = () => {
-  const navigate = useNavigate();
-  const handleSearch = () => {
-    navigate("/lg");
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
   };
   return (
     <div>
-      <div className="featured">
-        <div className="featuredItem" onClick={handleSearch}>
-          <img src="/IMG/Home/dalat.jpg" alt="" className="featuredImg" />
-          <div className="featuredTitles">
-            <h1>Da Lat</h1>
+      {open && (
+        <div className="Featured-popUp" onClick={() => setOpen(false)}>
+          <div
+            className="FeaturedWrapper"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      )}
+
+      <div>
+        <div className="featured">
+          <div className="featuredItem" onClick={handleOpen}>
+            <img src="/IMG/Home/dalat.jpg" alt="" className="featuredImg" />
+            <div className="featuredTitles">
+              <h1>Da Lat</h1>
+            </div>
+          </div>
+
+          <div className="featuredItem">
+            <img src="/IMG/Home/HoChiMinh.jpg" alt="" className="featuredImg" />
+            <div className="featuredTitles">
+              <h1>HoChiMinh City</h1>
+            </div>
           </div>
         </div>
 
-        <div className="featuredItem">
-          <img src="/IMG/Home/HoChiMinh.jpg" alt="" className="featuredImg" />
-          <div className="featuredTitles">
-            <h1>HoChiMinh City</h1>
+        <div className="featured2">
+          <div className="featuredItem">
+            <img src="/IMG/Home/Hanoi.jpg" alt="" className="featuredImg" />
+            <div className="featuredTitles">
+              <h1>Ha Noi</h1>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div className="featured2">
-        <div className="featuredItem">
-          <img src="/IMG/Home/Hanoi.jpg" alt="" className="featuredImg" />
-          <div className="featuredTitles">
-            <h1>Ha Noi</h1>
+          <div className="featuredItem">
+            <img src="/IMG/Home/Danang.jpg" alt="" className="featuredImg" />
+            <div className="featuredTitles">
+              <h1>Da nang</h1>
+            </div>
           </div>
-        </div>
-
-        <div className="featuredItem">
-          <img src="/IMG/Home/Danang.jpg" alt="" className="featuredImg" />
-          <div className="featuredTitles">
-            <h1>Da nang</h1>
-          </div>
-        </div>
-        <div className="featuredItem">
-          <img src="/IMG/Home/Vungtau.jpg" alt="" className="featuredImg" />
-          <div className="featuredTitles">
-            <h1>Vung tau</h1>
+          <div className="featuredItem">
+            <img src="/IMG/Home/Vungtau.jpg" alt="" className="featuredImg" />
+            <div className="featuredTitles">
+              <h1>Vung tau</h1>
+            </div>
           </div>
         </div>
       </div>

@@ -1,38 +1,58 @@
-.featured{
-    width: 100%;
-    max-width: 1024px;
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    z-index: 1;
+.featured {
+  width: 100%;
+  max-width: 1024px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  z-index: 1;
 }
 
-.featured2{
-    padding-top: 30px;
-    width: 100%;
-    max-width: 1024px;
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    z-index: 1;
-    
+.featured2 {
+  padding-top: 30px;
+  width: 100%;
+  max-width: 1024px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  z-index: 1;
 }
 
-.featuredItem{
-    position: relative;
-    color: white;
-    border-radius: 10px;
-    overflow: hidden;
-    height: 250px;
+.featuredItem {
+  position: relative;
+  color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 250px;
 }
 
-.featuredImg{
-    width: 100%;
-    object-fit: cover;
+.featuredImg {
+  width: 100%;
+  object-fit: cover;
 }
 
-.featuredTitles{
-    position: absolute;
-    top: 20px;
-    left: 20px;
+.featuredTitles {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.Featured-popUp {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.301);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.FeaturedWrapper {
+  width: 1100px;
+  height: 500px;
+  display: flex;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }

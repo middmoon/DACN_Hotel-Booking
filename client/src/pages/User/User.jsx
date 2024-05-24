@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import "./user.css";
 import React from "react";
 import axios from "axios";
 import Navbars from "../../components/navbar/navBar";
+import Offer from "../../components/offer/offer";
+import Footer from "../../components/footer/Footer";
+import MailList from "../../components/mailList/Mail.List";
+
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 const User = () => {
   const state = useSelector((useState) => useState.auth.login.currentUser);
   const accessToken = state?.metadata.accessToken;
@@ -72,6 +77,25 @@ const User = () => {
     }
   }, [selectedOrderId]);
 
+  const cancelOrder = async () => {
+    try {
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `${accessToken}`,
+      };
+      const response = await axios.put(
+        `http://localhost:3030/v2/api/user/order/cancel/${selectedOrderId}`,
+        {},
+        { headers }
+      );
+
+      console.log("Gui du lieu thanh cong:", response.data);
+      window.location.reload();
+    } catch (error) {
+      console.error("Lỗi ", error);
+    }
+  };
+
   const handleOrderClick = (orderId) => {
     setSelectedOrderId(orderId);
     setOpen(true);
@@ -97,74 +121,143 @@ const User = () => {
       <div className="header_user">
         <img src="/IMG/Home/user_ord.jpg" alt="" />
       </div>
-      <div className="OrderContainer">
-        <div className="homeDecrip">
-          <div className="p-7 ">
-            <h1 className="OrdTitle">Quản lí đơn</h1>
+      <div className="OrderUserContainer">
+        <h1 style={{ letterSpacing: "1px", fontWeight: "400" }}>
+          Conveniently and easily manage your orders
+        </h1>
+      </div>
+
+      <div className="OrderUserContainer">
+        <div className="container-fluid m-0 p-0 px-0 ">
+          <div className="row">
+            <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 left">
+              <div className="adv-offer">
+                <img
+                  className="offer-img"
+                  src="/IMG/Home/ordOffer1.jpg"
+                  alt=""
+                />
+                <div className="colorFetch"></div>
+                <div className="User-offer-content">
+                  <h1 className="content-hd">Special offers just for you</h1>
+                  <p className="dsc">
+                    Save an extra 10% when you share MidmoonBooking with your
+                    family and friend
+                  </p>
+                  <button className="button-hd">Share</button>
+                </div>
+              </div>
+            </div>
+            <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 right">
+              <div className="adv-offer">
+                <img
+                  className="offer-img"
+                  src="/IMG/Home/ordOffer2.jpg"
+                  alt=""
+                />
+                <div className="colorFetch"></div>
+                <div className="User-offer-content">
+                  <h1 className="content-hd">Special offers just for you</h1>
+                  <p className="dsc">
+                    Save 15% and more when booking more than 4 rooms
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <table className="w-full table-fixed">
-            <thead style={{ textAlign: "center" }}>
-              <tr className="py-2">
-                <th className="border p-2">ID</th>
-                <th className="border p-2">Trạng thái</th>
-                <th className="border p-2">Ngày bắt đầu</th>
-                <th className="border p-2">Ngày kết thúc</th>
-                <th className="border p-2">Tổng tiền</th>
-                <th className="border p-2"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.length > 0 &&
-                orders.map((order) => {
-                  //CHuyen ngay
-                  const startDate = new Date(order.start_day);
-                  const endDate = new Date(order.end_day);
-                  const formatDate = (date) => {
-                    const day = date.getDate();
-                    const month = date.getMonth() + 1;
-                    const year = date.getFullYear();
-                    return `${day}/${month}/${year}`;
-                  };
-                  //tinh so ngay thue và tính tiền
+        </div>
 
-                  return (
-                    <tr
-                      style={{ textAlign: "center", fontSize: "13px" }}
-                      key={order._id}
-                    >
-                      <th className="border p-2 font-normal">{order._id}</th>
-                      <th
-                        className={`border p-2 font-normal font-semibold ${getStatusColor(
-                          order.status
-                        )}`}
+        <div className="homeDecrip">
+          <div className=" ">
+            <p style={{ fontSize: "18px", fontWeight: "500" }}>
+              All Your orders:
+            </p>
+          </div>
+          <div className="nofition-ord">
+            <div className="nofition_content">
+              <p style={{ fontWeight: "600" }}>
+                <FontAwesomeIcon icon={faBell} /> Lưu ý :{" "}
+              </p>
+              <p>
+                Thời hạn hủy đơn đặt là trước{" "}
+                <span style={{ fontWeight: "600" }}>24 giờ</span> trước khi nhận
+                phòng, sau khoảng thời gian này quý khách sẽ không thể hủy phòng
+                và hoàn lại tiền, để tìm hiểu thêm hãy xem qua chính sách khách
+                hàng của chúng tôi
+              </p>
+              <a
+                style={{ position: "absolute", right: "20px", bottom: "5px" }}
+                href=""
+              >
+                learn more
+              </a>
+            </div>
+          </div>
+          <div className="table-ord">
+            <table className="w-full table-fixed">
+              <thead style={{ textAlign: "center" }}>
+                <tr className="py-2">
+                  <th className="border p-2">ID</th>
+                  <th className="border p-2">Status</th>
+                  <th className="border p-2">Start day</th>
+                  <th className="border p-2">End day</th>
+                  <th className="border p-2">total price</th>
+                  <th className="border p-2"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {orders.length > 0 &&
+                  orders.map((order) => {
+                    //CHuyen ngay
+                    const startDate = new Date(order.start_day);
+                    const endDate = new Date(order.end_day);
+                    const formatDate = (date) => {
+                      const day = date.getDate();
+                      const month = date.getMonth() + 1;
+                      const year = date.getFullYear();
+                      return `${day}/${month}/${year}`;
+                    };
+                    //tinh so ngay thue và tính tiền
+
+                    return (
+                      <tr
+                        style={{ textAlign: "center", fontSize: "13px" }}
+                        key={order._id}
                       >
-                        {order.status}
-                      </th>
+                        <th className="border p-2 font-normal">{order._id}</th>
+                        <th
+                          className={`border p-2 font-normal font-semibold ${getStatusColor(
+                            order.status
+                          )}`}
+                        >
+                          {order.status}
+                        </th>
 
-                      <th className="border p-2 font-normal">
-                        {formatDate(startDate)}
-                      </th>
-                      <th className="border p-2 font-normal">
-                        {formatDate(endDate)}
-                      </th>
-                      <th className="border p-2 font-normal">
-                        {order.total_price} VNĐ
-                      </th>
-                      <th className="border p-2 font-normal text-blue-700">
-                        <div className="flex justify-center items-center gap-2">
-                          <button
-                            className="border-b-2 border-blue-700"
-                            onClick={() => handleOrderClick(order._id)}
-                          >
-                            Chỉnh sửa
-                          </button>
-                        </div>
-                      </th>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+                        <th className="border p-2 font-normal">
+                          {formatDate(startDate)}
+                        </th>
+                        <th className="border p-2 font-normal">
+                          {formatDate(endDate)}
+                        </th>
+                        <th className="border p-2 font-normal">
+                          {order.total_price} VNĐ
+                        </th>
+                        <th className="border p-2 font-normal text-blue-700">
+                          <div className="flex justify-center items-center gap-2">
+                            <button
+                              className="border-b-2 border-blue-700"
+                              onClick={() => handleOrderClick(order._id)}
+                            >
+                              Edit
+                            </button>
+                          </div>
+                        </th>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
         </div>
         {/* hiển thị khi nhấn chỉnh sửa  */}
         {open && orderDetails && (
@@ -175,24 +268,42 @@ const User = () => {
                 e.stopPropagation();
               }}
             >
-              <div className="ordered-detail">
+              <div className="ordered-details">
                 <h1 style={{ fontSize: "20px", paddingBottom: "10px" }}>
-                  Chi tiết đơn đặt
-                  <span style={{ fontSize: "12px", fontWeight: "400" }}>
+                  Order detail{" "}
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "500",
+                      color: "green",
+                    }}
+                  >
                     {" "}
-                    {"("}Chỉ xem{")"}
+                    {"("}View only <FontAwesomeIcon icon={faEye} />
+                    {")"}
                   </span>
                   :
                 </h1>
                 <div style={{ display: "flex" }}>
                   <div className="ordered-detail-L">
                     <p>ID:</p>
-                    <p>Trạng thái:</p>
-                    <p>Ngày bắt đầu:</p>
-                    <p>Ngày kết thúc:</p>
-                    <p>Tổng tiền:</p>
+                    <p>Status:</p>
+                    <p>Start day:</p>
+                    <p>End day:</p>
+                    <p>Price:</p>
+                    <button
+                      style={{
+                        padding: "2px",
+                        backgroundColor: "orange",
+                        borderRadius: "5px",
+                        fontWeight: 500,
+                      }}
+                      onClick={cancelOrder}
+                    >
+                      Cancel order
+                    </button>
                   </div>
-                  <div className="yordered-detail-UR">
+                  <div className="ordered-detail-UR">
                     <p>{orderDetails._id}</p>
                     <p
                       className={`font-semibold ${getStatusColor(
@@ -207,13 +318,15 @@ const User = () => {
                     <p>{new Date(orderDetails.end_day).toLocaleDateString()}</p>
                     <p>{orderDetails.total_price}</p>
                   </div>
-                  <div>abc</div>
+                  <div></div>
                 </div>
+                <img className="ord-use-img" src="/IMG/Home/Y.png" alt="" />
               </div>
             </div>
           </div>
         )}
-        s
+        <MailList />
+        <Footer />
       </div>
     </div>
   );

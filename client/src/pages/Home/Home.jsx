@@ -66,13 +66,23 @@ const Home = () => {
     }
   );
 
+  //test
+
+  const [headerData, setHeaderData] = useState(null);
+
+  // Hàm nhận dữ liệu từ Header
+  const receiveDataFromHeader = (data) => {
+    setHeaderData(data);
+  };
+
+  ///////////////
   switch (userRole) {
     case "USER":
     case "unknown":
       return (
         <div>
           <Navbars />
-          <Header />
+          <Header sendDataToHome={receiveDataFromHeader} />
           <div className="homeContainer">
             <About />
             <div>
@@ -99,7 +109,7 @@ const Home = () => {
                 These popular destinations have a lot to offer
               </p>
             </div>
-            <PropertyList />
+            <PropertyList headerData={headerData} />
             <h1 className="homeTitle">Homes guests love</h1>
             <FeaturedProperties />
             <MailList />

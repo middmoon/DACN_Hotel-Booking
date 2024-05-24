@@ -3,26 +3,31 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+
 const SearchItem = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [destination, setDestination] = useState(
+    location.state?.destination || ""
+  );
+  const [code_destination, setCodeDestination] = useState(
+    location.state?.code_destination || ""
+  );
+  const [date, setDate] = useState(location.state?.date || {});
+  const [options, setOptions] = useState(location.state?.options || {});
+  const [room, setRoom] = useState(location.state?.options?.room || 1);
+
+  const [openDate, setOpenDate] = useState(false);
+  const [hotel, setHotel] = useState([]);
+
   const handleSearch = (hotelId) => {
     navigate(`/hotels/${hotelId}`, {
       state: { destination, date, options, code_destination },
     });
   };
-  const location = useLocation();
-  const [destination, setDestination] = useState(location.state.destination);
-  const [code_destination, setCodeDestination] = useState(
-    location.state.code_destination
-  );
-  const [date, setDate] = useState(location.state.date);
-  const [options, setOptions] = useState(location.state.options);
-  const [room, setRoom] = useState(location.state.options.room);
 
-  const [openDate, setOpenDate] = useState(false);
-  const [hotel, setHotel] = useState([]);
-
-  //laydata
+  // Fetch data
   useEffect(() => {
     const fetchSearch = async (code_destination, room) => {
       try {
@@ -36,7 +41,9 @@ const SearchItem = () => {
       }
     };
 
-    fetchSearch(code_destination, room);
+    if (code_destination && room) {
+      fetchSearch(code_destination, room);
+    }
   }, [code_destination, room]);
 
   return (

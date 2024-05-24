@@ -11,12 +11,9 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+
 import axios from "axios";
-const Header = ({ type }) => {
+const Header = ({ type, sendDataToHome }) => {
   const state = useSelector((useState) => useState.auth.login.currentUser);
   const navigate = useNavigate();
   const handleLogin = () => {
@@ -50,6 +47,7 @@ const Header = ({ type }) => {
     });
   };
   // search item
+
   useEffect(() => {
     const fetchSearch = async (destination) => {
       try {
@@ -140,6 +138,31 @@ const Header = ({ type }) => {
       return item.code;
     }
   };
+
+  //gui du lieu san home
+  const sendData = () => {
+    const startDate = format(date[0].startDate, "MM/dd/yyyy");
+    const endDate = format(date[0].endDate, "MM/dd/yyyy");
+    const data = {
+      destination: destination,
+      daystart: startDate,
+      dayend: endDate,
+      options: options,
+      code: code_destination,
+      date: date,
+    };
+
+    // Gọi hàm sendDataToHome nếu nó tồn tại
+    if (typeof sendDataToHome === "function") {
+      sendDataToHome(data);
+    } else {
+      console.error("sendDataToHome is not a function");
+    }
+  };
+
+  useEffect(() => {
+    sendData();
+  }, [date, destination, options]);
 
   return (
     <div>

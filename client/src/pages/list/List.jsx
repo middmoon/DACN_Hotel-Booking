@@ -9,14 +9,14 @@ import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
 const List = () => {
   const location = useLocation();
-  const [destination, setDestination] = useState(location.state.destination);
+  const [destination, setDestination] = useState(location.state?.destination);
   const [code_destination, setCodeDestination] = useState(
-    location.state.code_destination
+    location.state?.code_destination
   );
-  const [date, setDate] = useState(location.state.date);
-  const [options, setOptions] = useState(location.state.options);
-  const [room, setRoom] = useState(location.state.options.room);
-  const [startDate, setStartDate] = useState(location.state.startDate);
+  const [date, setDate] = useState(location.state?.date);
+  const [options, setOptions] = useState(location.state?.options);
+  const [room, setRoom] = useState(location.state?.options.room);
+  const [startDate, setStartDate] = useState(location.state?.startDate);
   const [openDate, setOpenDate] = useState(false);
 
   return (
@@ -33,10 +33,15 @@ const List = () => {
             </div>
             <div className="lsItem">
               <label className="label-no-margin">Check-in Date</label>
-              <span onClick={() => setOpenDate(!openDate)}>{`${format(
-                date[0].startDate,
-                "MM/dd/yyyy"
-              )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
+              <span onClick={() => setOpenDate(!openDate)}>
+                {date &&
+                  date.length > 0 &&
+                  `${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
+                    date[0].endDate,
+                    "MM/dd/yyyy"
+                  )}`}
+              </span>
+
               {openDate && (
                 <DateRange
                   onChange={(item) => setDate([item.selection])}
@@ -49,33 +54,12 @@ const List = () => {
               <label>Options</label>
               <div className="lsOptions">
                 <div className="lsOptionItem">
-                  <span className="lsOptionText">
-                    Min price<small>per night</small>
-                  </span>
-                  <input type="number" className="lsOptionInput" />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">
-                    Max price<small>per night</small>
-                  </span>
-                  <input type="number" className="lsOptionInput" />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Adult</span>
+                  <span className="lsOptionText">Quantity</span>
                   <input
                     type="number"
                     min={1}
                     className="lsOptionInput"
-                    placeholder={options.adult}
-                  />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Children</span>
-                  <input
-                    type="number"
-                    min={0}
-                    className="lsOptionInput"
-                    placeholder={options.children}
+                    placeholder={options && options.quantity}
                   />
                 </div>
                 <div className="lsOptionItem">
@@ -84,7 +68,7 @@ const List = () => {
                     type="number"
                     min={1}
                     className="lsOptionInput"
-                    placeholder={options.room}
+                    placeholder={options && options.room}
                   />
                 </div>
               </div>
