@@ -56,3 +56,82 @@
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+
+.FeaturedWrapper-L {
+  box-sizing: border-box;
+  width: 50%;
+}
+
+.FeaturedWrapper-L-img {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+.FeaturedWrapper-R {
+  position: relative;
+  box-sizing: border-box;
+  width: 50%;
+}
+
+.FeaturedWrapper-R-content {
+  font-family: "Open Sans", sans-serif;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+.FeaturedWrapper-R-content h1 {
+  letter-spacing: 5px;
+  font-weight: 500;
+}
+
+.FeaturedWrapper-R-content p {
+  font-size: 15px;
+  color: #003580;
+}
+
+.FeaturedWrapper-R-highlight {
+  font-size: 15px;
+  font-weight: 500;
+  background-color: rgb(238, 238, 238);
+
+  max-height: 360px;
+  border-radius: 5px;
+  overflow-y: scroll;
+  padding: 10px;
+}
+
+.FeaturedWrapper-R-share {
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+  display: flex;
+  gap: 30px;
+  font-size: 15px;
+  color: #003580;
+}
+
+.siRatingd {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+.siRatingd > span {
+  font-weight: 500;
+  color: green;
+}
+
+.siRatingd > button {
+  font-size: 20px;
+  background-color: #003580;
+  color: white;
+  padding: 15px;
+  font-weight: bold;
+  border: none;
+  border-radius: 2px;
+  transition: ease-in-out 0.3s;
+  cursor: pointer;
+}
