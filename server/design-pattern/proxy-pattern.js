@@ -1,4 +1,3 @@
-// Define a target object
 const target = {
   message: "Hello, world!",
   getValue: function () {
@@ -6,9 +5,7 @@ const target = {
   },
 };
 
-// Create a proxy for the target object
 const proxy = new Proxy(target, {
-  // Define a handler object with traps for different operations
   get: function (target, property) {
     console.log(`Getting property "${property}"`);
     return target[property];
@@ -24,14 +21,12 @@ const proxy = new Proxy(target, {
   },
 });
 
-// Accessing properties through the proxy
-console.log(proxy.message); // Output: Getting property "message"
+console.log(proxy.message);
 proxy.message = "Hello, Proxy!";
-console.log(proxy.message); // Output: Getting property "message"
-console.log(proxy.getValue()); // Output: Calling method "getValue"
+console.log(proxy.message);
+console.log(proxy.getValue());
 
-// Modifying behavior of methods through the proxy
 target.getValue = function () {
   return "Original method modified!";
 };
-console.log(proxy.getValue()); // Output: Calling method "getValue" with modified behavior
+console.log(proxy.getValue());

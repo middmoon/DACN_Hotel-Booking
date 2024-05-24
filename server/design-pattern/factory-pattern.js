@@ -1,4 +1,3 @@
-// Define the Animal classes
 class Dog {
   constructor(name) {
     this.name = name;
@@ -32,7 +31,6 @@ class Bird {
   }
 }
 
-// Define the AnimalFactory
 class AnimalFactory {
   static createAnimal(type, name) {
     switch (type) {
@@ -48,11 +46,10 @@ class AnimalFactory {
   }
 }
 
-// Usage of the factory to create different animals
 const dog = AnimalFactory.createAnimal("Dog", "Buddy");
 const cat = AnimalFactory.createAnimal("Cat", "Whiskers");
 const bird = AnimalFactory.createAnimal("Bird", "Tweety");
 
-dog.speak(); // Buddy says: Woof!
-cat.speak(); // Whiskers says: Meow!
-bird.speak(); // Tweety says: Tweet!
+dog.speak();
+cat.speak();
+bird.speak();
