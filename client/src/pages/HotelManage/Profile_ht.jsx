@@ -39,44 +39,12 @@ const Profile_ht = () => {
         }
       );
       console.log("Response:", response.data);
+      alert("Cập nhật thông tin thành công");
     } catch (error) {
       console.error("Error:", error);
+      alert("Cập nhật thông tin thất bại, thử lại sau");
     }
   };
-  // const handleFiles = async (e) => {
-  //   // e.stopPropagation();
-  //   // let files = e.target.files;
-  //   // const images = new FormData();
-  //   // for (let i of files) {
-  //   //   // images.append("file", i);
-  //   //   // images.append("upload_preset", process.env.REACT_APP_UPLOAD_ASSETS_NAME);
-  //   //   const response = await apiUploadImages(images);
-  //   //   console.log(response);
-  //   // const FormData = {
-  //   //   src: image,
-  //   // };
-  //   // console.log("Send data:", ImageData);
-  //   // try {
-  //   //   const response = await axios.post(
-  //   //     "http://localhost:3030/v2/api/test/post-method",
-  //   //     ImageData,
-  //   //     {
-  //   //       headers: {
-  //   //         "Content-Type": "application/json",
-  //   //         Authorization: `${accessToken}`,
-  //   //       },
-  //   //     }
-  //   //   );
-  //   //   if (response.status === 200) {
-  //   //     console.log("Data sent successfully", ImageData);
-  //   //   } else {
-  //   //     console.error("Failed to send data to the server");
-  //   //     alert("tài khoản đã tồn tại");
-  //   //   }
-  //   // } catch (error) {
-  //   //   console.error("Error:", error);
-  //   // }
-  // };
 
   return (
     <div className="p-7 flex flex-col items-center">
@@ -91,9 +59,9 @@ const Profile_ht = () => {
           <InputReadOnly label="Mã khách sạn" />
           <InputReadOnly label="Email" />
           <InputForm label="Tên hiển thị" />
-          <InputForm label="Họ" />
-          <InputForm label="Tên" />
-          <InputForm label="Mật khẩu" />
+          <InputForm label="Mô tả về khách sạn (tối đa 5000 kí tự)" />
+          <InputForm label="Tiện ích" />
+          <InputForm label="Cập nhật thêm thông tin (Luật lệ của khách sạn, các câu hỏi vv.vv)" />
           {/* Hinh anh */}
           <div style={{ paddingTop: "30px" }}>
             <h2 className="Address_title">Hình ảnh</h2>

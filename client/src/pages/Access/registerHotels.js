@@ -98,6 +98,9 @@ const Registerhotels = () => {
 
       if (response.status === 200) {
         console.log("Data sent successfully", formData);
+        alert("Tạo tài khoản thành công");
+
+        navigate("/lg");
       } else {
         console.error("Failed to send data to the server");
         alert("tài khoản đã tồn tại");
