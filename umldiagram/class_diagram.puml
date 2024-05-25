@@ -1,20 +1,56 @@
-@startuml test
-left to right direction
-actor Un_RegisteredUser as g
-package Professional {
-  actor Chef as c
-  actor "Food Critic" as fc
-}
-package Restaurant {
-  usecase "Eat Food" as UC1
-  usecase "Pay for Food" as UC2
-  usecase "Drink" as UC3
-  usecase "Review" as UC4
+@startuml
+
+class User {
+    + signUp()
+    + login()
+    + logout()
+    + searchHotels()
+    + createOrder()
+    + viewOrderList()
+    + viewOrderDetail()
+    + cancelOrder()
+    + updateOrder()
 }
 
+class HotelManager {
+    + signUp()
+    + login()
+    + logout()
+    + viewOrderList()
+    + updateOrder()
+    + checkoutOrder()
+    + addUtils()
+    + addImages()
+}
 
-fc --> UC4
-g --> UC1
-g --> UC2
-g --> UC3
+class Order {
+    + create()
+    + update()
+    + cancel()
+    + checkout()
+    + viewList()
+    + viewDetail()
+}
+
+class Hotel {
+    + addUtil()
+    + addImage()
+    + search()
+}
+
+class System {
+    + manageUser()
+    + manageOrder()
+    + manageHotel()
+}
+
+User --> Order : manages
+User --> Hotel : searches
+HotelManager --> Order : manages
+HotelManager --> Hotel : manages
+System --> User : includes
+System --> HotelManager : includes
+System --> Order : includes
+System --> Hotel : includes
+
 @enduml
