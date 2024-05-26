@@ -104,11 +104,9 @@ const Room = () => {
           <tr className="py-2">
             <th className="border p-2">Số phòng</th>
             <th className="border p-2">Giá</th>
-            <th className="border p-2">Loại phòng</th>
+            <th className="border p-2">Loại phòng (Standard/VIP)</th>
             <th className="border p-2">Trạng thái</th>
-            <th className="border p-2">Ngày bắt đầu</th>
-            <th className="border p-2">Ngày kết thúc</th>
-            <th className="border p-2">Tổng tiền</th>
+
             <th className="border p-2"></th>
           </tr>
         </thead>
@@ -129,9 +127,6 @@ const Room = () => {
                 {room.is_ordered ? "Ordered" : "Available"}
               </th>
 
-              <th className="border p-2 font-normal">12/5/2024</th>
-              <th className="border p-2 font-normal">16/5/2024</th>
-              <th className="border p-2 font-normal">5000</th>
               <th className="flex justify-center items-center gap-2 p-2 font-normal text-blue-700">
                 <button className="border-b-2 border-blue-700">Chi tiết</button>
               </th>
