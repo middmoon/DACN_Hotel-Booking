@@ -23,6 +23,11 @@
   border-radius: 10px;
   overflow: hidden;
   height: 250px;
+  transition: transform 0.3s;
+}
+
+.featuredItem:hover {
+  transform: translateY(-10px);
 }
 
 .featuredImg {

@@ -110,7 +110,7 @@ const Home = () => {
               </p>
             </div>
             <PropertyList headerData={headerData} />
-            <h1 className="homeTitle">Homes guests love</h1>
+            <h1 className="homeTitle">News</h1>
             <FeaturedProperties />
             <MailList />
             <Footer />
