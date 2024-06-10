@@ -9,6 +9,7 @@ import {
   faLeftLong,
   faInfo,
   faEarthAmericas,
+  faCircleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faGithub,
@@ -38,14 +39,20 @@ const List = () => {
       <div className="listContainer">
         <div className="listWrapper">
           <div className="listSearch">
-            <h1 className="lsTitle">Search</h1>
+            <h1 className="lsTitle">
+              Search{" "}
+              <span style={{ fontSize: "13px", color: "#003580" }}>
+                (View Only)
+              </span>
+            </h1>
+
             <div className="lsItem">
               <label>Destanation</label>
-              <input placeholder={destination} type="text" />
+              <input placeholder={destination} type="text" readOnly />
             </div>
             <div className="lsItem">
               <label className="label-no-margin">Check-in Date</label>
-              <span onClick={() => setOpenDate(!openDate)}>
+              <span onClick={() => setOpenDate(openDate)}>
                 {date &&
                   date.length > 0 &&
                   `${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
@@ -72,6 +79,7 @@ const List = () => {
                     min={1}
                     className="lsOptionInput"
                     placeholder={options && options.quantity}
+                    readOnly
                   />
                 </div>
                 <div className="lsOptionItem">
@@ -81,11 +89,22 @@ const List = () => {
                     min={1}
                     className="lsOptionInput"
                     placeholder={options && options.room}
+                    readOnly
                   />
                 </div>
               </div>
             </div>
-            <button>Search</button>
+            <div className="listInfor-box1">
+              <span>
+                <FontAwesomeIcon icon={faCircleExclamation} />
+              </span>{" "}
+              <span style={{ textAlign: "justify", fontSize: "14px" }}>
+                This table displays all selected options outside the home page.{" "}
+                <span style={{ color: "#003B95", cursor: "pointer" }}>
+                  Please return to the home page if your options are empty.
+                </span>{" "}
+              </span>
+            </div>
           </div>
           <div className="listResult">
             <SearchItem />

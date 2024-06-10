@@ -80,6 +80,16 @@
   border: #006ce4 1px solid;
   border-radius: 5px;
 }
+
+.listInfor-box1 {
+  padding: 20px;
+  width: 100%;
+  font-weight: 500;
+  background-color: #ffd86c;
+  border: #f5bf2a 1px solid;
+  border-radius: 5px;
+}
+
 .lsTitle {
   font-size: 20px;
 }
