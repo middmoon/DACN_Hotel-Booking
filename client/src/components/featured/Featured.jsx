@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUsers,
-  faLightbulb,
+  faLocationDot,
   faCamera,
   faShop,
 } from "@fortawesome/free-solid-svg-icons";
@@ -53,7 +53,7 @@ const Featured = () => {
               <div className="FeaturedWrapper-R-content">
                 <h1>DaLat - VietNam</h1>
                 <p>
-                  Highlights in Dalat <FontAwesomeIcon icon={faLightbulb} />
+                  Highlights in Dalat <FontAwesomeIcon icon={faLocationDot} />
                 </p>
                 <div className="FeaturedWrapper-R-highlight">
                   <span>
@@ -133,7 +133,8 @@ const Featured = () => {
               <div className="FeaturedWrapper-R-content">
                 <h1>HoChiMinh-VietNam</h1>
                 <p>
-                  Highlights in HoChiMinh <FontAwesomeIcon icon={faLightbulb} />
+                  Highlights in HoChiMinh{" "}
+                  <FontAwesomeIcon icon={faLocationDot} />
                 </p>
                 <div className="FeaturedWrapper-R-highlight">
                   <span>
@@ -206,7 +207,7 @@ const Featured = () => {
               <div className="FeaturedWrapper-R-content">
                 <h1>Ha Noi - VietNam</h1>
                 <p>
-                  Highlights in Hanoi <FontAwesomeIcon icon={faLightbulb} />
+                  Highlights in Hanoi <FontAwesomeIcon icon={faLocationDot} />
                 </p>
                 <div className="FeaturedWrapper-R-highlight">
                   <span>
@@ -275,7 +276,7 @@ const Featured = () => {
               <div className="FeaturedWrapper-R-content">
                 <h1>Da nang - VietNam</h1>
                 <p>
-                  Highlights in DaNang <FontAwesomeIcon icon={faLightbulb} />
+                  Highlights in DaNang <FontAwesomeIcon icon={faLocationDot} />
                 </p>
                 <div className="FeaturedWrapper-R-highlight">
                   <span>
@@ -345,7 +346,7 @@ const Featured = () => {
               <div className="FeaturedWrapper-R-content">
                 <h1>Vung Tau - VietNam</h1>
                 <p>
-                  Highlights in VungTau <FontAwesomeIcon icon={faLightbulb} />
+                  Highlights in VungTau <FontAwesomeIcon icon={faLocationDot} />
                 </p>
                 <div className="FeaturedWrapper-R-highlight">
                   <span>

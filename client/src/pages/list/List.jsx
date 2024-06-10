@@ -4,6 +4,18 @@ import Header from "../../components/header/Header";
 import Navbar from "../../components/navbar/navBar";
 import "./list.css";
 import { useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faLeftLong,
+  faInfo,
+  faEarthAmericas,
+} from "@fortawesome/free-solid-svg-icons";
+import {
+  faGithub,
+  faInstagram,
+  faFacebook,
+  faTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
@@ -77,6 +89,79 @@ const List = () => {
           </div>
           <div className="listResult">
             <SearchItem />
+          </div>
+
+          <div className="listInfor">
+            <button className="listInfor-btn">
+              <FontAwesomeIcon icon={faLeftLong} />
+              prev
+            </button>
+            <div className="listInfor-content">
+              <h1 style={{ fontSize: "20px" }}>Contact us</h1>
+              <span style={{ fontSize: "14px" }}>
+                MidmoonBooking.com Media Relations
+              </span>
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#003580",
+                  cursor: "pointer",
+                }}
+              >
+                mediarelations@booking.com
+              </p>
+            </div>
+            <div className="listInfor-box">
+              <span>
+                <FontAwesomeIcon
+                  icon={faInfo}
+                  style={{ fontSize: "14px", color: "003580" }}
+                />
+              </span>
+              <br></br>
+              <span style={{ textAlign: "justify", fontSize: "14px" }}>
+                For more information on permissions to use photos and imagery,
+                please contact{" "}
+                <span style={{ color: "#003B95", cursor: "pointer" }}>
+                  mediarelations@booking.com
+                </span>{" "}
+                before using on your own platform.
+              </span>
+            </div>
+            <div className="listInfor-content">
+              <h1 style={{ fontSize: "20px" }}>Share this page</h1>
+              <span style={{ fontSize: "14px" }}>
+                Latest MidmoonBooking.com Sustainable Travel Data Reveals
+                Ongoing Challenges for Consumers & Highlights a Heightened
+                Opportunity for Cross-Industry Collaboration
+              </span>
+              <div className="listInfor-share">
+                <span className="icon-share">
+                  <FontAwesomeIcon icon={faGithub} />
+                </span>
+                <span className="icon-share">
+                  <FontAwesomeIcon icon={faInstagram} />
+                </span>
+                <span className="icon-share">
+                  <FontAwesomeIcon icon={faFacebook} />
+                </span>
+              </div>
+            </div>
+            <div className="listInfor-content">
+              <h1 style={{ fontSize: "20px" }}>MidmoonBooking.com</h1>
+
+              <div className="listInfor-share">
+                <span className="icon-share">
+                  <FontAwesomeIcon icon={faEarthAmericas} />
+                </span>
+                <span className="icon-share">
+                  <FontAwesomeIcon icon={faTwitter} />
+                </span>
+                <span className="icon-share">
+                  <FontAwesomeIcon icon={faFacebook} />
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
