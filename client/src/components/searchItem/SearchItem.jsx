@@ -65,16 +65,16 @@ const SearchItem = () => {
               </span>
               <span className="siDistance">0,6km from center</span>
               <span className="siSubtitle">
-                Tìm kiếm khách sạn ở Hà Nội? Hãy xem Oriental Central Hotel,
-                khách sạn dành cho gia đình, lưu trú tại đây sẽ giúp bạn khám
-                phá Hà Nội một cách dễ dàng. Bạn sẽ tận hưởng căn phòng với tv
-                màn hình phẳng, điều hòa nhiệt độ và tủ lạnh, và bạn chắc chắn
-                sẽ được kết nối internet trong thời gian này bởi Oriental
-                Central Hotel cung cấp cho du khách wifi miễn phí. Khách sạn còn
-                cung cấp bàn lễ tân 24 giờ, dịch vụ phòng và nhân viên hỗ trợ
-                khách. Hơn nữa, Oriental Central Hotel với bữa sáng, mang lại
-                những giây phút thư giãn trốn khỏi một ngày bận rộn. Với khách
-                có xe cộ bãi đỗ xe công cộng có trả phí gần đó có sẵn.
+                Looking for hotels? Take a look at Oriental Central Hotel,
+                Family-friendly hotel, staying here will help you explore
+                Destroy Hanoi easily. You will enjoy the room with tv Flat
+                screen, air conditioning and refrigerator, and you're sure will
+                be connected to the internet during this time by Oriental
+                Central Hotel offers guests free wifi. The hotel is still
+                available offers a 24 hour front desk, room service and
+                concierge guest. Furthermore, Oriental Central Hotel offers
+                breakfast Relaxing moments to escape a busy day. With guests
+                Paid public parking is available nearby.
               </span>
             </div>
             <div className="siDetails">

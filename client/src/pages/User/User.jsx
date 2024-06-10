@@ -176,14 +176,14 @@ const User = () => {
           <div className="nofition-ord">
             <div className="nofition_content">
               <p style={{ fontWeight: "600" }}>
-                <FontAwesomeIcon icon={faBell} /> Lưu ý :{" "}
+                <FontAwesomeIcon icon={faBell} /> Note :{" "}
               </p>
               <p>
-                Thời hạn hủy đơn đặt là trước{" "}
-                <span style={{ fontWeight: "600" }}>24 giờ</span> trước khi nhận
-                phòng, sau khoảng thời gian này quý khách sẽ không thể hủy phòng
-                và hoàn lại tiền, để tìm hiểu thêm hãy xem qua chính sách khách
-                hàng của chúng tôi
+                Consent to cancel an order is prior{" "}
+                <span style={{ fontWeight: "600" }}>24 hours</span> before
+                receiving room, after this period you will not be able to cancel
+                the room and refunds, to learn more check out our guest policies
+                our goods
               </p>
               <a
                 style={{ position: "absolute", right: "20px", bottom: "5px" }}

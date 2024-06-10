@@ -160,7 +160,7 @@ const Hotels = () => {
             </div>
           )}
           <div className="hotelWrapper">
-            <button className="bookNow">Đặt ngay</button>
+            <button className="bookNow">Book now!</button>
             <h1 className="hotelTitle">{hotel.hotel_name}</h1>
             <div className="hotelAddress">
               <FontAwesomeIcon icon={faLocationDot} />
@@ -183,40 +183,37 @@ const Hotels = () => {
               <div className="hotelDetailsTexts">
                 <h1 className="hotelTitle">Stay in heart</h1>
                 <p className="hotelDesc">
-                  Lavender Central Hotel chào đón du khách với nước ép cam tươi
-                  mát và nằm cách Cầu Thê Húc cũng như Hồ Hoàn Kiếm đẹp như
-                  tranh vẽ chỉ 3 phút đi bộ. Khách sạn trang nhã này cung cấp
-                  dịch vụ lễ tân 24 giờ và WiFi miễn phí ở tất cả các khu vực.
-                  Tọa lạc ở trung tâm Khu Phố Cổ Hà Nội, chỗ nghỉ nằm trong bán
-                  kính chỉ 5 phút lái xe từ các điểm tham quan đậm nét lịch sử
-                  như Quảng trường Ba Đình và Lăng Chủ tịch Hồ Chí Minh. Sân bay
-                  quốc tế Nội Bài cách đó 45 phút lái xe.
+                  Hotel welcomes guests with fresh orange juice cool and located
+                  far from The Huc Bridge as well as the beautiful Hoan Kiem
+                  Lake painting just 3 minutes walk. This elegant hotel delivers
+                  24-hour front desk service and free WiFi in all areas. Located
+                  in the heart of Hanoi's Old Quarter, the property is for sale
+                  Just a 5-minute drive from historic attractions such as Ba
+                  Dinh Square and President Ho Chi Minh Mausoleum. Airport Noi
+                  Bai International is a 45-minute drive away.
                   <br></br>
                   <br></br>
-                  Pha trộn giữa lối trang trí truyền thống với tiện nghi hiện
-                  đại, phòng nghỉ gắn máy điều hòa tại đây có TV truyền hình cáp
-                  màn hình phẳng, khu vực ghế ngồi và ấm đun nước điện. Phòng
-                  tắm riêng đi kèm đồ vệ sinh cá nhân miễn phí và máy sấy tóc.
-                  Du khách có thể tham quan quanh khu vực một cách dễ dàng với
-                  dịch vụ cho thuê xe đạp và xe hơi. Dịch vụ văn phòng và bàn
-                  đặt tour nằm trong số các tiện nghi của chỗ nghỉ. Dịch vụ đưa
-                  đón sân bay cũng được cung cấp với một khoản phụ phí để tạo
-                  thuận tiện cho khách.
+                  Blending traditional décor with modern amenities Modern,
+                  air-conditioned rooms come with cable TV flat screen, seating
+                  area and electric kettle. Room The private bathroom comes with
+                  free toiletries and a hairdryer. Guests can easily tour around
+                  the area with Bicycle and car rental services. Office and desk
+                  service Tour bookings are among the property's amenities.
+                  Delivery service Airport pickup is also available for an
+                  additional fee Convenient for guests.
                 </p>
               </div>
               <div className="hotelDetailsPrice">
-                <h1>Điểm nổi bật của chỗ nghỉ</h1>
+                <h1>Highlights of the property</h1>
                 <span>
-                  Địa điểm hàng đầu: Được khách gần đây đánh giá cao (8,9 điểm)
+                  Top locations: Highly rated by recent guests (8.9 points)
                 </span>
-                <span>Có bãi đậu xe riêng miễn phí ở khách sạn này</span>
-                <button>Đặt ngay!</button>
+                <span>Free private parking is available at this hotel</span>
+                <button>Book now!</button>
               </div>
             </div>
             <div className="hotelUbility">
-              <h1 style={{ fontSize: "15px" }}>
-                Các tiện nghi được ưa chuộng nhất
-              </h1>
+              <h1 style={{ fontSize: "15px" }}>Most popular amenities</h1>
               <div className="Ubility-content">
                 <div
                   style={{
@@ -231,7 +228,7 @@ const Hotels = () => {
                     style={{ color: "green" }}
                   />
                   <span style={{ fontWeight: "500", fontSize: "12px" }}>
-                    Chỗ đỗ xe miễn phí
+                    Free parking
                   </span>
                 </div>
 
@@ -245,7 +242,7 @@ const Hotels = () => {
                 >
                   <FontAwesomeIcon icon={faWifi} style={{ color: "green" }} />
                   <span style={{ fontWeight: "500", fontSize: "12px" }}>
-                    Wifi miễn phí
+                    Wifi free
                   </span>
                 </div>
               </div>
@@ -253,14 +250,14 @@ const Hotels = () => {
           </div>
 
           <div className="hotel-Available">
-            <h1 style={{ fontSize: "25px", paddingTop: "10px" }}>Đặt phòng</h1>
+            <h1 style={{ fontSize: "25px", paddingTop: "10px" }}>Book room</h1>
             <div className="ht-table">
               <div className="table-Content-title">
-                <span style={{ flex: "2" }}>Chi tiết phòng</span>
+                <span style={{ flex: "2" }}>Room detail</span>
                 <span style={{ flex: "2", textAlign: "center" }}>
-                  Loại phòng
+                  Type room
                 </span>
-                <span style={{ flex: "2", textAlign: "center" }}>Giá tiền</span>
+                <span style={{ flex: "2", textAlign: "center" }}>Price</span>
                 <span style={{ flex: "1" }}></span>
               </div>
 
@@ -270,17 +267,17 @@ const Hotels = () => {
                     {price.type_name === "VIP" && (
                       <>
                         <p style={{ color: "#0071c2", fontWeight: "500" }}>
-                          Phòng Deluxe giường đôi có ban công
+                          Deluxe double bed in room with balcony
                         </p>
-                        <p>một giường đôi cực lớn</p>
+                        <p>an extra large double bed</p>
                       </>
                     )}
                     {price.type_name === "STD" && (
                       <>
                         <p style={{ color: "#0071c2", fontWeight: "500" }}>
-                          Phòng Standard giường đôi
+                          Standard double room
                         </p>
-                        <p>một giường đôi</p>
+                        <p>one double bed</p>
                       </>
                     )}
                   </span>
