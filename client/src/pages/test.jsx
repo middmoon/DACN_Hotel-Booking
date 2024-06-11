@@ -1,75 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-function App() {
-  const [rooms, setRooms] = useState([]); // Danh sách phòng từ API
-  const [selectedRooms, setSelectedRooms] = useState([]); // Danh sách phòng đã chọn
-  const [showRooms, setShowRooms] = useState(false); // State để hiển thị danh sách phòng
-
-  // Gọi API lấy phòng
-  useEffect(() => {
-    fetchRooms();
-  }, []);
-
-  const fetchRooms = async () => {
-    try {
-      const response = await fetch("API_LAY_PHONG_URL");
-      const data = await response.json();
-      setRooms(data);
-    } catch (error) {
-      console.error("Error fetching rooms:", error);
-    }
-  };
-
-  // Xử lý khi chọn phòng
-  const handleRoomSelect = async (room) => {
-    try {
-      const response = await fetch("API_GUI_THONG_TIN_PHONG_URL", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ room }),
-      });
-      const data = await response.json();
-
-      // Cập nhật danh sách phòng đã chọn
-      setSelectedRooms((prevSelectedRooms) => [...prevSelectedRooms, data]);
-
-      // Ẩn danh sách phòng sau khi chọn
-      setShowRooms(false);
-    } catch (error) {
-      console.error("Error selecting room:", error);
-    }
-  };
-
+const Dashboard = () => {
   return (
     <div>
-      <button onClick={() => setShowRooms(true)}>
-        Hiển thị danh sách phòng
-      </button>
-      {showRooms && (
-        <div>
-          <h2>Danh sách phòng</h2>
-          <ul>
-            {rooms.map((room) => (
-              <li key={room.id}>
-                {room.name}{" "}
-                <button onClick={() => handleRoomSelect(room)}>Chọn</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      <div>
-        <h2>Danh sách phòng đã chọn</h2>
-        <ul>
-          {selectedRooms.map((room, index) => (
-            <li key={index}>{room.name}</li>
-          ))}
-        </ul>
-      </div>
+      <h2>Welcome to the Dashboard!</h2>
+      <p>Only authenticated users can see this.</p>
     </div>
   );
-}
+};
 
-export default App;
+export default Dashboard;
+
+// import React from 'react';
+// import { Redirect } from 'react-router-dom';
+
+// const withAuth = (Component) => {
+//   return (props) => {
+//     const isAuthenticated = // logic xác thực người dùng;
+
+//     if (!isAuthenticated) {
+//       return <Redirect to="/login" />;
+//     }
+
+//     return <Component {...props} />;
+//   };
+// };
+
+// export default withAuth;
+
+// import React from 'react';
+// import withAuth from './withAuth';
+// import Dashboard from './Dashboard';
+
+// const ProtectedDashboard = withAuth(Dashboard);
+
+// const App = () => (
+//   <div>
+//     <ProtectedDashboard />
+//   </div>
+// );
+
+// export default App;
