@@ -30,15 +30,26 @@ class UserOrderController {
 
   updateOrder = async (req, res, next) => {
     new OK({
-      message: "Get detail order OK",
+      message: "update order OK",
       metadata: await UserOrderService.updateOrder(req._id, req.params.orderId),
     }).send(res);
   };
 
   cancelOrder = async (req, res, next) => {
     new OK({
-      message: "Get detail order OK",
+      message: "Cancel order OK",
       metadata: await UserOrderService.cancelOrder(req._id, req.params.orderId),
+    }).send(res);
+  };
+
+  makeRating = async (req, res, next) => {
+    new OK({
+      message: "make rating order OK",
+      metadata: await UserOrderService.makeRating(
+        req._id,
+        req.params.orderId,
+        req.body
+      ),
     }).send(res);
   };
 }

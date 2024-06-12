@@ -9,6 +9,6 @@ router
   .get("/detail/:orderId", asyncHandler(UserOrderController.getOrderDetail))
   .patch("/update/:orderId", asyncHandler(UserOrderController.updateOrder))
   .put("/cancel/:orderId", asyncHandler(UserOrderController.cancelOrder))
-  .post("/make-order", asyncHandler(UserOrderController.makeOrder));
-
+  .post("/make-order", asyncHandler(UserOrderController.makeOrder))
+  .post("/rating/:orderId", asyncHandler(UserOrderController.makeRating));
 module.exports = router;

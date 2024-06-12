@@ -1,7 +1,7 @@
 "use strict";
 
 const db = require("../models");
-const { NotFoundError } = require("../core/error.response");
+const { NotFoundError, ForbiddenError } = require("../core/error.response");
 const { getInfoData } = require("../utils");
 
 class UserOrderService {
@@ -119,6 +119,37 @@ class UserOrderService {
     return {
       cancelOrder,
     };
+  }
+
+  static async makeRating(userId, orderId, payload) {
+    const foundOrder = await db.Order.findOne({
+      where: {
+        _id: orderId,
+        id_user: userId,
+      },
+    });
+
+    if (!foundOrder) {
+      throw new NotFoundError("ERR: Can not find the order for user");
+    }
+
+    if (!foundOrder.status != "DONE") {
+      throw new ForbiddenError("ERR: This order is not checked out");
+    }
+
+    const newRating = db.Rating.create({
+      id_hotel: foundOrder.id_hotel,
+      id_user: userId,
+      id_order: orderId,
+      comment: payload.comment,
+      rating_point: payload.rating_point,
+    });
+
+    if (!newRating) {
+      throw new ForbiddenError("ERR: Can not make rating for this order");
+    }
+
+    return newRating;
   }
 }
 

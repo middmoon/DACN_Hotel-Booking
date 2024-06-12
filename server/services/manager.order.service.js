@@ -4,7 +4,6 @@ const db = require("../models");
 const { BadRequestError, NotFoundError } = require("../core/error.response");
 const HotelManagerService = require("./hotel.manager.service");
 const ManagerRoomService = require("./manager.room.service");
-const { forEach } = require("lodash");
 
 class ManagerOrderService {
   static async getAllOrder(userId) {
@@ -183,6 +182,7 @@ class ManagerOrderService {
       // if (!newRoomOrder) {
       //   throw new BadRequestError("ERR: Can not update price for order");
       // }
+      //this.updatePrice(userId, orderId);
       return { newRoomOrder };
     } catch (error) {
       await transaction.rollback();
@@ -199,7 +199,7 @@ class ManagerOrderService {
 
     const rooms = foundOrder.Rooms;
 
-    console.log(foundOrder);
+    //console.log(foundOrder);
 
     if (!rooms || rooms.length === 0) {
       throw new NotFoundError("ERR: No rooms found in the order");
