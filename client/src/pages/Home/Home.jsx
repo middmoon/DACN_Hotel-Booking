@@ -20,6 +20,7 @@ import About from "../../components/about/About";
 import { Link, Route, Routes } from "react-router-dom";
 import { Navigate, Outlet } from "react-router-dom";
 import AboutUs from "../../components/aboutUs/AboutUs";
+import Buss from "../../components/business/Buss";
 
 const Home = () => {
   const user = useSelector((useState) => useState.auth.login.currentUser);
@@ -110,6 +111,10 @@ const Home = () => {
               </p>
             </div>
             <PropertyList headerData={headerData} />
+            <div>
+              <h1 className="homeTitle">Business with us</h1>
+            </div>
+            <Buss />
             <h1 className="homeTitle">News</h1>
             <FeaturedProperties />
             <MailList />
