@@ -17,6 +17,7 @@ import Ordered from "./pages/HotelManage/Ordered";
 import Profile_ht from "./pages/HotelManage/Profile_ht";
 import Test from "./pages/test";
 import User from "./pages/User/User";
+import Business from "./components/business/BusinessPost";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/test" element={<Test />} />
           <Route path="/User/order" element={<User />} />
+          <Route path="/Business" element={<Business />} />
           {/* hotel manager */}
           <Route path="/hotel-manage/*" element={<HotelManage />}>
             <Route path="create-post" element={<Createpost />} />

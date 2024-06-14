@@ -1,6 +1,13 @@
 import "./buss.css";
+import { useNavigate } from "react-router-dom";
 
 const Buss = () => {
+  const navigate = useNavigate();
+
+  const handleBusiness = () => {
+    navigate("/Business");
+  };
+
   return (
     <div className="fp">
       <div className="bussCtn">
@@ -15,7 +22,7 @@ const Buss = () => {
             complimentary 24/7 support from leading travel management company
             CWT.
           </p>
-          <button> Explore now</button>
+          <button onClick={handleBusiness}> Explore now</button>
         </div>
         <div className="buss2">
           <img src="/IMG/Home/busines.png" alt="" />

@@ -25,7 +25,27 @@
   color: black;
   border-radius: 5px;
   font-weight: 600;
+  transition: transform 0.3s;
 }
 .buss2 {
   width: 50%;
+}
+
+.buss1 button:hover {
+  transform: translateY(-10px);
+}
+
+.busL {
+  position: absolute;
+  height: max-content;
+  left: -30%;
+}
+
+.busL ul li {
+  padding: 15px;
+  color: #003b95;
+}
+
+.busL ul li:hover {
+  background-color: rgb(204, 204, 204);
 }

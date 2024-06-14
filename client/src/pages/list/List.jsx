@@ -109,7 +109,6 @@ const List = () => {
           <div className="listResult">
             <SearchItem />
           </div>
-
           <div className="listInfor">
             <button className="listInfor-btn">
               <FontAwesomeIcon icon={faLeftLong} />
