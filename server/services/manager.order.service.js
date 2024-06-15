@@ -67,9 +67,7 @@ class ManagerOrderService {
       throw new NotFoundError("Error: Can not get order detail");
     }
 
-    return {
-      foundOrder,
-    };
+    return foundOrder;
   }
 
   static async getOrderWithStatus(userId, status) {
@@ -156,6 +154,10 @@ class ManagerOrderService {
         throw new NotFoundError("ERR: Room not found");
       }
 
+      if (room.is_ordered) {
+        throw new NotFoundError("ERR: This room is ordered");
+      }
+
       if (!room.is_ordered) {
         await room.update({ is_ordered: true }, { transaction });
       }
@@ -179,16 +181,19 @@ class ManagerOrderService {
 
       await transaction.commit();
 
-      if (!newRoomOrder) {
-        throw new BadRequestError("ERR: Can not update price for order");
-      }
+      await this.updatePrice(userId, orderId);
 
-      if (newRoomOrder) {
-        await this.updatePrice(userId, orderId);
-      }
+      // if (!newRoomOrder) {
+      //   throw new BadRequestError("ERR: Can not update price for order");
+      // }
+
+      // if (newRoomOrder) {
+      // }
       return { newRoomOrder };
     } catch (error) {
-      await transaction.rollback();
+      if (transaction.finished !== "commit") {
+        await transaction.rollback();
+      }
       throw error;
     }
   }
@@ -202,9 +207,11 @@ class ManagerOrderService {
 
     const rooms = foundOrder.Rooms;
 
-    //console.log(foundOrder);
+    // console.log("id_hotel: ", JSON.stringify(foundOrder.id_hotel, null, 2));
+    // console.log(foundOrder);
+    // console.log("Rooms Lenght::::::" + rooms.length);
 
-    if (!rooms || rooms.length === 0) {
+    if (!rooms) {
       throw new NotFoundError("ERR: No rooms found in the order");
     }
 
@@ -214,6 +221,8 @@ class ManagerOrderService {
     rooms.forEach((r) => {
       price += r.price * total_day;
     });
+
+    console.log("price::::::::::" + price);
 
     const updatedOrder = await foundOrder.update({
       total_price: price,
