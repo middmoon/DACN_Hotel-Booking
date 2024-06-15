@@ -34,7 +34,21 @@ const AboutUs = () => {
           </div>
         </div>
         <div className="about-usCT" style={{ backgroundColor: "white" }}>
-          <div className="HuloveRM" style={{ padding: "40px 0px 40px 0px" }}>
+          <div
+            className="HuloveRM"
+            style={{
+              padding: "40px 10px 40px 0px",
+              border: "black 1px solid",
+              borderRadius: "5px",
+            }}
+          >
+            <div className="ABct-right">
+              <img
+                src="/IMG/Home/smile.png"
+                alt=""
+                className="ABCT-right-img"
+              />
+            </div>
             <div className="ABct-left">
               <h1>Get quality bookings quickly</h1>
               <ul>
@@ -66,11 +80,32 @@ const AboutUs = () => {
                 </li>
               </ul>
             </div>
-            <div className="ABct-right">
+          </div>
+
+          <div className="HuloveRM" style={{ padding: "40px 0px 40px 0px" }}>
+            <div className="ABct-left1">
+              <h1>Start saving more on business travel</h1>
+              <ul>
+                <li>
+                  Enjoy reduced business rates and earn loyalty points with your
+                  favourite hotels, airlines and car rental companies
+                </li>
+                <li>
+                  Access complimentary travel support from CWT via email or
+                  phone, whenever you need it
+                </li>
+                <li>
+                  Get up to 20% off standard rates with the Genius loyalty
+                  programme
+                </li>
+                <li>Choose stays with a flexible cancellation policy</li>
+              </ul>
+            </div>
+            <div className="ABct-right1">
               <img
-                src="/IMG/Home/smile.png"
+                src="/IMG/Home/abou2.png"
                 alt=""
-                className="ABCT-right-img"
+                className="ABCT-right-img2"
               />
             </div>
           </div>

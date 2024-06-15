@@ -45,10 +45,24 @@
   width: 50%;
   overflow: hidden;
 }
+.ABct-left1 {
+  width: 60%;
+}
+
+.ABct-right1 {
+  width: 40%;
+  overflow: hidden;
+}
 
 .ABCT-right-img {
   width: 100%;
   padding: 20px;
   border-radius: 5px;
+  overflow: hidden;
+}
+
+.ABCT-right-img2 {
+  width: 100%;
+
   overflow: hidden;
 }

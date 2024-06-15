@@ -57,7 +57,7 @@ const Ordered = () => {
             { headers }
           );
 
-          setOrderDetails(response.data.metadata.foundOrder);
+          setOrderDetails(response.data.metadata);
           console.log(orderDetails);
         } catch (error) {
           console.error("Lỗi khi lấy chi tiết đơn hàng:", error);
@@ -73,6 +73,34 @@ const Ordered = () => {
     setOpen(true);
   };
 
+  //checkout cho order
+  const handleCheckout = async (orderId) => {
+    if (orderId !== null) {
+      try {
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `${accessToken}`,
+        };
+        const response = await axios.put(
+          `http://localhost:3030/v2/api/hotel-manage/order/check-out/${orderId}`,
+          {},
+          { headers }
+        );
+
+        if (response.status === 200) {
+          alert("Check-out thành công!");
+          window.location.reload();
+        }
+      } catch (error) {
+        console.error("Lỗi khi thực hiện check-out:", error);
+        alert("Lỗi khi thực hiện check-out. Vui lòng thử lại.");
+      }
+    }
+  };
+
+  const handleOrdercheckout = (orderId) => {
+    handleCheckout(orderId);
+  };
   //add room cho order
   const handleRoomSelection = async (room) => {
     try {
@@ -132,11 +160,13 @@ const Ordered = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case "ON_ORDER":
-        return "text-blue-500"; // blue text color
+        return "text-blue-500";
       case "PRE_ORDER":
-        return "text-green-500"; // green text color
+        return "text-yellow-500";
       case "CANCEL":
-        return "text-red-500"; // red text color
+        return "text-red-500";
+      case "DONE":
+        return "text-green-500";
       default:
         return ""; // default text color
     }
@@ -202,6 +232,12 @@ const Ordered = () => {
                       onClick={() => handleOrderClick(order._id)}
                     >
                       Chỉnh sửa
+                    </button>
+                    <button
+                      className="border-b-2 border-blue-700"
+                      onClick={() => handleOrdercheckout(order._id)}
+                    >
+                      Check out
                     </button>
                   </div>
                 </th>
