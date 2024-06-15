@@ -179,10 +179,13 @@ class ManagerOrderService {
 
       await transaction.commit();
 
-      // if (!newRoomOrder) {
-      //   throw new BadRequestError("ERR: Can not update price for order");
-      // }
-      //this.updatePrice(userId, orderId);
+      if (!newRoomOrder) {
+        throw new BadRequestError("ERR: Can not update price for order");
+      }
+
+      if (newRoomOrder) {
+        await this.updatePrice(userId, orderId);
+      }
       return { newRoomOrder };
     } catch (error) {
       await transaction.rollback();
@@ -221,6 +224,12 @@ class ManagerOrderService {
     }
 
     return updatedOrder;
+  }
+
+  static async removeRoomFromOrder(userId, orderId) {
+    const foundOrder = await this.getDetailOrder(userId, orderId);
+
+    const removedRoom = db;
   }
 
   static async checkOutOrder(userId, orderId) {

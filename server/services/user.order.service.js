@@ -1,11 +1,30 @@
 "use strict";
 
 const db = require("../models");
-const { NotFoundError, ForbiddenError } = require("../core/error.response");
+const {
+  NotFoundError,
+  ForbiddenError,
+  BadRequestError,
+} = require("../core/error.response");
 const { getInfoData } = require("../utils");
 
 class UserOrderService {
   static async makeOrder(userId, payload) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const startDay = new Date(payload.start_day);
+    const endDay = new Date(payload.end_day);
+
+    if (startDay < today) {
+      throw new BadRequestError("ERR: start day cannot be in the past");
+    }
+
+    if (endDay < startDay) {
+      throw new BadRequestError(
+        "ERR: end day must be equal to or later than start_day"
+      );
+    }
     const makedOrder = await db.Order.create({
       id_user: userId,
       id_hotel: payload.id_hotel,
@@ -133,7 +152,7 @@ class UserOrderService {
       throw new NotFoundError("ERR: Can not find the order for user");
     }
 
-    if (!foundOrder.status != "DONE") {
+    if (foundOrder.status !== "DONE") {
       throw new ForbiddenError("ERR: This order is not checked out");
     }
 

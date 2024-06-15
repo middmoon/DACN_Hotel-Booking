@@ -37,6 +37,9 @@ class HotelService {
           },
           attributes: ["_id", "utility_name", "utility_icon"],
         },
+        {
+          model: db.Rating,
+        },
       ],
       // attributes: { exclude: ["code_ward"] },
     });
@@ -54,6 +57,8 @@ class HotelService {
       };
     }
   }
+
+  static async getAllRating(hotelId) {}
 
   static async getHotelList(search) {
     const foundHotel = await db.Hotel.findAll({

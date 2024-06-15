@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       Hotel.hasMany(models.Order, { foreignKey: "id_hotel" });
+      Hotel.hasMany(models.Rating, { foreignKey: "id_hotel" });
     }
   }
 
