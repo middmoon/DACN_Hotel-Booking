@@ -222,7 +222,7 @@ class ManagerOrderService {
       price += r.price * total_day;
     });
 
-    console.log("price::::::::::" + price);
+    // console.log("price::::::::::" + price);
 
     const updatedOrder = await foundOrder.update({
       total_price: price,

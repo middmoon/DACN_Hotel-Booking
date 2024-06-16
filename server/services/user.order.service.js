@@ -156,6 +156,19 @@ class UserOrderService {
       throw new ForbiddenError("ERR: This order is not checked out");
     }
 
+    const existingRating = await db.Rating.findOne({
+      where: {
+        id_order: orderId,
+        id_user: userId,
+      },
+    });
+
+    if (existingRating) {
+      throw new ForbiddenError(
+        "ERR: This order already has a rating by the user"
+      );
+    }
+
     const newRating = db.Rating.create({
       id_hotel: foundOrder.id_hotel,
       id_user: userId,
