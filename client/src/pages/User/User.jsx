@@ -105,11 +105,13 @@ const User = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case "ON_ORDER":
-        return "text-blue-500"; // blue text color
+        return "text-blue-500";
       case "PRE_ORDER":
-        return "text-green-500"; // green text color
+        return "text-yellow-500";
       case "CANCEL":
-        return "text-red-500"; // red text color
+        return "text-red-500";
+      case "DONE":
+        return "text-green-500";
       default:
         return ""; // default text color
     }
